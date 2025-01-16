@@ -1,0 +1,27 @@
+/* Background and Layout */
+.page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    color: white;
+    text-align: center;
+}
+
+/* Dark overlay for readability */
+.overlay {
+    background: rgba(0, 0, 0, 0.6);
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 600px;
+}
+
+/* Headings */
+.page h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
