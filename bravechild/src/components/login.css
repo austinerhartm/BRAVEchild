@@ -8,6 +8,35 @@
     text-align: center;
 }
 
-    .login-container p {
+    .login-container h2 {
         margin-bottom: 20px;
     }
+
+    .login-container label {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .login-container input,
+    .login-container select {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .login-container button {
+        padding: 10px 20px;
+        color: white;
+        background-color: #4CAF50;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1rem;
+    }
+
+        .login-container button:hover {
+            background-color: #45a049;
+        }

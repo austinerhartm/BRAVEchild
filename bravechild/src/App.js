@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router';
 
 // Page imports
 import HomePage from './HomePage';
-import LoginPage from './components/login'
+import Login from './components/Login'
+import CreateUser from './components/CreateUser'
 
 function App() {
 
@@ -11,7 +12,8 @@ function App() {
         <Router>
             <Routes>
                 <Route path="/" element={<HomePage />} />
-                <Route path="/login" element={<LoginPage />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/create-user" element={<CreateUser />} />
             </Routes>
         </Router>
     )  
