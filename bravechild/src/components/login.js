@@ -1,6 +1,6 @@
 //Library imports
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate, Link } from 'react-router';
 import { loginUser } from '../services/loginAuth';
 import PropTypes from 'prop-types';
 
@@ -8,7 +8,6 @@ import PropTypes from 'prop-types';
 import './login.css';
 
 const Login = () => {
-    const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
@@ -43,6 +42,10 @@ const Login = () => {
                 <button type='submit'>Login</button>
             </form>
             {error && <p>{error}</p>}
+            <p>Don't have an account?</p>
+            <Link to='/create-user'>
+                <button className='create-user-button'>Create User</button>
+            </Link>
         </div>
   );
 };
