@@ -7,13 +7,13 @@ const jwt = require('jsonwebtoken');
 
 // User registation endpoint
 router.post('/registration', async (req, res) => {
-	const { username, email, password, role } = req.body;
+	const { username, email, password } = req.body;
 
 	try {
 		const salt = 10;
 		const passwordHash = await bcrypt.hash(password, salt);
 
-		const [result] = await db.execute('INSERT INTO users (username, email, passwordHash, role) VALUES (?,?,?,?)', [username, email, passwordHash, role]);
+		const [result] = await db.execute('INSERT INTO users (username, email, passwordHash, role) VALUES (?,?,?,?)', [username, email, passwordHash]);
 
 		res.status(201).json({ message: 'User registered successfully' });
 	} catch (error) {
