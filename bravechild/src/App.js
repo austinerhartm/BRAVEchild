@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router';
 import HomePage from './HomePage';
 import Login from './components/Login'
 import CreateUser from './components/CreateUser'
+import DonoPage from './components/Donation'
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/create-user" element={<CreateUser />} />
+                <Route path="/donate" element={<DonoPage />} />
             </Routes>
         </Router>
     )  

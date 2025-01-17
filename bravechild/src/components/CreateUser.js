@@ -1,6 +1,6 @@
 //Lib imports
 import React, { useState } from 'react';
-import { registerUser } from '../services/registrationAuth';
+import { register_user } from '../services/registration_auth';
 import { useNavigate } from 'react-router';
 
 //Style imports
@@ -20,7 +20,7 @@ const CreateUser = () => {
 
         if (Object.keys(newErrors).length === 0) {
             try {
-                await registerUser({ username, email, password });
+                await register_user({ username, email, password });
             } catch (err) {
                 setErrors('Unable to register new user');
             }
