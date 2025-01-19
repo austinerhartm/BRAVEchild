@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 // Style import
 import './Login.css';
 
-const Login = () => {
+const Login = ( { setToken } ) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
@@ -18,7 +18,8 @@ const Login = () => {
 
         setError(null);
         try {
-          const token = await login_user( { username, password } );
+            const token = await login_user({ username, password });
+            setToken(token);
 
         } catch (err) {
           setError('Invalid credentials');

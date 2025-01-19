@@ -1,13 +1,12 @@
 const express = require('express');
 const router = express.Router();
 
-// Simulated progress value (replace with real data fetching logic as needed)
-let progressValue = 0;
+const db = require('../db');
 
 // Endpoint to get progress
-router.get('/', (req, res) => {
-    // Simulate dynamic progress or retrieve it from a database
-    progressValue = Math.min(progressValue + 10, 100); // Example increment
+router.get('/progress', async (req, res) => {
+    let [sqlTotal] = await db.execute('SELECT SUM(amount) AS amt FROM donations');
+    let progressValue = sqlTotal[0].amt;
     res.json({ progress: progressValue });
 });
 

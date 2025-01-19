@@ -11,8 +11,8 @@
     background-color: #4caf50;
     height: 100%;
     text-align: center;
-    line-height: 30px; /* Aligns the text vertically */
+    line-height: 30px; 
     color: white;
     font-weight: bold;
-    transition: width 0.3s ease; /* Smooth transition for width changes */
+    transition: width 0.3s ease;
 }

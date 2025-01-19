@@ -3,7 +3,7 @@ const API_BASE_URL = process.env.REACT_APP_API_BASE_URL; // Define this in your 
 // Function to fetch progress data
 async function get_dono_amount() {
     try {
-        const response = await fetch(`${API_BASE_URL}/progress`, {
+        const response = await fetch(`${API_BASE_URL}/fetch/progress`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
