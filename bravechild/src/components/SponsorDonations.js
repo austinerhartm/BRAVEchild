@@ -1,17 +1,13 @@
 import React from 'react'
-import UserInfoForm from './UserInfoForm';
-import BoxContainer from './BoxContainer';
+import DonationForm from './DonationForm';
+import '../styles/SponsorDonations.css'
 
 const SponsorDonation = () => {
      
     return (
-        <div className="donor-container" 
-        style="font-family: Arial, sans-serif; 
-                text-align: center; padding: 20px"
-        >
-            <h1>Sponsor Donation</h1>
-            <UserInfoForm />
-            <BoxContainer />
+        <div className="donor-container">
+            <h1 className="title">Sponsor Donation</h1>
+            <DonationForm />
         </div>
     );
 };

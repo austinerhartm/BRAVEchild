@@ -5,7 +5,7 @@ import { loginUser } from '../services/loginAuth';
 import PropTypes from 'prop-types';
 
 // Style import
-import './styles/login.css';
+import '../styles/login.css';
 
 const Login = () => {
     const [username, setUsername] = useState('');
