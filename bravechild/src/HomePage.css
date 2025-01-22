@@ -29,7 +29,7 @@
 } */
 
 .navbar {
-    background-color: #b2b2b2;
+    background-color: #ffffff;
     overflow: hidden;
     position: fixed;
     top: 0;
@@ -47,6 +47,7 @@
     font-size: 1rem;
     font-weight: bold;
     align-items: center;
+    color: rgb(140, 0, 175);
 }
 
 .navbar-logo img {
@@ -77,74 +78,114 @@
 .homepage-content {
     margin-top: 150px;
     padding: 10px;
-    margin-left: 20px;
+    margin-left: 80px;
     text-align: left;
     color: black;
-    display: left;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
 }
 
 .homepage-content h2 {
     font-size: 1.5rem;
-    margin-bottom: 20px;
+    font: arial;
+    margin-bottom: 10px;
     color: rgb(47, 0, 255);
 }
 
 .homepage-content p {
-    font-size: .75rem;
+    font-size: 1rem;
+    font: arial;
     margin-bottom: 20px;
     color: black;
     margin-top: 10px;
+    flex: auto;
 }
 
 .whatIsBraveChild-text {
     white-space: pre-line;
 }
 
+.equine-therapy-image3 {
+    max-width: 600px;
+    margin-right: 30px;
+    margin-left: 800px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
 .hippo-therapy h2 {
     margin-top: 30px;
     margin-bottom: 10px;
-    color: black;
+    color: rgb(47, 0, 255);
     font-size: 1.5rem;
-    margin-left: 5px;
+    font: arial;
+    margin-left: 80px;
 }
 
+.hippo-therapy p {
+    white-space: pre-line;
+    font-size: 1rem;
+    color: black;
+    margin-left: 80px;
+}
+
+
 .hippo-therapy-content {
-    display: right;
-    align-items: flex;
+    display: flex;
+    align-items: horizontal;
+    justify-content: center;
+    flex-direction: row;
 }
 
 .equine-therapy-image1 {
-    max-width: 200px;
+    max-width: 300px;
     margin-top: 30px;
     margin-left: 50px;
     flex: auto;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
 .equine-therapy-image2 {
-    max-width: 200px;
+    max-width: 300px;
     margin-top: 30px;
     margin-left: 50px;
     flex: auto;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
-.hippo-therapy-text p {
-    white-space: pre-line;
-    font-size: .75rem;
-    color: black;
-    margin-left: 100px;
+.equine-therapy-image4 {
+    max-width: 300px;
+    margin-top: 30px;
+    margin-left: 50px;
+    flex: auto;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
 .contact-us h2{
     margin-bottom: 10px;
-    color: black;
+    color: rgb(255, 0, 191);
     font-size: 1.5rem;
-    margin-left: 5px;
     margin-top: 300px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
 }
 
 .contact-us p {
-    font-size: .75rem;
-    margin-bottom: 0px;
+    font-size: 1rem;
+    margin-bottom: 10px;
     color: black;
     margin-left: 20px;
+    display: flex;
+    flex-direction: row;
+}
+
+.contact-us-list li {
+    display: flex;
+    margin-top: 20px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font: arial;
+    font-size: 1rem;
 }
