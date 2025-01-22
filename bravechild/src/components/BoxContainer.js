@@ -1,5 +1,5 @@
 import React from 'react'
-import "./BoxContainer.css"
+import "./styles/BoxContainer.css"
 
 const BoxContainer = () => {
     const boxes = [1, 2, 3]
