@@ -29,7 +29,7 @@
 } */
 
 .navbar {
-    background-color: #dcd9d9;
+    background-color: #b2b2b2;
     overflow: hidden;
     position: fixed;
     top: 0;
@@ -50,7 +50,7 @@
 }
 
 .navbar-logo img {
-    height: 50px;
+    height: 100px;
     margin-right: 10px;
 }
 
@@ -75,23 +75,76 @@
 }
 
 .homepage-content {
-    margin-top: 200px;
-    padding: 20px;
+    margin-top: 150px;
+    padding: 10px;
+    margin-left: 20px;
     text-align: left;
     color: black;
     display: left;
 }
 
 .homepage-content h2 {
-    font-size: 2rem;
+    font-size: 1.5rem;
     margin-bottom: 20px;
-    color: black;
+    color: rgb(47, 0, 255);
 }
 
 .homepage-content p {
-    font-size: 1.2rem;
+    font-size: .75rem;
     margin-bottom: 20px;
     color: black;
+    margin-top: 10px;
 }
 
+.whatIsBraveChild-text {
+    white-space: pre-line;
+}
 
+.hippo-therapy h2 {
+    margin-top: 30px;
+    margin-bottom: 10px;
+    color: black;
+    font-size: 1.5rem;
+    margin-left: 5px;
+}
+
+.hippo-therapy-content {
+    display: right;
+    align-items: flex;
+}
+
+.equine-therapy-image1 {
+    max-width: 200px;
+    margin-top: 30px;
+    margin-left: 50px;
+    flex: auto;
+}
+
+.equine-therapy-image2 {
+    max-width: 200px;
+    margin-top: 30px;
+    margin-left: 50px;
+    flex: auto;
+}
+
+.hippo-therapy-text p {
+    white-space: pre-line;
+    font-size: .75rem;
+    color: black;
+    margin-left: 100px;
+}
+
+.contact-us h2{
+    margin-bottom: 10px;
+    color: black;
+    font-size: 1.5rem;
+    margin-left: 5px;
+    margin-top: 300px;
+}
+
+.contact-us p {
+    font-size: .75rem;
+    margin-bottom: 0px;
+    color: black;
+    margin-left: 20px;
+}
