@@ -1,27 +1,150 @@
 /* Background and Layout */
-.page {
+/*.logo {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100vh;
     background-size: cover;
     background-position: center;
-    position: relative;
-    color: white;
+    color: rgb(0, 0, 0);
     text-align: center;
-}
+} */
 
 /* Dark overlay for readability */
-.overlay {
+/*.overlay {
     background: rgba(0, 0, 0, 0.6);
     padding: 20px;
     border-radius: 10px;
     width: 90%;
     max-width: 600px;
-}
+    display: flex;
+    align-items: center;
+    justify-content: center;
+} */
 
 /* Headings */
-.page h1 {
+/*.page h1 {
     font-size: 3rem;
     margin-bottom: 20px;
+} */
+
+.navbar {
+    background-color: #b2b2b2;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+
+.navbar-title {
+    display: flex;
+    font-size: 1rem;
+    font-weight: bold;
+    align-items: center;
+}
+
+.navbar-logo img {
+    height: 100px;
+    margin-right: 10px;
+}
+
+.navbar-list ul {
+    margin: 0;
+    padding: 30px;
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.navbar-list ul li {
+    display: inline;
+    padding: 20px;
+}
+
+.navbar-list ul li a {
+    text-decoration: none;
+    color: black;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.homepage-content {
+    margin-top: 150px;
+    padding: 10px;
+    margin-left: 20px;
+    text-align: left;
+    color: black;
+    display: left;
+}
+
+.homepage-content h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: rgb(47, 0, 255);
+}
+
+.homepage-content p {
+    font-size: .75rem;
+    margin-bottom: 20px;
+    color: black;
+    margin-top: 10px;
+}
+
+.whatIsBraveChild-text {
+    white-space: pre-line;
+}
+
+.hippo-therapy h2 {
+    margin-top: 30px;
+    margin-bottom: 10px;
+    color: black;
+    font-size: 1.5rem;
+    margin-left: 5px;
+}
+
+.hippo-therapy-content {
+    display: right;
+    align-items: flex;
+}
+
+.equine-therapy-image1 {
+    max-width: 200px;
+    margin-top: 30px;
+    margin-left: 50px;
+    flex: auto;
+}
+
+.equine-therapy-image2 {
+    max-width: 200px;
+    margin-top: 30px;
+    margin-left: 50px;
+    flex: auto;
+}
+
+.hippo-therapy-text p {
+    white-space: pre-line;
+    font-size: .75rem;
+    color: black;
+    margin-left: 100px;
+}
+
+.contact-us h2{
+    margin-bottom: 10px;
+    color: black;
+    font-size: 1.5rem;
+    margin-left: 5px;
+    margin-top: 300px;
+}
+
+.contact-us p {
+    font-size: .75rem;
+    margin-bottom: 0px;
+    color: black;
+    margin-left: 20px;
 }
