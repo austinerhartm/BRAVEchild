@@ -4,7 +4,7 @@ import { register_user } from '../services/registration_auth';
 import { useNavigate } from 'react-router';
 
 //Style imports
-import './CreateUser.css';
+import '../styles/CreateUser.css'
 
 
 const CreateUser = () => {

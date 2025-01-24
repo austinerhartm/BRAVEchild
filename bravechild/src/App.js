@@ -7,6 +7,7 @@ import HomePage from './HomePage';
 import Login from './components/Login'
 import CreateUser from './components/CreateUser'
 import DonoPage from './components/Donation'
+import SponsorDonations from './components/SponsorDonations';
 
 function App() {
     const { token, setToken } = UseToken();
@@ -18,6 +19,7 @@ function App() {
                 <Route path="/login" element={<Login setToken={setToken} />} />
                 <Route path="/create-user" element={<CreateUser />} />
                 <Route path="/donate" element={<DonoPage />} />
+                <Route path="/sponsor-donations" element={<SponsorDonations />} />
             </Routes>
         </Router>
     )  
