@@ -1,11 +1,10 @@
-
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL; // needs to be defined in environment variable, IP address of auth server
 
 
 // function takes in credentials from login and turns them into a JSON formated string
 // returns both the status response from the auth server and a token if user credentials are valid
-async function loginUser(credentials) {
-    return fetch(`${API_BASE_URL}/login`, {
+async function login_user(credentials) {
+    return fetch(`${API_BASE_URL}/auth/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -20,5 +19,5 @@ async function loginUser(credentials) {
       });
   }
   
-  export { loginUser };
+  export { login_user };
   

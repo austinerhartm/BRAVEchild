@@ -1,13 +1,13 @@
 //Library imports
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router';
-import { loginUser } from '../services/loginAuth';
+import { login_user } from '../services/login_auth';
 import PropTypes from 'prop-types';
 
 // Style import
-import '../styles/login.css';
+import './Login.css';
 
-const Login = () => {
+const Login = ( { setToken } ) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
@@ -18,7 +18,8 @@ const Login = () => {
 
         setError(null);
         try {
-          const token = await loginUser( { username, password } );
+            const token = await login_user({ username, password });
+            setToken(token);
 
         } catch (err) {
           setError('Invalid credentials');
