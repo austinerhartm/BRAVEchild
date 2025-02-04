@@ -25,8 +25,7 @@ const CreateUser = () => {
                 setErrors('Unable to register new user');
             }
 
-            console.log('User created:', { username, email, password });
-            alert('User created successfully!');
+            //alert('User created successfully!');
             navigate('/login');
 
         } else {

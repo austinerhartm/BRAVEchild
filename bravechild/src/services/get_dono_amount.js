@@ -5,6 +5,7 @@ async function get_dono_amount() {
     try {
         const response = await fetch(`${API_BASE_URL}/fetch/progress`, {
             method: 'GET',
+            credientials: 'include',
             headers: {
                 'Content-Type': 'application/json',
             },
