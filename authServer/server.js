@@ -1,14 +1,29 @@
-require('dotenv').config();
 
-const express = require('express');
-const cors = require('cors');
-const authRoutes = require('./routes/auth');
+import 'dotenv/config';
+import https from 'https';
+import fs from 'fs';
+import express from 'express';
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
+import authRoutes from './routes/auth.js';
+import getRoutes from './routes/get.js';
 
 const app = express();
 
-app.use(cors());
+const PORT = process.env.PORT || 8081;
 
+const sslOptions = {
+    key: fs.readFileSync('./certs/server.key'),
+    cert: fs.readFileSync('./certs/server.crt'),
+};
+
+const allowedOrigins = ['https://localhost:3000']
 app.use(express.json());
+app.use(cookieParser());
+app.use(cors({ origin: allowedOrigins, credentials: true, withCredentials: true }));
+app.use('/fetch', getRoutes);
 app.use('/auth', authRoutes);
 
-app.listen(8080, '0.0.0.0', () => console.log('API is running on http://localhost:8080/login'));
+https.createServer(sslOptions, app).listen(PORT, 'localhost', () => {
+    console.log(`Secure server running at https://localhost:${PORT}`);
+});

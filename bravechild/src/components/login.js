@@ -1,13 +1,14 @@
 //Library imports
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router';
-import { loginUser } from '../services/loginAuth';
+import { login_user } from '../services/login_auth';
+import { logout_user } from '../services/logout';
 import PropTypes from 'prop-types';
 
 // Style import
-import '../styles/login.css';
+import '../styles/Login.css';
 
-const Login = () => {
+const Login = ({ setToken }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
@@ -18,10 +19,12 @@ const Login = () => {
 
         setError(null);
         try {
-          const token = await loginUser( { username, password } );
+            const token = await login_user({ username, password });
+            setToken(token);
 
         } catch (err) {
-          setError('Invalid credentials');
+            console.log(err);
+            setError('Invalid credentials');
         }
 
     };
@@ -41,13 +44,14 @@ const Login = () => {
 
                 <button type='submit'>Login</button>
             </form>
+            <p></p>
             {error && <p>{error}</p>}
             <p>Don't have an account?</p>
             <Link to='/create-user'>
                 <button className='create-user-button'>Create User</button>
             </Link>
         </div>
-  );
+    );
 };
 
 Login.propTypes = {

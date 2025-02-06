@@ -2,8 +2,8 @@ const API_BASE_URL = process.env.REACT_APP_API_BASE_URL; // needs IP address of 
 
 // takes in credentials from CreateUser and converts to to JSON formatted string
 // returns status message from backend along with a message of completion or error
-async function registerUser(credentials) {
-    return fetch(`${API_BASE_URL}/registration`, {
+async function register_user(credentials) {
+    return fetch(`${API_BASE_URL}/auth/registration`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -18,4 +18,4 @@ async function registerUser(credentials) {
         });
 }
 
-export { registerUser };
+export { register_user };
