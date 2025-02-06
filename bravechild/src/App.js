@@ -9,6 +9,7 @@ import CreateUser from './components/CreateUser'
 import DonoPage from './components/Donation'
 import SponsorDonations from './components/SponsorDonations';
 import UserDashboard from './components/UserDashboard';
+import SpecificChildDonations from './components/SpecificChildDonations'
 
 function App() {
     const { token, setToken } = UseToken();
@@ -21,6 +22,7 @@ function App() {
                 <Route path="/create-user" element={<CreateUser />} />
                 <Route path="/donate" element={<DonoPage />} />
                 <Route path="/sponsor-donations" element={<SponsorDonations />} />
+                <Route path="/child-donations" element={<SpecificChildDonations />} />
                 <Route path="/user-dashboard" element={<UserDashboard />} />
             </Routes>
         </Router>

@@ -257,5 +257,13 @@ router.post('/refresh', (req, res) => {
 	}
 });
 
+router.post('/save-tiles', (req, res) => {
+	try {
+		res.status(200).json({ success: true, message: 'Connection successful' });
+	} catch (error) {
+		res.status(403).json({ success: false, message: 'Server error' });
+	}
+});
+
 
 export default router;
