@@ -3,8 +3,9 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router';
 
 // Page imports
 import HomePage from './HomePage';
-import Login from './components/login';
-import CreateUser from './components/CreateUser';
+import Login from './components/login'
+import CreateUser from './components/CreateUser'
+import DonoPage from './components/Donation'
 import SponsorDonations from './components/SponsorDonations';
 
 
