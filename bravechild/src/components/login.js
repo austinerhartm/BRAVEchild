@@ -6,7 +6,7 @@ import { logout_user } from '../services/logout';
 import PropTypes from 'prop-types';
 
 // Style import
-import '../styles/Login.css';
+import '../styles/login.css';
 
 const Login = ({ setToken }) => {
     const [username, setUsername] = useState('');
