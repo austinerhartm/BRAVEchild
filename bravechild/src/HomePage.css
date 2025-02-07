@@ -28,18 +28,27 @@
     margin-bottom: 20px;
 } */
 
+.page-container {
+    background-color: #e8f5e9;
+    min-height: 100vh;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
 .navbar {
-    background-color: #ffffff;
-    overflow: hidden;
+    background-color: rgb(255, 255, 255);
     position: fixed;
     top: 0;
     width: 100%;
     z-index: 100;
-    height: 100px;
+    height: auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 20px;
+    padding: .1rem 0;
+    flex-direction: row;
 }
 
 .navbar-title {
@@ -56,16 +65,19 @@
 }
 
 .navbar-list ul {
-    margin: 0;
-    padding: 30px;
     list-style: none;
+    justify-content: space-around;
     display: flex;
     gap: 20px;
+    flex-direction: row;
 }
 
 .navbar-list ul li {
-    display: inline;
+    display: flex;
+    align-items:last baseline;
     padding: 20px;
+    flex-direction: row;
+    margin-right: 20px;
 }
 
 .navbar-list ul li a {
@@ -75,117 +87,314 @@
     font-weight: bold;
 }
 
-.homepage-content {
-    margin-top: 150px;
-    padding: 10px;
-    margin-left: 80px;
-    text-align: left;
-    color: black;
+.navbar-divider-vertical {
+    border-left: 1px solid;
+    height: 60px;
+    margin: 0 7.5px;
+    position: inline;
+    align-self: middle;
+    display: fixed;
+    color:rgb(140, 0, 175)
+}
+
+.whoweare-container {
+    background-color: rgb(205, 242, 255);
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 100px;
     display: flex;
-    align-items: flex-start;
+    flex-direction: row;
+    align-items: center;
+    min-height: 20vh;
+}
+
+.whoweare-container h2 {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding: 30px;
+    font-size: 2rem;
+}
+
+.whoweare-container p {
+    margin-top: 0;
+    margin-bottom: 0px;
+    padding: 30px;
+    font-size: 1.5rem;
+}
+
+.hippotherapy-container {
+    background-color: rgb(127, 247, 127);
+    margin-left: 100px;
+    margin-top: 0;
+    margin-right: 100px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    min-height: 60vh;
+    padding: 2rem;
+}
+
+.hippotherapy-text-content {
+    display: flex;
     flex-direction: column;
+    flex: 1;
+    max-width: 50%;
+    padding: 0 2rem;
 }
 
-.homepage-content h2 {
+.hippotherapy-container h2 {
+    margin: 0;
+    padding: 30px;
+    font-style: monospace;
+    font-size: 3rem;
+    text-align: center;
+    color: rgb(0, 0, 0)
+}
+
+.hippotherapy-container p {
+    margin: 0;
+    padding: 30px;
+    font-style: monospace;
     font-size: 1.5rem;
-    font: arial;
-    margin-bottom: 10px;
-    color: rgb(47, 0, 255);
+    text-align: center;
+    color: rgb(0, 0, 0)
 }
 
-.homepage-content p {
-    font-size: 1rem;
-    font: arial;
-    margin-bottom: 20px;
-    color: black;
-    margin-top: 10px;
-    flex: auto;
+.hippotherapy-container-img {
+    margin: 0;
+    padding: 0;
+    max-width: 50%;
+    height: auto;
+    object-fit: cover;
 }
 
-.whatIsBraveChild-text {
-    white-space: pre-line;
-}
-
-.equine-therapy-image3 {
-    max-width: 600px;
-    margin-right: 30px;
-    margin-left: 800px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-}
-
-.hippo-therapy h2 {
-    margin-top: 30px;
-    margin-bottom: 10px;
-    color: rgb(47, 0, 255);
-    font-size: 1.5rem;
-    font: arial;
-    margin-left: 80px;
-}
-
-.hippo-therapy p {
-    white-space: pre-line;
-    font-size: 1rem;
-    color: black;
-    margin-left: 80px;
-}
-
-
-.hippo-therapy-content {
+.equinetherapy-container {
+    background-color: rgb(244, 241, 41);
+    margin-left: 100px;
+    margin-top: 0;
+    margin-right: 100px;
     display: flex;
-    align-items: horizontal;
-    justify-content: center;
-    flex-direction: row;
-}
-
-.equine-therapy-image1 {
-    max-width: 300px;
-    margin-top: 30px;
-    margin-left: 50px;
-    flex: auto;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-}
-
-.equine-therapy-image2 {
-    max-width: 300px;
-    margin-top: 30px;
-    margin-left: 50px;
-    flex: auto;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-}
-
-.equine-therapy-image4 {
-    max-width: 300px;
-    margin-top: 30px;
-    margin-left: 50px;
-    flex: auto;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-}
-
-.contact-us h2{
-    margin-bottom: 10px;
-    color: rgb(255, 0, 191);
-    font-size: 1.5rem;
-    margin-top: 300px;
-    justify-content: center;
+    flex-direction: row-reverse;
     align-items: center;
-    display: flex;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    padding: 2rem;
 }
 
-.contact-us p {
-    font-size: 1rem;
-    margin-bottom: 10px;
-    color: black;
-    margin-left: 20px;
-    display: flex;
-    flex-direction: row;
+.equinetherapy-container h2 {
+    margin: 0;
+    padding: 30px;
+    font-style: monospace;
+    font-size: 3rem;
+    text-align: center;
+    color: rgb(0, 0, 0)
 }
 
-.contact-us-list li {
+.equinetherapy-container p {
+    margin: 0;
+    padding: 30px;
+    font-style: monospace;
+    font-size: 1.5rem;
+    text-align: center;
+    color: rgb(0, 0, 0);
+}
+
+.equinetherapy-container-img {
+    margin: 0;
+    padding: 0;
+    max-width: 110%;
+    height: 100%;
+}
+
+.how-can-you-help-container {
+    background-color: pink;
+    margin-left: 100px;
+    margin-right: 100px;
     display: flex;
-    margin-top: 20px;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
-    font: arial;
-    font-size: 1rem;
+    justify-content: space-between;
+    padding: 2rem 0;
+    width: calc(100% - 200px);
 }
+
+.navbar-divider-vertical-how-help {
+    border-left: 1px solid;
+    height: 100px;
+    margin: 0 7.5px;
+    position: inline;
+    align-self: middle;
+    display: fixed;
+    color:rgb(0, 0, 0)
+}
+
+.how-can-you-help-sponsor,
+.how-can-you-help-donate,
+.how-can-you-help-facebook {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 33%;
+    padding: 0 1rem;
+}
+
+.how-can-you-help-sponsor h2 {
+    margin: 0;
+    padding: 30px;
+    font-style: monospace;
+    font-size: 1.5rem;
+    text-align: center;
+    color: rgb(0, 0, 0);
+}
+
+.how-can-you-help-sponsor button {
+    background: #ffffff;
+    border: 1px solid #000000;
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 16px;
+    min-height: 40px;
+    outline: 0;
+    padding: 12px 14px;
+    text-align: center;
+    text-rendering: geometricprecision;
+    text-transform: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: middle;
+    margin: 10px auto;
+    color: #000000;
+}
+
+.how-can-you-help-sponsor button:hover,
+.how-can-you-help-sponsor button:active {
+    background-color: initial;
+    background-position: 0 0;
+    color: #FF4742;
+}
+
+
+.how-can-you-help-donate h2 {
+    margin: 0;
+    padding: 30px;
+    font-style: monospace;
+    font-size: 1.5rem;
+    text-align: center;
+    color: rgb(0, 0, 0);
+}
+
+.how-can-you-help-donate button {
+    background: #ffffff;
+    border: 1px solid #000000;
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 16px;
+    min-height: 40px;
+    outline: 0;
+    padding: 12px 14px;
+    text-align: center;
+    text-rendering: geometricprecision;
+    text-transform: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: middle;
+    margin: 10px auto;
+    color: #000000;
+}
+
+.how-can-you-help-donate button:hover,
+.how-can-you-help-donate button:active {
+  background-color: initial;
+  background-position: 0 0;
+  color: #FF4742;
+}
+
+
+.how-can-you-help-facebook img {
+    max-width: 14%;
+}
+
+.how-can-you-help-facebook h2 {
+    margin: 0;
+    padding: 20px;
+    font-style: monospace;
+    font-size: 1.5rem;
+    text-align: center;
+    color: rgb(0, 0, 0);
+}
+
+.brave-501c-container {
+    background-color: rgb(255, 255, 255);
+    margin-top: 100px;
+    margin-right: 500px;
+    margin-left: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    outline: solid;
+}
+
+.footer {
+    background-color: darkcyan;
+    padding: 0;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-top: 100px;
+    display: flex;
+    width: 100%;
+}
+
+.footer-section {
+    flex: 1;
+    padding: 0 1rem;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer h2 {
+    color: white;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.footer p{
+    color: white;
+    font-size: 1rem;
+    margin: 0.5rem 0;
+    text-align: center;
+}
+
+.footer-social-icons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.footer-social-icons img {
+    width: 30px;
+    height: 30px;
+}
+
