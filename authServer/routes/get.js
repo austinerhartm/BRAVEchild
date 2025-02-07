@@ -12,15 +12,18 @@ router.get('/progress', async (req, res) => {
 });
 
 // Endpoint to fetch tiles
-router.get('/tiles', async (req, res) => {
+router.get('/tiles/:childId', async (req, res) => {
     try {
-        const { childId } = req.body;
-
-        if (!childId) {
-            return res.status(404).json({ success: false, message: 'No id found' });
-        }
-
-        const [blockedTiles] = await db.execute('SELECT selected_tile FROM donation_tile_selections WHERE child_id=?', [childId]);
+        const { childId } = req.params;
+        //if (!childId === null) {
+        //    return res.status(404).json({ success: false, message: 'No id found' });
+        //}
+        
+        const [blockedTiles] = await db.execute(
+            'SELECT selected_tile FROM donation_tile_selections WHERE child_id = ?', 
+            [childId]
+        );
+        
         res.status(200).json({
             success: true,
             tileData: {

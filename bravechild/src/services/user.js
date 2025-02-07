@@ -3,12 +3,21 @@ const API_BASE_URL = process.env.REACT_APP_API_BASE_URL; // needs IP address of 
 const fetch_user = async () => {
     let token = sessionStorage.getItem('token');
 
+    const token_from_ss = JSON.parse(token, (key, value) => {
+        if (key === "token") {
+            return value;
+        }
+    });
+
+    console.log(token_from_ss);
+
     const response = await fetch(`${API_BASE_URL}/fetch/user`, {
         method: 'GET',
         withCredntials: true,
         credentials: 'include',
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': `${ token_from_ss }`,
         },
     });
 
@@ -34,7 +43,7 @@ const fetch_user = async () => {
                 },
             });
         } else {
-            window.location.href = '/login'; // Redirect to login if refresh fails
+            /*window.location.href = '/login'; // Redirect to login if refresh fails*/
         }
     }
 

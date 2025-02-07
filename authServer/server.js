@@ -20,7 +20,7 @@ const sslOptions = {
 const allowedOrigins = ['https://localhost:3000']
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({ origin: allowedOrigins, credentials: true, withCredentials: true }));
+app.use(cors({ origin: true, credentials: true, withCredentials: true }));
 app.use('/fetch', getRoutes);
 app.use('/auth', authRoutes);
 

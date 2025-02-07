@@ -4,7 +4,7 @@ import '../styles/ChildDonation.css';
 import { get_tiles } from '../services/get_tiles';
 
 const SpecificChildDonations = ({
-    childId,
+    childId = 1,
     totalTiles = 35,
     maxAllowedTiles = 10
 }) => {
@@ -13,13 +13,20 @@ const SpecificChildDonations = ({
     const [disabledTiles, setDisabledTiles] = useState([]);
     const [totalSum, setTotalSum] = useState(0);
 
-    //useEffect(() => {
-    //    const fetchUserSelections = async () => {
-    //        const existingSelections = await get_tiles(childId);
-    //        setDisabledTiles(existingSelections);
-    //    };
-    //    fetchUserSelections();
-    //}, [childId]);
+    useEffect(() => {
+        const fetchUserSelections = async () => {
+            try {
+                const existingSelections = await get_tiles(childId);
+                setDisabledTiles(existingSelections);
+            } catch (error) {
+                console.error('Error fetching tiles:', error);
+            }
+        };
+
+        if (childId) {
+            fetchUserSelections();
+        }
+    }, [childId]);
 
     const handleTileClick = async (tileNumber) => {
         if (disabledTiles.includes(tileNumber)) return;
@@ -30,7 +37,6 @@ const SpecificChildDonations = ({
         } else {
             if (selectedTiles.length >= maxAllowedTiles) return;
             const newSelectedTiles = [...selectedTiles, tileNumber];
-            /*await tileRepo.saveTileSelection(userId, tileNumber);*/
             setSelectedTiles(newSelectedTiles);
             setTotalSum(newSelectedTiles.reduce((sum, tile) => sum + tile, 0));
         }
