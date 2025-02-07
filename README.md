@@ -9,10 +9,10 @@ In the project directory, you can run:
 
 Installs the necessary dependencies for the project.
 
-### `npm start`
+### `HTTPS=true npm start`
 
 Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Open [https://localhost:3000](https://localhost:3000) to view it in your browser.
 
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
