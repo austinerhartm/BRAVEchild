@@ -4,6 +4,7 @@
 /.vs
 .vs
 ./node_modules
+/node_modules
 /authServer/node_modules
 /braveChild/node_modules
 /.pnp
