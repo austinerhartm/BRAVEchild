@@ -1,6 +1,13 @@
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL; 
 
-async function submitSponsor(sponsorData) {
+async function submit_sponsor(sponsorData) {
+    
+    const donorData = {
+        user_id: 6, 
+        amount: sponsorData.amount, 
+        for_child: "all", 
+    }
+    
     try {
         const response = await fetch(`${API_BASE_URL}/sponsor/donate`, {
             method: 'POST', 
@@ -8,7 +15,7 @@ async function submitSponsor(sponsorData) {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(sponsorData)
+            body: JSON.stringify(donorData)
         });
 
         if (!response.ok) {

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import DonationForm from './DonationForm';
 import ProgressBar from './ProgressBar'
 import { get_dono_amount } from '../services/get_dono_amount';
@@ -6,7 +6,8 @@ import '../styles/SponsorDonations.css'
 
 const SponsorDonation = () => {
 
-    const [progress, setProgress] = useState(0); 
+    //Progress Bar
+    /**const [progress, setProgress] = useState(0); 
 
     useEffect(() => {
         const getProgress = async () => { 
@@ -24,11 +25,9 @@ const SponsorDonation = () => {
         
         return () => clearInterval(intervalId); 
     }, []); 
-
+    **/
     return (
-        <div className="donor-container">
-            <h1 className="title">Sponsor Donation</h1>
-            <ProgressBar value={progress}/>
+        <div className="donor-container">  
             <DonationForm />
         </div>
     );

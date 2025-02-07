@@ -1,20 +1,20 @@
 import express from 'express'
+import db from '../config/db.js';
 
 const router = express.Router(); 
 
 
-app.post('/donate', async(req, res) => {
-    const { fname, lname, email, amount } = req.body; 
+router.post('/donate', async(req, res) => {
+    const { user_id, amount, for_child } = req.body; 
 
-    if (!fname || !lname || !email || !amount) {
-        return res.status(400).json({ message: 'first name, last name, email, and amount ar required.'});
-
+    if (!user_id || !amount || !for_child ) {
+        return res.status(400).json({ message: 'user_id, amount, and for_child required.'});
     }
     
     try {
-        const [result] = await pool.promise().query( 
-            'INSERT INTO sponsors (fname, lname, email, amount) VALUES (?, ?, ?, ?)',
-            [fname, lname, email, amount]
+        const [result] = await db.execute( 
+            'INSERT INTO sponsors (user_id, amount, for_child) VALUES (?, ?, ?)',
+            [user_id, amount, for_child]
         ); 
         res.status(200).json({ message: 'Donation recieved!', donorId: result.insertId })
     } catch (error) {
@@ -23,3 +23,4 @@ app.post('/donate', async(req, res) => {
     }
 });
 
+export default router; 

@@ -7,6 +7,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import authRoutes from './routes/auth.js';
 import getRoutes from './routes/get.js';
+import sponsorRoutes from './routes/sponsor.js'
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.use(cookieParser());
 app.use(cors({ origin: allowedOrigins, credentials: true, withCredentials: true }));
 app.use('/fetch', getRoutes);
 app.use('/auth', authRoutes);
+app.use('/sponsor', sponsorRoutes); 
 
 https.createServer(sslOptions, app).listen(PORT, 'localhost', () => {
     console.log(`Secure server running at https://localhost:${PORT}`);
