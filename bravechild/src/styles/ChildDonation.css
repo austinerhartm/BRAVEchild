@@ -43,3 +43,23 @@
     font-size: 1.25rem;
     font-weight: 600;
 }
+
+.donate-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.donate-button {
+    padding: 10px 20px;
+    color: white;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.donate-button:hover {
+    background-color: #45a049;
+}
