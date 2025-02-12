@@ -1,34 +1,28 @@
-const express = require('express');
-const bcrypt = require('bcrypt');
-const db = require('../db');
+import express from 'express';
+import bcrypt from 'bcrypt';
+import db from '../config/db.js';
+import transporter from '../config/mailer.js';
+import jwt from 'jsonwebtoken';
+import authenticateToken from '../middleware/token_auth.js';
 
 const router = express.Router();
-const jwt = require('jsonwebtoken');
 
 // User registation endpoint
 router.post('/registration', async (req, res) => {
 	const { username, email, password } = req.body;
 
 	try {
-<<<<<<< Updated upstream
-=======
 		const [existingUsers] = await db.execute('SELECT * FROM users WHERE username=? OR email=?', [username, email]);
 
 		if (existingUsers.length > 0) {
 			return res.status(409).json({ success: false, message: "User already exists" });
 		}
 
->>>>>>> Stashed changes
 		const salt = 10;
 		const passwordHash = await bcrypt.hash(password, salt);
 
 		const [result] = await db.execute('INSERT INTO users (username, email, passwordHash) VALUES (?,?,?)', [username, email, passwordHash]);
 
-<<<<<<< Updated upstream
-		res.status(201).json({ message: 'User registered successfully' });
-	} catch (error) {
-		res.status(500).json({ error: error.message });
-=======
 		const userId = result.insertId;
 		try {
 			const accessToken = jwt.sign({ userId: userId }, process.env.JWT_SECRET, { expiresIn: '7d' });
@@ -53,7 +47,6 @@ router.post('/registration', async (req, res) => {
 			error: error.message,
 			...(process.env.NODE_ENV === 'development' && { details: error.stack })
 		});
->>>>>>> Stashed changes
 	}
 });
 
@@ -65,20 +58,6 @@ router.post('/login', async (req, res) => {
 		const [rows] = await db.execute('SELECT * FROM users WHERE username = ?', [username]);
 		const user = rows[0];
 
-<<<<<<< Updated upstream
-		if(!user) {
-			return res.status(401).json({ message: 'Invalid username or password' });
-		}
-
-		const validPass = await bcrypt.compare(password, user.passwordHash);
-		if(!validPass) {
-			return res.status(401).json({ message: 'Invalid username or password' });
-		}
-
-		const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-
-		res.status(200).json({ token });
-=======
 		if (!user) {
 			return res.status(401).json({ success: false, message: 'Invalid username or password' });
 		}
@@ -95,15 +74,11 @@ router.post('/login', async (req, res) => {
 		await db.execute('UPDATE users SET refresh_token = ? WHERE id = ?',[refreshToken, user.id]);
 
 		res.status(200).json({ success: true, accessToken, refreshToken });
->>>>>>> Stashed changes
 	} catch (error) {
-		res.status(500).json({ error: error.message });
+		res.status(500).json({ success: false, error: error.message });
 	}
 });
 
-<<<<<<< Updated upstream
-module.exports = router;
-=======
 // User logout endpoint
 router.post('/logout', async (req, res) => {
 	try {
@@ -327,4 +302,3 @@ router.post('/save_tiles', async (req, res) => {
 
 
 export default router;
->>>>>>> Stashed changes

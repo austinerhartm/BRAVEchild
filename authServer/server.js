@@ -1,13 +1,3 @@
-require('dotenv').config();
-
-<<<<<<< Updated upstream
-const https = require('https');
-const fs = require('fs');
-const express = require('express');
-const cors = require('cors');
-const authRoutes = require('./routes/auth');
-const getRoutes = require('./routes/get');
-=======
 import 'dotenv/config';
 import https from 'https';
 import fs from 'fs';
@@ -15,7 +5,6 @@ import express from 'express';
 import cors from 'cors';
 import authRoutes from './routes/auth.js';
 import getRoutes from './routes/get.js';
->>>>>>> Stashed changes
 
 const app = express();
 
@@ -26,11 +15,7 @@ const sslOptions = {
     cert: fs.readFileSync('./certs/server.crt'),
 };
 
-<<<<<<< Updated upstream
-app.use(cors());
 
-app.use(express.json());
-=======
 // CORS configuration
 const corsOptions = {
     origin: function (origin, callback) {
@@ -50,7 +35,6 @@ const corsOptions = {
 const allowedOrigins = ['https://localhost:3000']
 app.use(express.json());
 app.use(cors(corsOptions));
->>>>>>> Stashed changes
 app.use('/fetch', getRoutes);
 app.use('/auth', authRoutes);
 

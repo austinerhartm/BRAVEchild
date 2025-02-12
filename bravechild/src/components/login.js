@@ -2,19 +2,13 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router';
 import { login_user } from '../services/login_auth';
-<<<<<<< Updated upstream
-import PropTypes from 'prop-types';
-=======
->>>>>>> Stashed changes
 
 // Style import
 import './Login.css';
 
-<<<<<<< Updated upstream
-const Login = ( { setToken } ) => {
-=======
+
+
 const Login = () => {
->>>>>>> Stashed changes
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);

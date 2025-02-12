@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 import React, { useState } from 'react';
 import '../styles/DonationForm.css'
 import cashappImg from '../imgs/cashapp.png'
@@ -131,5 +130,3 @@ const DonationForm = () => {
 };
 
 export default DonationForm;
-=======
->>>>>>> Stashed changes

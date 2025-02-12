@@ -10,9 +10,6 @@ router.get('/progress', async (req, res) => {
     res.json({ progress: progressValue });
 });
 
-<<<<<<< Updated upstream
-module.exports = router;
-=======
 // Endpoint to fetch tiles
 router.get('/tiles/:childId', async (req, res) => {
     try {
@@ -85,4 +82,4 @@ router.get('/verify-role', authenticateToken, async (req, res) => {
 });
 
 export default router;
->>>>>>> Stashed changes
+
