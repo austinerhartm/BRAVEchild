@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../styles/ChildDonation.css';
+/*import '../styles/ChildDonation.css';*/
 import { get_tiles } from '../services/get_tiles';
 
 const SpecificChildDonations = ({
@@ -96,4 +96,3 @@ const SpecificChildDonations = ({
 };
 
 export default SpecificChildDonations;
->>>>>>> Stashed changes

@@ -4,7 +4,7 @@ import { useNavigate, Link } from 'react-router';
 import { login_user } from '../services/login_auth';
 
 // Style import
-import './Login.css';
+import '../styles/Login.css';
 
 const Login = () => {
     const [username, setUsername] = useState('');
