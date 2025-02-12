@@ -2,7 +2,7 @@ import express from 'express';
 const router = express.Router();
 
 import db from '../config/db.js';
-import authenticateToken from '../middleware/token_auth.js';
+import { authenticateToken } from '../middleware/token_auth.js';
 
 // Endpoint to get progress
 router.get('/progress', async (req, res) => {

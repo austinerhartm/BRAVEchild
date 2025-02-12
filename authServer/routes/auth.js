@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import db from '../config/db.js';
 import transporter from '../config/mailer.js';
 import jwt from 'jsonwebtoken';
-import authenticateToken from '../middleware/token_auth.js';
+import { authenticateToken } from '../middleware/token_auth.js';
 
 const router = express.Router();
 
@@ -146,12 +146,10 @@ router.post('/verify_email', authenticateToken, async (req, res) => {
 	try {
 		const [[user]] = await db.execute('SELECT * FROM users WHERE id=?', [userId]);
 
-		console.log(user);
 		if (!user) {
 			return res.status(404).json({ success: false, message: 'User not found' });
 		}
 
-		console.log(user.verifyOTP);
 		if (!user.verifyOTP || user.verifyOTP !== otp) {
 			return res.status(400).json({ success: false, message: 'Invalid OTP' });
 		}
@@ -275,8 +273,6 @@ router.post('/refresh', async (req, res) => {
 router.post('/save_tiles', async (req, res) => {
 	const { childId, tiles, donator } = req.body;
 
-	console.log(childId);
-	console.log(tiles);
 	if ((!childId && childId !== 0) || !tiles) {
 		return res.status(400).json({ success: false, message: 'Id and selected tiles is required' });
 	}
@@ -298,7 +294,7 @@ router.post('/save_tiles', async (req, res) => {
 
 		res.status(200).json({ success: true, message: 'Connection successful' });
 	} catch (error) {
-		console.log(error);
+		console.error(error);
 		res.status(500).json({ success: false, message: 'Server error' });
 	}
 });

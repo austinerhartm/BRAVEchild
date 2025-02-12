@@ -19,13 +19,11 @@ const Login = () => {
         try {
             const result = await login_user(username, password);
             if (result.success) {
-                console.log("It worked :) \n" + result);
             } else {
-                // Handle error
                 setError(result.message);
             }
         } catch (err) {
-            console.log(err);
+            console.error(err);
             setError('Invalid credentials');
         }
 

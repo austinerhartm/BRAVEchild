@@ -14,7 +14,7 @@ const db = mysql.createPool({
 (async () => {
 	try {
 		const [rows] = await db.query('SELECT 1 + 1 AS result');
-		console.log('Database connection is working:', rows[0].result); // Should log "2"
+		console.log('Database connection is working:', rows[0].result);
 	} catch (err) {
 		console.error('Database connection error:', err);
 	}

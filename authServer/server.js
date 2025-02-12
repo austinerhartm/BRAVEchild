@@ -5,6 +5,7 @@ import express from 'express';
 import cors from 'cors';
 import authRoutes from './routes/auth.js';
 import getRoutes from './routes/get.js';
+import sponsorRoutes from './routes/sponsor.js';
 
 const app = express();
 
