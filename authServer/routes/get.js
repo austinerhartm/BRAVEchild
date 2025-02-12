@@ -83,4 +83,3 @@ router.get('/verify-role', authenticateToken, async (req, res) => {
 });
 
 export default router;
-

@@ -25,7 +25,8 @@ const Login = () => {
                 setError(result.message);
             }
         } catch (err) {
-          setError('Invalid credentials');
+            console.log(err);
+            setError('Invalid credentials');
         }
 
     };
@@ -45,13 +46,14 @@ const Login = () => {
 
                 <button type='submit'>Login</button>
             </form>
+            <p></p>
             {error && <p>{error}</p>}
             <p>Don't have an account?</p>
             <Link to='/create-user'>
                 <button className='create-user-button'>Create User</button>
             </Link>
         </div>
-  );
+    );
 };
 
 export default Login;

@@ -8,7 +8,7 @@ import getRoutes from './routes/get.js';
 
 const app = express();
 
-const PORT = 8081;
+const PORT = process.env.PORT || 8081;
 
 const sslOptions = {
     key: fs.readFileSync('./certs/server.key'),
@@ -36,6 +36,7 @@ app.use(express.json());
 app.use(cors(corsOptions));
 app.use('/fetch', getRoutes);
 app.use('/auth', authRoutes);
+app.use('/sponsor', sponsorRoutes); 
 
 https.createServer(sslOptions, app).listen(PORT, 'localhost', () => {
     console.log(`Secure server running at https://localhost:${PORT}`);

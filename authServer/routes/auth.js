@@ -21,6 +21,10 @@ router.post('/registration', async (req, res) => {
 		const salt = 10;
 		const passwordHash = await bcrypt.hash(password, salt);
 
+		if (exisitingUser.length > 0) {
+			return res.status(409).json({ success: false, message: "user already exists" });
+		}
+
 		const [result] = await db.execute('INSERT INTO users (username, email, passwordHash) VALUES (?,?,?)', [username, email, passwordHash]);
 
 		const userId = result.insertId;
@@ -93,7 +97,6 @@ router.post('/logout', async (req, res) => {
 		res.status(500).json({ success: false, message: error.message });
 	}
 });
-
 
 // Create OTP and send email 
 router.post('/verify', authenticateToken, async (req, res) => {
