@@ -1,17 +1,22 @@
-<<<<<<< Updated upstream
 import React, { useState } from 'react';
-import '../styles/DonationForm.css'
-import cashappImg from '../imgs/cashapp.png'
-import venmoImg from '../imgs/venmo.png'
-import squareImg from '../imgs/square.png'
+import { useLocation } from 'react-router-dom';
 
-const DonationForm = () => {
+import '../styles/DonationForm.css';
+import cashappImg from '../imgs/cashapp.png';
+import venmoImg from '../imgs/venmo.png';
+import squareImg from '../imgs/square.png';
+import { save_tiles } from '../services/save_tiles';
+
+const NumbersDonationForm = () => {
+    const location = useLocation();
+    const { selectedTiles, totalSum, childId } = location.state || {};
+
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
         address: '',
         billingAddress: '',
-        selectedDate: ''
+        donationAmount: !totalSum ? '' : totalSum.toString()
     });
 
     const handleChange = (e) => {
@@ -22,22 +27,16 @@ const DonationForm = () => {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         console.log('Form submitted:', formData);
-        // You can add further processing logic here
+        try {
+            await save_tiles(childId, selectedTiles, formData.firstName + ' ' + formData.lastName);
+        } catch (error) {
+            console.error('Error fetching tiles:', error);
+        }
     };
 
-    const generateDateOptions = () => {
-        const options = [];
-        const currentDate = new Date();
-        for (let i = 0; i < 30; i++) {
-            const date = new Date();
-            date.setDate(currentDate.getDate() + i);
-            options.push(date.toISOString().split('T')[0]); // Format: YYYY-MM-DD
-        }
-        return options;
-    };
 
     return (
         <>
@@ -98,22 +97,16 @@ const DonationForm = () => {
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="selectedDate">Select a Date:</label>
-                    <select
-                        id="selectedDate"
-                        name="selectedDate"
-                        value={formData.selectedDate}
+                    <label htmlFor="donationAmount">Amount:</label>
+                    <input
+                        type="text"
+                        id="donationAmount"
+                        name="donationAmount"
+                        value={formData.donationAmount}
                         onChange={handleChange}
                         required
-                        className="form-select"
-                    >
-                        <option value="">-- Select a Date --</option>
-                        {generateDateOptions().map((date) => (
-                            <option key={date} value={date}>
-                                {date}
-                            </option>
-                        ))}
-                    </select>
+                        className="form-input"
+                    />
                 </div>
 
                 <button type="submit" className="form-button">
@@ -130,6 +123,4 @@ const DonationForm = () => {
     );
 };
 
-export default DonationForm;
-=======
->>>>>>> Stashed changes
+export default NumbersDonationForm;

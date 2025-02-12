@@ -1,8 +1,8 @@
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL; // Define this in your .env file
+import api from './api.service';
 
-// Function to fetch progress data
-async function get_dono_amount() {
+export const get_dono_amount = async () => {
     try {
+<<<<<<< Updated upstream
         const response = await fetch(`${API_BASE_URL}/fetch/progress`, {
             method: 'GET',
             headers: {
@@ -15,10 +15,18 @@ async function get_dono_amount() {
         }
 
         return response.json();
+=======
+        const response = await api.get('/fetch/progress');
+        return response.data;
+>>>>>>> Stashed changes
     } catch (error) {
-        console.error('Error in fetchProgress:', error);
-        throw error;
+        console.error('Error fetching donation progress:', error);
+        if (error.response) {
+            throw new Error(error.response.data.message || 'Failed to fetch progress data');
+        } else if (error.request) {
+            throw new Error('No response received from server');
+        } else {
+            throw new Error('Error setting up the request');
+        }
     }
-}
-
-export { get_dono_amount };
+};
