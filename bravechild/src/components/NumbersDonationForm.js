@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import '../styles/DonationForm.css';
+import '../styles/NumbersDonationForm.css';
 import cashappImg from '../imgs/cashapp.png';
 import venmoImg from '../imgs/venmo.png';
 import squareImg from '../imgs/square.png';
