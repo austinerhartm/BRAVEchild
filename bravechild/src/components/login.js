@@ -6,8 +6,6 @@ import { login_user } from '../services/login_auth';
 // Style import
 import './Login.css';
 
-
-
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');

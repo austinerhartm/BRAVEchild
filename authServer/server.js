@@ -15,7 +15,6 @@ const sslOptions = {
     cert: fs.readFileSync('./certs/server.crt'),
 };
 
-
 // CORS configuration
 const corsOptions = {
     origin: function (origin, callback) {
