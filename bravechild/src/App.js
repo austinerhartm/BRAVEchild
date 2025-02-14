@@ -17,7 +17,7 @@ import SuperAdminPage from './components/SuperAdminPage';
 function App() {
 
     return (
-        <Router>
+        <Router>   
             <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/login" element={<Login />} />
