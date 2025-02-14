@@ -9,7 +9,7 @@ export const save_tiles = async (childId, tiles, donator) => {
             throw new Error('Tiles array is required and cannot be empty');
         }
 
-        const response = await api.post('/auth/save_tiles', {
+        const response = await api.post('/post/save_tiles', {
             childId,
             tiles,
             donator: donator || 'ANON'

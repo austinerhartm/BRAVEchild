@@ -13,7 +13,7 @@ router.post('/donate', async(req, res) => {
     
     try {
         const [result] = await db.execute( 
-            'INSERT INTO sponsors (user_id, amount, for_child) VALUES (?, ?, ?)',
+            'INSERT INTO donations (user_id, amount, for_child) VALUES (?, ?, ?)',
             [user_id, amount, for_child]
         ); 
         res.status(200).json({ message: 'Donation recieved!', donorId: result.insertId })

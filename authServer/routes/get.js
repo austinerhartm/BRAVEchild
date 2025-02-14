@@ -3,6 +3,7 @@ const router = express.Router();
 
 import db from '../config/db.js';
 import { authenticateToken } from '../middleware/token_auth.js';
+import { require_role } from '../middleware/require_role.js';
 
 // Endpoint to get progress
 router.get('/progress', async (req, res) => {
@@ -15,14 +16,11 @@ router.get('/progress', async (req, res) => {
 router.get('/tiles/:childId', async (req, res) => {
     try {
         const { childId } = req.params;
-        //if (!childId === null) {
-        //    return res.status(404).json({ success: false, message: 'No id found' });
-        //}
+        if ((!childId === null && childId !== 0)) {
+            return res.status(404).json({ success: false, message: 'No id found' });
+        }
         
-        const [blockedTiles] = await db.execute(
-            'SELECT selected_tile FROM donation_tile_selections WHERE child_id = ?', 
-            [childId]
-        );
+        const [blockedTiles] = await db.execute('SELECT selected_tile FROM donation_tile_selections WHERE child_id = ?',  [childId]);
         
         res.status(200).json({
             success: true,
@@ -76,6 +74,17 @@ router.get('/verify-role', authenticateToken, async (req, res) => {
         }
 
         res.json({ success: true, role: user.role });
+    } catch (error) {
+        console.error('Error in verify-role:', error);
+        res.status(500).json({ success: false, message: 'Error verifying role' });
+    }
+});
+
+router.get('/donees', authenticateToken, require_role('super_admin'), async (req, res) => {
+    try {
+        const [donees] = await db.execute('SELECT * FROM donation_receivers');
+
+        res.json({ success: true, donees: donees });
     } catch (error) {
         console.error('Error in verify-role:', error);
         res.status(500).json({ success: false, message: 'Error verifying role' });

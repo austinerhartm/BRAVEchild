@@ -1,0 +1,167 @@
+/* src/styles/AdminDashboard.css */
+.admin-dashboard {
+    padding: 20px;
+    max-width: 10000px;
+    margin: 0px auto 0;
+    background-color: #e8f5e9;
+    min-height: 100vh;
+}
+
+.date-pickers {
+    align-content: center;
+    display: flex;
+    gap: 20px;
+    margin-top: 0px;
+    padding: 0 20px;
+}
+
+    .date-pickers input {
+        padding: 8px;
+        border: 1px solid;
+        border-radius: 3px;
+    }
+
+    .date-picker-container {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .date-picker-container label {
+        font-weight: bold;
+    }
+
+.donations-section {
+    background-color: rgb(127, 247, 127);
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+}
+
+    .donations-section h2 {
+        margin: 0;
+        padding: 20px;
+        font-size: 2rem;
+        color: rgb(0, 0, 0);
+    }
+
+.donee-management {
+    background-color: pink;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+    .donee-management h2 {
+        margin: 0;
+        padding: 20px;
+        font-size: 2rem;
+        color: rgb(0, 0, 0);
+    }
+    .input-container {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        margin-bottom: 15px;
+    }
+
+    .input-container label {
+        font-weight: bold;
+    }
+
+    .input-container input {
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: white;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: darkcyan;
+    color: white;
+}
+
+.add-donee-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 400px;
+    margin: 20px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+    .add-donee-form input,
+    .add-donee-form textarea {
+        padding: 12px;
+        border: 1px solid #000000;
+        border-radius: 6px;
+        font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
+    }
+
+    .add-donee-form button {
+        background: #ffffff;
+        border: 1px solid #000000;
+        border-radius: 6px;
+        box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+        color: #000000;
+        cursor: pointer;
+        display: inline-block;
+        font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
+        font-size: 16px;
+        font-weight: 800;
+        line-height: 16px;
+        min-height: 40px;
+        padding: 12px 14px;
+        text-align: center;
+    }
+
+        .add-donee-form button:hover {
+            background-color: lightgrey;
+            background-position: 0 0;
+            color: black;
+        }
+
+.remove-btn {
+    background: #ffffff;
+    border: 1px solid #000000;
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+    color: #000000;
+    cursor: pointer;
+    font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    padding: 8px 12px;
+}
+
+    .remove-btn:hover {
+        background-color: lightgrey;
+        background-position: 0 0;
+        color: black;
+    }
+
+.donees-list {
+    margin-top: 30px;
+}
+
+    .donees-list h3 {
+        margin: 0;
+        padding: 20px;
+        font-size: 1.5rem;
+        color: rgb(0, 0, 0);
+    }

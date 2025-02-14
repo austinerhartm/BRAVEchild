@@ -16,10 +16,15 @@
     transition: all 0.2s ease-in-out;
 }
 
+
     .calendar-tile:hover {
         background-color: #dbeafe;
     }
 
+.calendar-tile-disabled {
+    pointer-events: none;
+    background-color: dimgrey;
+}
 .calendar-tile-selected {
     background-color: #3b82f6;
     color: white;

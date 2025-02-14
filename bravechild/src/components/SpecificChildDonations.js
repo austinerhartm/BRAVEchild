@@ -63,11 +63,11 @@ const SpecificChildDonations = ({
                         const isDisabled = disabledTiles.includes(tileNumber);
                         return (
                             <div
-                                key={tileNumber}
+                                key={ tileNumber }
                                 onClick={() => handleTileClick(tileNumber)}
                                 className={`calendar-tile ${isSelected ? 'calendar-tile-selected' : ''} ${isDisabled ? 'calendar-tile-disabled' : ''}`}
                             >
-                                {tileNumber}
+                                { tileNumber }
                             </div>
                         );
                     })}

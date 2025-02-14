@@ -6,6 +6,7 @@ import cors from 'cors';
 import authRoutes from './routes/auth.js';
 import getRoutes from './routes/get.js';
 import sponsorRoutes from './routes/sponsor.js';
+import postRoutes from './routes/post.js';
 
 const app = express();
 
@@ -32,11 +33,12 @@ const corsOptions = {
     optionsSuccessStatus: 200
 };
 
-const allowedOrigins = ['https://localhost:3000']
+
 app.use(express.json());
 app.use(cors(corsOptions));
 app.use('/fetch', getRoutes);
 app.use('/auth', authRoutes);
+app.use('/post', postRoutes);
 app.use('/sponsor', sponsorRoutes); 
 
 https.createServer(sslOptions, app).listen(PORT, 'localhost', () => {
