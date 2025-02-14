@@ -36,7 +36,6 @@ const DonationForm = () => {
 
     return (
         <div className="donation-container">
-            <h1 className="donation-title">Become a BRAVE sponsor!</h1>
             <form onSubmit={handleSubmit} className="donation-form">
                 <div className="form-group">
                     <label htmlFor="fname">First Name</label>

@@ -1,0 +1,14 @@
+/* Custom amount field */
+.custom-amount input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+.custom-amount input:focus {
+    border-color: #28a745;
+    outline: none;
+}
