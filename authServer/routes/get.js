@@ -17,12 +17,12 @@ router.get('/tiles/:linkId', async (req, res) => {
     try {
         const { linkId } = req.params;
         if (!linkId) {
-            return res.status(404).json({ success: false, message: 'No id found' });
+            return res.status(403).json({ success: false, message: 'No id found' });
         }
 
         const [[donee]] = await db.execute('SELECT child_id FROM donation_receivers WHERE link = ?', [linkId]);
         if (!donee) {
-            return res.status(404).json({ success: false, message: 'Not valid link' });
+            return res.status(403).json({ success: false, message: 'Not valid link' });
         }
 
         const [blockedTiles] = await db.execute('SELECT selected_tile FROM donation_tile_selections WHERE child_id = ?',  [donee.child_id]);
@@ -47,7 +47,7 @@ router.get('/user', authenticateToken, async (req, res) => {
         const [[user]] = await db.execute( 'SELECT id, username, email FROM users WHERE id = ?', [userId]);
 
         if (!user) {
-            return res.status(404).json({ success: false, message: 'User not found' });
+            return res.status(403).json({ success: false, message: 'User not found' });
         }
 
         // Get total donations if you have a donations table
@@ -75,10 +75,10 @@ router.get('/verify-role', authenticateToken, async (req, res) => {
         const [[user]] = await db.execute( 'SELECT role FROM users WHERE id = ?', [userId]);
 
         if (!user) {
-            return res.status(404).json({ success: false, message: 'User not found' });
+            return res.status(403).json({ success: false, message: 'User not found' });
         }
 
-        res.json({ success: true, role: user.role });
+        res.status(200).json({ success: true, role: user.role });
     } catch (error) {
         console.error('Error in verify-role:', error);
         res.status(500).json({ success: false, message: 'Error verifying role' });
@@ -89,10 +89,53 @@ router.get('/donees', authenticateToken, require_role('super_admin'), async (req
     try {
         const [donees] = await db.execute('SELECT * FROM donation_receivers');
 
-        res.json({ success: true, donees: donees });
+        if(!donees) {
+            return res.status(403).json({ success: false, message: 'No information found' });
+        }
+
+        res.status(200).json({ success: true, donees: donees });
     } catch (error) {
         console.error('Error in verify-role:', error);
         res.status(500).json({ success: false, message: 'Error verifying role' });
+    }
+});
+
+router.get('/donations', authenticateToken, require_role('super_admin'), async (req, res) => {
+    try {
+        const { startDate, endDate } = req.query;
+    
+        if (!startDate || !endDate) {
+            return res.status(400).json({ success: false, error: 'Start date and end date are required' });
+        }
+
+        const formatToMySQLDateTime = (date) => {
+            const d = new Date(date);
+            return d.toISOString().slice(0, 19).replace('T', ' ');
+        };
+
+        const start = formatToMySQLDateTime(startDate);
+        const end = formatToMySQLDateTime(endDate);
+
+        console.log('Formatted start date:', start);
+        console.log('Formatted end date:', end);
+        
+        if (new Date(startDate) > new Date(endDate)) {
+            return res.status(400).json({ success: false, error: 'Start date must be before end date' });
+        }
+
+        const [donations] = await db.execute(
+            'SELECT * FROM donations WHERE donation_time BETWEEN ? AND ? ORDER BY donation_time DESC', 
+            [start, end]
+        );
+
+        if(!donations || donations.length === 0) {
+            return res.status(403).json({ success: false, message: 'No donations found in this time period' });
+        }
+
+        res.status(200).json({ success: true, donations: donations });
+    } catch (error) {
+        console.error('Error fetching donations:', error);
+        res.status(500).json({ success: false, message: 'Error fetching donations' });
     }
 });
 

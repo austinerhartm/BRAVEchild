@@ -18,7 +18,7 @@ export const require_role = (role) => {
             next();
         } catch (error) {
             console.error('Role check error:', error);
-            res.status(500).json({ success: false, message: 'Error checking user role' });
+            return res.status(500).json({ success: false, message: 'Error checking user role' });
         }
     };
 };
