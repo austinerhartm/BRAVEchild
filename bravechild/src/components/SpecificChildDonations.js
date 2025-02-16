@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import '../styles/ChildDonation.css';
 import { get_tiles } from '../services/get_tiles';
 
 const SpecificChildDonations = ({
-    childId = 1,
     totalTiles = 35,
     maxAllowedTiles = 10
 }) => {
+    const { linkId } = useParams();
     const navigate = useNavigate();
     const [selectedTiles, setSelectedTiles] = useState([]);
     const [disabledTiles, setDisabledTiles] = useState([]);
@@ -16,17 +16,17 @@ const SpecificChildDonations = ({
     useEffect(() => {
         const fetchUserSelections = async () => {
             try {
-                const existingSelections = await get_tiles(childId);
+                const existingSelections = await get_tiles(linkId);
                 setDisabledTiles(existingSelections);
             } catch (error) {
                 console.error('Error fetching tiles:', error);
             }
         };
 
-        if (childId) {
+        if (linkId) {
             fetchUserSelections();
         }
-    }, [childId]);
+    }, [linkId]);
 
     const handleTileClick = async (tileNumber) => {
         if (disabledTiles.includes(tileNumber)) return;
@@ -47,7 +47,7 @@ const SpecificChildDonations = ({
             state: {
                 selectedTiles: selectedTiles,
                 totalSum: totalSum,
-                childId: childId
+                linkId: linkId
             }
         });
     };

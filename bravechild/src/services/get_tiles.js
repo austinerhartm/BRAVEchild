@@ -1,12 +1,12 @@
 import api from './api.service';
 
-export const get_tiles = async (childId) => {
+export const get_tiles = async (linkId) => {
     try {
-        if (childId === undefined || childId === null) {
+        if (!linkId) {
             throw new Error('Child ID is required');
         }
 
-        const response = await api.get(`/fetch/tiles/${childId}`);
+        const response = await api.get(`/fetch/tiles/${linkId}`);
 
         if (response.data?.tileData?.blockedTiles) {
             return response.data.tileData.blockedTiles.map(tile => tile.selected_tile);

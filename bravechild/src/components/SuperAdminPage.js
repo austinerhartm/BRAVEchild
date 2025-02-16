@@ -205,6 +205,7 @@ const AdminDashboard = () => {
 								<th>Name</th>
 								<th>Total Donations</th>
 								<th>Program Start Date</th>
+								<th>Link</th>
 								<th>Actions</th>
 							</tr>
 						</thead>
@@ -215,6 +216,7 @@ const AdminDashboard = () => {
 										<td>{donee.child_name}</td>
 										<td>${parseFloat(donee.total_donations).toFixed(2)}</td>
 										<td>{new Date(donee.began_program_at).toLocaleDateString()}</td>
+										<td>{donee.link}</td>
 										<td>
 											<button onClick={() => handleRemoveDonee(donee.child_name)} className="remove-btn">
 												Remove

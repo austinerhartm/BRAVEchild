@@ -9,7 +9,7 @@ import { save_tiles } from '../services/save_tiles';
 
 const NumbersDonationForm = () => {
     const location = useLocation();
-    const { selectedTiles, totalSum, childId } = location.state || {};
+    const { selectedTiles, totalSum, linkId } = location.state || {};
 
     const [formData, setFormData] = useState({
         firstName: '',
@@ -31,7 +31,7 @@ const NumbersDonationForm = () => {
         e.preventDefault();
         console.log('Form submitted:', formData);
         try {
-            await save_tiles(childId, selectedTiles, formData.firstName + ' ' + formData.lastName);
+            await save_tiles(linkId, selectedTiles, formData.firstName + ' ' + formData.lastName);
         } catch (error) {
             console.error('Error fetching tiles:', error);
         }
