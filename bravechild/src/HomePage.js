@@ -83,6 +83,12 @@ const HomePage = () => {
                 </div>
             </div>
 
+            <div className="dono-container">
+                    <SponsorDonations 
+                        onSubmit={handleSubmit}
+                    />
+                </div>
+
             <div className="brave-501c-container">
                 <div className="brave-501c-container-text">
                     <p>B.R.A.V.E. Child, Inc is a (IRC) Section 501c (3) organization.
@@ -103,12 +109,6 @@ const HomePage = () => {
                     <p><a href="#home">Home</a></p>
                     <p><a href="#about">About Us</a></p>
                     <p><a href="#services">Services</a></p>
-                </div>
-               
-                <div className="dono-container">
-                    <SponsorDonations 
-                        onSubmit={handleSubmit}
-                    />
                 </div>
 
                 <div className="footer-section">
