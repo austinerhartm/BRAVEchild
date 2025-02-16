@@ -125,41 +125,68 @@ const SponsorDonation = ({ onSubmit: externalSubmit }) => {
     };
 
     return (
-        <div className="donor-container">  
-            <h1 className="donation-title">Become a BRAVE sponsor!</h1>
-            <ContributionToggle 
-                isMonthly={formData.isMonthly} 
-                onChange={(value) => setFormData(prev => ({ ...prev, isMonthly: value }))} 
-            />
-            <PresetAmountButtons 
-                amounts={formData.isMonthly ? [5, 10, 25, 50, 100] : [25, 50, 100, 250, 500]}
-                selectedAmount={formData.selectedAmount}
-                onSelect={(amount) => setFormData(prev => ({
-                    ...prev,
-                    selectedAmount: amount,
-                    customAmount: ''
-                }))}
-            />
-            <CustomAmountField 
-                value={formData.customAmount} 
-                onChange={(value) => handleCustomAmountChange(value)} 
-                onFocus={handleCustomAmountFocus}
-                onBlur={handleCustomAmountBlur}
-            />
+        <>
+            <div className="donor-container">  
+                <h1 className="donation-title">Become a BRAVE sponsor!</h1>
+                <ContributionToggle 
+                    isMonthly={formData.isMonthly} 
+                    onChange={(value) => setFormData(prev => ({ ...prev, isMonthly: value }))} 
+                />
+                <PresetAmountButtons 
+                    amounts={formData.isMonthly ? [5, 10, 25, 50, 100] : [25, 50, 100, 250, 500]}
+                    selectedAmount={formData.selectedAmount}
+                    onSelect={(amount) => setFormData(prev => ({
+                        ...prev,
+                        selectedAmount: amount,
+                        customAmount: ''
+                    }))}
+                />
+                <CustomAmountField 
+                    value={formData.customAmount} 
+                    onChange={(value) => handleCustomAmountChange(value)} 
+                    onFocus={handleCustomAmountFocus}
+                    onBlur={handleCustomAmountBlur}
+                />
 
-            {errors.amount && <div className="error-message">{errors.amount}</div>}
+                {errors.amount && <div className="error-message">{errors.amount}</div>}
 
-            <DonationForm 
-                formData={formData}
-                onChange={handleInputChange}
-                errors={errors}
-            />
-            {errorMessage && <div className="error-message">{errorMessage}</div>}
+                <DonationForm 
+                    formData={formData}
+                    onChange={handleInputChange}
+                    errors={errors}
+                />
+                {errorMessage && <div className="error-message">{errorMessage}</div>}
 
-            <button type="submit" className='submit-button' onClick={handleSubmit}>
-                Donate
-            </button>
-        </div>
+                <button type="submit" className='submit-button' onClick={handleSubmit}>
+                    Donate
+                </button>
+            </div>
+
+            <div>
+                <div className="footer">
+                    <div className="footer-section">
+                        <h2>Contact Us</h2>
+                        <p>Email: BRAVEbfchild@gmail.com</p>
+                        <p>Phone: (318) 840-7091</p>
+                        <p>Address: 66 Mengle Road Rayville, LA 71269</p>
+                    </div>
+                    <div className="footer-section">
+                        <h2>Quick Links</h2>
+                        <p><a href="#home">Home</a></p>
+                        <p><a href="#about">About Us</a></p>
+                        <p><a href="#services">Services</a></p>
+                    </div>
+                    <div className="footer-section">
+                        <h2>Follow Us</h2>
+                        <div className="footer-social-icons">
+                            <img src="/BRAVEFacebookIcon.png" alt="Facebook" />
+                            <img src="/BRAVEInstagramIcon.png" alt="Instagram" />
+                            <img src="/BRAVETwitterIcon.png" alt="Twitter" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </>
     );
 };
 

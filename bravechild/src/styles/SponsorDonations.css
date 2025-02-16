@@ -21,3 +21,46 @@
 .submit-button:hover {
     background-color: #218838;
 }
+
+.footer {
+    background-color: darkcyan;
+    padding: 0;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-top: 100px;
+    display: flex;
+    width: 100%;
+}
+
+.footer-section {
+    flex: 1;
+    padding: 0 1rem;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer h2 {
+    color: white;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.footer p{
+    color: white;
+    font-size: 1rem;
+    margin: 0.5rem 0;
+    text-align: center;
+}
+
+.footer-social-icons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.footer-social-icons img {
+    width: 30px;
+    height: 30px;
+}
