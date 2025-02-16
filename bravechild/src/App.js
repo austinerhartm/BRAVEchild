@@ -13,6 +13,7 @@ import UserDashboard from './components/UserDashboard';
 import SpecificChildDonations from './components/SpecificChildDonations';
 import NumbersDonationForm from './components/NumbersDonationForm';
 import SuperAdminPage from './components/SuperAdminPage';
+import LearnMore from './components/LearnMore';
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
                 <Route path="/child-donations" element={<SpecificChildDonations />} />
                 <Route path="/child-donations/numbers-donation-form" element={<NumbersDonationForm />} />
                 <Route path="/user-dashboard" element={<ProtectedRoute route= {<UserDashboard />} > <UserDashboard /> </ProtectedRoute> } />
+                <Route path="/learn-more" element={<LearnMore />} />
 
                 <Route path="/super/secret/page" element={<ProtectedRoute route={ <SuperAdminPage /> } allowedRoles={['super_admin']}> <SuperAdminPage /> </ProtectedRoute> } />
             </Routes>
