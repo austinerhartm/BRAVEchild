@@ -62,6 +62,8 @@
 .navbar-logo img {
     height: 100px;
     margin-right: 10px;
+    cursor: pointer;
+
 }
 
 .navbar-list ul {
@@ -142,6 +144,7 @@
     flex: 1;
     max-width: 50%;
     padding: 0 2rem;
+    flex: 1 0;
 }
 
 .hippotherapy-container h2 {
@@ -168,6 +171,8 @@
     max-width: 50%;
     height: auto;
     object-fit: cover;
+    overflow: hidden;
+    flex: 1 0;
 }
 
 .equinetherapy-container {
@@ -189,7 +194,8 @@
     font-style: monospace;
     font-size: 3rem;
     text-align: center;
-    color: rgb(0, 0, 0)
+    color: rgb(0, 0, 0);
+    flex: 1 0;
 }
 
 .equinetherapy-container p {
@@ -206,6 +212,7 @@
     padding: 0;
     max-width: 110%;
     height: 100%;
+    flex: 1 0;
 }
 
 .how-can-you-help-container {
@@ -218,6 +225,7 @@
     justify-content: space-between;
     padding: 2rem 0;
     width: calc(100% - 200px);
+    flex: 1 0;
 }
 
 .navbar-divider-vertical-how-help {
@@ -232,7 +240,7 @@
 
 .how-can-you-help-sponsor,
 .how-can-you-help-donate,
-.how-can-you-help-facebook {
+.how-can-you-help-enroll {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -328,18 +336,47 @@
   color: #FF4742;
 }
 
-
-.how-can-you-help-facebook img {
-    max-width: 14%;
-}
-
-.how-can-you-help-facebook h2 {
+.how-can-you-help-enroll h2 {
     margin: 0;
     padding: 20px;
     font-style: monospace;
     font-size: 1.5rem;
     text-align: center;
     color: rgb(0, 0, 0);
+}
+
+.how-can-you-help-enroll button {
+    background: #ffffff;
+    border: 1px solid #000000;
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 16px;
+    min-height: 40px;
+    outline: 0;
+    padding: 12px 14px;
+    text-align: center;
+    text-rendering: geometricprecision;
+    text-transform: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: middle;
+    margin: 10px auto;
+    color: #000000;
+}
+
+.how-can-you-help-enroll button:hover,
+.how-can-you-help-enroll button:active {
+  background-color: initial;
+  background-position: 0 0;
+  color: #fafa6f;
 }
 
 .brave-501c-container {
@@ -353,6 +390,8 @@
     justify-content: space-between;
     flex-wrap: nowrap;
     outline: solid;
+    flex: 1 0;
+    overflow: auto;
 }
 
 .footer {
@@ -363,6 +402,7 @@
     margin-top: 100px;
     display: flex;
     width: 100%;
+    flex: 1 0;
 }
 
 .footer-section {

@@ -1,0 +1,240 @@
+.page-container {
+    background-color: #e8f5e9;
+    min-height: 100vh;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.navbar {
+    background-color: rgb(255, 255, 255);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: .1rem 0;
+    flex-direction: row;
+}
+
+.navbar-title {
+    display: flex;
+    font-size: 1rem;
+    font-weight: bold;
+    align-items: center;
+    color: rgb(140, 0, 175);
+}
+
+.navbar-logo img {
+    height: 100px;
+    margin-right: 10px;
+}
+
+.navbar-list ul {
+    list-style: none;
+    justify-content: space-around;
+    display: flex;
+    gap: 20px;
+    flex-direction: row;
+}
+
+.navbar-list ul li {
+    display: flex;
+    align-items:last baseline;
+    padding: 20px;
+    flex-direction: row;
+    margin-right: 20px;
+}
+
+.navbar-list ul li a {
+    text-decoration: none;
+    color: black;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.navbar-divider-vertical {
+    border-left: 1px solid;
+    height: 60px;
+    margin: 0 7.5px;
+    position: inline;
+    align-self: middle;
+    display: fixed;
+    color:rgb(140, 0, 175)
+}
+
+.learn-more-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-left: 100px;
+    margin-right: 100px;
+    background-color: white;
+    margin-top: 107px;
+    min-height: calc(100vh - 107px);
+}
+
+.learn-more-text-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    background-color: rgb(255, 255, 255);
+}
+
+.learn-more-text-content h2 {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding: 0;
+    font-size: 3rem;
+}
+
+.program-details, .eligibility-section, .session-info, .registration-steps {
+    width: 80%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.program-details h3, .eligibility-section h3, .session-info h3, .registration-steps h3 {
+    color: rgb(140, 0, 175);
+    margin-bottom: 15px;
+    font-size: 2.5rem;
+}
+
+.program-details ul, .eligibility-section ul, .session-info ul {
+    list-style-type: none;
+    padding-left: 20px;
+    font-size: 2.5rem;
+}
+
+.program-details li, .eligibility-section li, .session-info li {
+    margin: 10px 0;
+    position: relative;
+    padding-left: 25px;
+    font-size: 2rem;
+}
+
+.program-details li:before, .eligibility-section li:before, .session-info li:before {
+    content: "✓";
+    color: rgb(140, 0, 175);
+    position: absolute;
+    left: 0;
+}
+
+.registration-steps ol {
+    padding-left: 20px;
+}
+
+.registration-steps li {
+    margin: 15px 0;
+}
+
+.are-interested-container {
+    width: 100%;
+    margin-top: 40px;
+    padding: 0px;
+    background-color: #ffffff;
+    text-align: center;
+    border-radius: 8px;
+    margin-left: 100px;
+    margin-right: 100px;
+}
+
+.are-interested-text {
+    display: flow;
+    padding: 100px;
+    background-color: rgb(131, 245, 255);
+    border-radius: 1000px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-top: 20px;
+}
+
+.are-interested-text h3 {
+    color: rgb(140, 0, 175);
+    font-size: 2.5rem;
+    margin-top: 0px;
+    margin-bottom: 30px;
+    padding: 0;
+}
+
+.are-interested-text p {
+    font-size: 2rem;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding: 0;
+}
+
+.contact-box a {
+    color: rgb(140, 0, 175);
+    text-decoration: none;
+}
+
+.contact-box a:hover {
+    text-decoration: underline;
+}
+
+.brave-501c-container {
+    background-color: rgb(255, 255, 255);
+    margin-top: 100px;
+    margin-right: 500px;
+    margin-left: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    outline: solid;
+}
+
+
+.footer {
+    background-color: darkcyan;
+    padding: 0;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-top: 100px;
+    display: flex;
+    width: 100%;
+}
+
+.footer-section {
+    flex: 1;
+    padding: 0 1rem;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer h2 {
+    color: white;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.footer p{
+    color: white;
+    font-size: 1rem;
+    margin: 0.5rem 0;
+    text-align: center;
+}
+
+.footer-social-icons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.footer-social-icons img {
+    width: 30px;
+    height: 30px;
+}

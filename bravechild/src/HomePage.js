@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import SponsorDonations from './components/SponsorDonations.js'; 
 import './HomePage.css';
+import { Link } from 'react-router-dom';
 
 const HomePage = () => {
     const navigate = useNavigate(); 
@@ -16,7 +17,7 @@ const HomePage = () => {
             <div className="navbar">
                 <div className="navbar-title">
                     <div className="navbar-logo">
-                        <img src="/BRAVEpic.png" alt="logo" />
+                        <Link to="/"><img src="/BRAVEpic.png" alt="logo" /></Link>
                     </div>
                     <h1>B.R.A.V.E Child Inc</h1>
                 </div>
@@ -75,11 +76,9 @@ const HomePage = () => {
                     <button><a href="/sponsor-donations">Donate Here</a></button>
                 </div>
                 <div className="navbar-divider-vertical-how-help"></div>
-                <div className="how-can-you-help-facebook">
-                    <h2>Join us on Facebook</h2>
-                    <div className="how-can-you-help-facebook-img">
-                        <img src="/BRAVEFacebookQR.jpg" alt="facebookQR" />
-                    </div>
+                <div className="how-can-you-help-enroll">
+                    <h2>Register Your Child Today!</h2>
+                    <button><a href="/learn-more">Enroll Your Child</a></button>
                 </div>
             </div>
 
