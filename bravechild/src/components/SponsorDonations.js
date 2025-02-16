@@ -1,77 +1,164 @@
 import React, { useState, useEffect } from 'react';
-import ContributionToggle from './ContributionToggle';
-import PresetAmountButtons from './PresetAmountButtons';
-import CustomAmountField from './CustomAmountField';
-import DonationForm from './DonationForm';
-import ProgressBar from './ProgressBar';
+import { useLocation } from 'react-router-dom'; 
+import ContributionToggle from './sponsor/ContributionToggle';
+import PresetAmountButtons from './sponsor/PresetAmountButtons';
+import CustomAmountField from './sponsor/CustomAmountField';
+import DonationForm from './sponsor/DonationForm';
 import { get_dono_amount } from '../services/get_dono_amount';
 import '../styles/SponsorDonations.css';
 
-const SponsorDonation = () => {
-    const [isMonthly, setIsMonthly] = useState(true); 
-    const [selectedAmount, setSelectedAmount] = useState(null);
-    const [customAmount, setCustomAmount] = useState(''); 
-    const [errorMessage, setErrorMessage] = useState(''); 
+const SponsorDonation = ({ onSubmit: externalSubmit }) => {
+    const location = useLocation(); 
+    const [isTyping, setIsTyping] = useState(false)
+    const [errors, setErrors] = useState({});
+    const [errorMessage, setErrorMessage] = useState('')
+    const [formData, setFormData] = useState({
+        isMonthly: true,
+        selectedAmount: null,
+        customAmount: '',
+        fName: '',
+        lName: '',
+        email: ''
+    });
 
-    const presetAmounts = isMonthly ? [5, 10, 25, 50, 100] : [25, 50, 100, 250, 500];
     const MIN_DONATION_AMOUNT = 5; 
 
-    const donationAmount = selectedAmount || customAmount; 
+    useEffect(() => {
+        if (location.state) {
+            setFormData(location.state); 
+        }
+    }, [location.state]);
 
-    const handleCustomAmountFocus = () => {
-        setSelectedAmount(null); 
+    const validateForm = () => {
+        const newErrors = {}; 
+        if (!formData.fName) newErrors.firstName = 'First name is required';
+        if (!formData.lName) newErrors.lastName = 'Last name is required';
+        if (!formData.email) newErrors.email = 'Email is required';
+        const hasValidAmount = formData.selectedAmount || 
+            (formData.customAmount && parseFloat(formData.customAmount) >= MIN_DONATION_AMOUNT);
+        
+        if (!hasValidAmount) {
+            newErrors.amount = 'Please select or enter a dontaion amount';
+        }
+
+        setErrors(newErrors); 
+        return Object.keys(newErrors).length === 0; 
     };
 
-    const handleCustomAmountChange = (value) => {
+    const handleCustomAmountFocus = () => {
+        setFormData(prev => ({
+            ...prev,
+            selectedAmount: null
+        }));
+        setIsTyping(true); 
+    };
+
+    const handleCustomAmountBlur = () => {
+        setIsTyping(false); 
+        validateAmount(formData.customAmount); 
+    }
+
+    const validateAmount = (value) => {
         if (value === '') {
-            setCustomAmount('');
+            setFormData(prev => ({
+                ...prev,
+                customAmount: ''
+            }));
             setErrorMessage('');
-            return; 
+            return true; 
         }
+
         const amount = parseFloat(value); 
-        if (isNaN(amount) || amount < MIN_DONATION_AMOUNT) {
-            setCustomAmount(''); 
+        if (!isTyping && (isNaN(amount) || amount < MIN_DONATION_AMOUNT)) {
             setErrorMessage(`Donations must be a minimum of $${MIN_DONATION_AMOUNT}.`);
-        } else {
-            setCustomAmount(amount);
-            setErrorMessage('');
+            return false; 
+        }
+        
+        setErrorMessage('')
+        return true; 
+    }
+
+    const handleCustomAmountChange = (value) => {
+        setFormData(prev => ({
+            ...prev,
+            customAmount: value,
+            selectedAmount: null
+        }));
+
+        if (!isTyping) {
+            validateAmount(value); 
         }
     };
 
     const handleSubmit = (e) => {
         e.preventDefault(); 
-        const amount = selectedAmount || customAmount; 
-        if (!amount) {
-            alert('Please select or enter a donation amount.')
-            return; 
+
+        if (externalSubmit) {
+            externalSubmit(e, formData);
+
+        } else {
+            if (validateForm()) {
+                console.log('Form submitted:', JSON.stringify(formData, null, 2));
+                setErrorMessage('')
+
+            } else {
+            const missingFields = Object.keys(errors).length > 0;
+                if (missingFields) {
+                setErrorMessage('Please fill in all required fields before submitting.');
+                }
+            }
         }
-        console.log(`Donation: $${amount} (${isMonthly ? 'Monthly' : 'One-time'})`);
-    }
+        
+        
+    };
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target; 
+        setFormData(prev => ({
+            ...prev, 
+            [name]: value
+        })); 
+
+        if (errors[name]) {
+            setErrors(prev => ({...prev, [name]: ''})); 
+        }
+    };
 
     return (
         <div className="donor-container">  
             <h1 className="donation-title">Become a BRAVE sponsor!</h1>
-            <ContributionToggle isMonthly={isMonthly} onChange={setIsMonthly} />
+            <ContributionToggle 
+                isMonthly={formData.isMonthly} 
+                onChange={(value) => setFormData(prev => ({ ...prev, isMonthly: value }))} 
+            />
             <PresetAmountButtons 
-                amounts={presetAmounts}
-                selectedAmount={selectedAmount}
-                onSelect={setSelectedAmount}
+                amounts={formData.isMonthly ? [5, 10, 25, 50, 100] : [25, 50, 100, 250, 500]}
+                selectedAmount={formData.selectedAmount}
+                onSelect={(amount) => setFormData(prev => ({
+                    ...prev,
+                    selectedAmount: amount,
+                    customAmount: ''
+                }))}
             />
             <CustomAmountField 
-                value={customAmount} 
-                onChange={handleCustomAmountChange} 
+                value={formData.customAmount} 
+                onChange={(value) => handleCustomAmountChange(value)} 
                 onFocus={handleCustomAmountFocus}
+                onBlur={handleCustomAmountBlur}
+            />
+
+            {errors.amount && <div className="error-message">{errors.amount}</div>}
+
+            <DonationForm 
+                formData={formData}
+                onChange={handleInputChange}
+                errors={errors}
             />
             {errorMessage && <div className="error-message">{errorMessage}</div>}
-            {donationAmount && (
-                <div className="donation-summary">
-                    Total Donation: <strong>${donationAmount}</strong> {isMonthly ? 'Monthly' : ''}
-                </div>
-            )}
+
             <button type="submit" className='submit-button' onClick={handleSubmit}>
                 Donate
             </button>
-            <DonationForm />
         </div>
     );
 };

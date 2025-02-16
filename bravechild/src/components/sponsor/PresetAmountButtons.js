@@ -1,5 +1,5 @@
 import React from 'react'; 
-import '../styles/PresetAmountButtons.css'; 
+import '../../styles/PresetAmountButtons.css'; 
 
 const PresetAmountButtons = ({ amounts, selectedAmount, onSelect }) => {
     return (

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../styles/CustomAmountField.css';
+import '../../styles/CustomAmountField.css';
 
 const CustomAmountField = ({ value, onChange, onFocus }) => {
     return (

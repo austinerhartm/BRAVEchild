@@ -14,29 +14,15 @@
     color: #333;
 }
 
-.submit-button {
-    width: 100%;
-    padding: 12px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.submit-button:hover {
-    background-color: #218838;
-}
-
 .donation-form {
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 .form-group {
     margin-bottom: 15px;
+    width: 100%;
 }
 
 .form-group label {
@@ -47,7 +33,7 @@
 }
 
 .form-group input {
-    width: 100%;
+    width: 98%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -60,24 +46,39 @@
     outline: none;
 }
 
-.donate-button {
-    background-color: #007bff;
-    color: white;
+.submit-button {
+    width: 100%;
     padding: 12px;
+    background-color: #28a745;
+    color: white;
     border: none;
     border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    margin-top: 20px;
 }
 
-.donate-button:hover {
-    background-color: #0056b3;
+.submit-button:hover {
+    background-color: #218838;
 }
 
 .message {
     text-align: center;
     margin-top: 20px;
     font-size: 16px;
+    color: #333;
+}
+
+.error-message {
+    color: #dc3545;
+    text-align: center;
+    margin: 10px 0;
+    font-size: 14px;
+}
+
+.donation-title {
+    text-align: center;
+    margin-bottom: 30px;
     color: #333;
 }

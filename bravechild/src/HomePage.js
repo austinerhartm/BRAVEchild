@@ -1,7 +1,15 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; 
+import SponsorDonations from './components/SponsorDonations.js'; 
 import './HomePage.css';
 
 const HomePage = () => {
+    const navigate = useNavigate(); 
+
+    const handleSubmit = (e, formData) => {
+        e.preventDefault(); 
+        navigate('/sponsor-donations', { state: formData });
+    };
 
     return (
         <div className="page-container">
@@ -95,6 +103,12 @@ const HomePage = () => {
                     <p><a href="#home">Home</a></p>
                     <p><a href="#about">About Us</a></p>
                     <p><a href="#services">Services</a></p>
+                </div>
+               
+                <div className="dono-container">
+                    <SponsorDonations 
+                        onSubmit={handleSubmit}
+                    />
                 </div>
 
                 <div className="footer-section">

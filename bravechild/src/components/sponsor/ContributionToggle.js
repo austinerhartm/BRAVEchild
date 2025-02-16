@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/ContributionToggle.css';
+import '../../styles/ContributionToggle.css';
 
 const ContributionToggle = ({ isMonthly, onChange }) => {
     return (

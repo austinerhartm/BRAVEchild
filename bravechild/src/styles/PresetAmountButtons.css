@@ -2,10 +2,11 @@
 .preset-amounts {
     display: flex;
     justify-content: space-between;
+    width: 100%;  /* Match container width */
     margin-bottom: 20px;
+    padding: 0 5px;
 }
 
-/* Amount buttons */
 .amount-button {
     flex: 1;
     margin: 0 5px;
