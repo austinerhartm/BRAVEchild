@@ -115,18 +115,12 @@ router.get('/donations', authenticateToken, require_role('super_admin'), async (
 
         const start = formatToMySQLDateTime(startDate);
         const end = formatToMySQLDateTime(endDate);
-
-        console.log('Formatted start date:', start);
-        console.log('Formatted end date:', end);
         
         if (new Date(startDate) > new Date(endDate)) {
             return res.status(400).json({ success: false, error: 'Start date must be before end date' });
         }
 
-        const [donations] = await db.execute(
-            'SELECT * FROM donations WHERE donation_time BETWEEN ? AND ? ORDER BY donation_time DESC', 
-            [start, end]
-        );
+        const [donations] = await db.execute('SELECT * FROM donations WHERE donation_time BETWEEN ? AND ? ORDER BY donation_time DESC', [start, end]);
 
         if(!donations || donations.length === 0) {
             return res.status(403).json({ success: false, message: 'No donations found in this time period' });

@@ -1,31 +1,26 @@
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL; 
+import api from './api.service';
+import AuthService from './auth.service';
 
-async function submit_sponsor(sponsorData) {
-    
-    const donorData = {
-        user_id: 6, 
-        amount: sponsorData.amount,  
-    }
-    
+export const submit_sponsor = async (sponsorData) => {
     try {
-        const response = await fetch(`${API_BASE_URL}/sponsor/donate`, {
-            method: 'POST', 
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(donorData)
-        });
+        const userId = AuthService.isAuthenticated() ? 
+            (sponsorData.user_id || null) : null;
 
-        if (!response.ok) {
-            throw new Error('Failed to submit donation'); 
-        }
+        const donorData = {
+            user_id: userId,
+            amount: sponsorData.amount,
+        };
 
-        return response.json(); 
+        const response = await api.post('/sponsor/donate', donorData);
+        return response.data;
     } catch (error) {
         console.error('Error in submit_sponsor:', error);
-        throw error; 
+        if (error.response) {
+            throw new Error(error.response.data.message || 'Failed to submit donation');
+        } else if (error.request) {
+            throw new Error('No response received from server');
+        } else {
+            throw new Error('Error setting up the request');
+        }
     }
-}
-
-export { submit_sponsor }; 
+};

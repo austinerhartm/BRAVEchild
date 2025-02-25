@@ -1,66 +1,48 @@
 .create-user-container {
-    max-width: 400px;
-    margin: 50px auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    text-align: center;
-  }
-  
-  .create-user-container h2 {
-    margin-bottom: 20px;
-  }
-  
-  .create-user-container label {
-    display: block;
-    margin: 10px 0;
-  }
-  
-  .create-user-container input,
-  .create-user-container select {
+    height: 100vh;
+    min-height: 100%;
+    padding: 16px;
+}
+
+    .create-user-container::before {
+        content: "";
+        display: block;
+        position: absolute;
+        z-index: -1;
+        inset: 0;
+        background-image: radial-gradient(ellipse at 50% 50%, #e8f5e9, hsl(0, 0%, 100%));
+        background-repeat: no-repeat;
+    }
+
+.create-user-card {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
     width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .create-user-container button {
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    font-size: 1rem;
-  }
-  
-  .create-user-container button:hover {
-    background-color: #45a049;
-  }
-  
-  .create-user-button {
-    margin-top: 10px;
-    padding: 10px 20px;
-    color: #4CAF50;
-    background-color: #ffffff;
-    border: 2px solid #4CAF50;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
-    font-size: 1rem;
-  }
-  
-  .create-user-button:hover {
-    background-color: #4CAF50;
-    color: white;
-  }
-  
-  .error-message {
-    color: red;
-    font-size: 0.9rem;
-    margin-top: 5px;
-  }
-  
+    padding: 32px;
+    gap: 16px;
+    margin: auto;
+}
+
+.create-user-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 16px;
+}
+
+.create-user-title {
+    width: 100%;
+    font-size: clamp(2rem, 10vw, 2.15rem);
+    color: rgb(140, 0, 175);
+}
+
+@media (min-width: 600px) {
+    .create-user-container {
+        padding: 32px;
+    }
+
+    .create-user-card {
+        max-width: 450px;
+    }
+}

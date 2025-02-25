@@ -1,8 +1,7 @@
 import api from './api.service';
 
-export const save_tiles = async (link, tiles, donator) => {
+export const save_tiles = async (link, tiles, donator, amount) => {
     try {
-        console.log(link);
         if (!link) {
             throw new Error('ID is required');
         }
@@ -10,11 +9,7 @@ export const save_tiles = async (link, tiles, donator) => {
             throw new Error('Tiles array is required and cannot be empty');
         }
 
-        const response = await api.post('/post/save_tiles', {
-            link,
-            tiles,
-            donator: donator || 'ANON'
-        });
+        const response = await api.post('/post/save_tiles', { link, tiles, donator: donator || 'ANON' , amount });
 
         return response.data;
     } catch (error) {

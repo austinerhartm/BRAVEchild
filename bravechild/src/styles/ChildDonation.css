@@ -1,70 +1,152 @@
-.calendar-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 0.5rem;
-    max-width: 36rem;
-    margin: 0 auto;
-}
-
-.calendar-tile {
-    padding: 1rem;
-    text-align: center;
-    cursor: pointer;
-    border: 1px solid #e5e7eb;
-    border-radius: 0.25rem;
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-    transition: all 0.2s ease-in-out;
-}
-
-
-    .calendar-tile:hover {
-        background-color: #dbeafe;
-    }
-
-.calendar-tile-disabled {
-    pointer-events: none;
-    background-color: dimgrey;
-}
-.calendar-tile-selected {
-    background-color: #3b82f6;
-    color: white;
-}
-
-.calendar-container {
-    padding: 1rem;
-    background-color: #f3f4f6;
-    min-height: 100vh;
-}
-
-.calendar-title {
-    text-align: center;
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
-}
-
-.calendar-summary {
-    text-align: center;
-    font-size: 1.25rem;
-    font-weight: 600;
-}
-
-.donate-div {
+.loading-container {
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 100vh;
+    background-color: #e8f5e9;
+}
+
+.child-donation-container {
+    padding: 2rem 1rem;
+    min-height: 100vh;
+    background-color: #e8f5e9;
+}
+
+.child-donation-paper {
+    padding: 2rem;
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: hsla(220, 30%, 5%, 0.05) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.05) 0px 15px 35px -5px;
+}
+
+.donation-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.donation-title {
+    margin-bottom: 0.5rem;
+}
+
+.home-button {
+    margin-bottom: 0.5rem;
+}
+
+.donation-description {
+    margin-bottom: 2rem;
+    line-height: 1.6;
+    color: #555;
+}
+
+.donation-card {
+    margin-bottom: 2rem;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.selection-info {
+    padding: 0.5rem;
+}
+
+.info-divider {
+    margin: 0.75rem 0;
+}
+
+.selection-details {
+    margin-top: 1rem;
+}
+
+.remaining-chip {
+    margin-top: 0.5rem;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+    gap: 0.75rem;
+    margin: 2rem 0;
+}
+
+.calendar-tile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.25rem;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+    .calendar-tile:hover:not(.calendar-tile-disabled) {
+        background-color: #f0f7ff;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+.calendar-tile-selected {
+    background-color: rgb(140, 0, 175) !important;
+    color: white;
+    border: none;
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(140, 0, 175, 0.3);
+}
+
+.calendar-tile-disabled {
+    background-color: #e0e0e0;
+    color: #999;
+    cursor: not-allowed;
+    opacity: 0.7;
+    text-decoration: line-through;
+}
+
+.error-alert {
+    margin-bottom: 1.5rem;
+}
+
+.donation-action {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
 }
 
 .donate-button {
-    padding: 10px 20px;
-    color: white;
-    background-color: #4CAF50;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1rem;
+    padding: 0.75rem 2rem;
+    font-size: 1.15rem;
+    border-radius: 50px;
+    box-shadow: 0 4px 12px rgba(140, 0, 175, 0.3);
+    transition: all 0.3s ease;
 }
 
-.donate-button:hover {
-    background-color: #45a049;
+    .donate-button:hover:not(:disabled) {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 16px rgba(140, 0, 175, 0.4);
+    }
+
+@media (max-width: 600px) {
+    .child-donation-paper {
+        padding: 1rem;
+    }
+
+    .donation-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .calendar-grid {
+        grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+        gap: 0.5rem;
+    }
+
+    .calendar-tile {
+        height: 50px;
+        font-size: 1rem;
+    }
 }

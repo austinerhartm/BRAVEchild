@@ -7,32 +7,40 @@ import { require_role } from '../middleware/require_role.js';
 const router = express.Router();
 
 router.post('/save_tiles', async (req, res) => {
-	const { link, tiles, donator } = req.body;
+    const { link, tiles, donator: requestDonator, amount } = req.body;
 
-	if (!link || !tiles) {
-		return res.status(400).json({ success: false, message: 'Id and selected tiles is required' });
-	}
+    if (!link || !tiles) {
+        return res.status(400).json({ success: false, message: 'Id and selected tiles is required' });
+    }
 
-	if (!donator) {
-		donator = 'ANON';
-	}
+    const finalDonator = requestDonator || 'ANON';
 
-	try {
-		const [[donee_info]] = await db.execute('SELECT * FROM donation_receivers WHERE link=?', [link]);
+    try {
+        const [[donee_info]] = await db.execute('SELECT * FROM donation_receivers WHERE link=?', [link]);
 
-		if (!donee_info) {
-			return res.status(404).json({ success: false, message: 'Donee not found' });
-		}
+        if (!donee_info) {
+            return res.status(404).json({ success: false, message: 'Donee not found' });
+        }
 
-		for (let tile of tiles) {
-			await db.execute('INSERT INTO donation_tile_selections (child_id, donator, selected_tile) VALUES (?,?,?)', [donee_info.child_id, donator, tile]);
-		}
+        const placeholders = tiles.map(() => '?').join(',');
+        const [existingTiles] = await db.execute(`SELECT selected_tile FROM donation_tile_selections WHERE child_id = ? AND selected_tile IN (${placeholders})`, [donee_info.child_id, ...tiles]);
 
-		res.status(200).json({ success: true, message: 'Tiles updated' });
-	} catch (error) {
-		console.error(error);
-		res.status(500).json({ success: false, message: 'Server error' });
-	}
+        if (existingTiles && existingTiles.length > 0) {
+            return res.status(409).json({ success: false, message: 'Some selected tiles are already taken' });
+        }
+
+        for (let tile of tiles) {
+            await db.execute('INSERT INTO donation_tile_selections (child_id, donator, selected_tile) VALUES (?,?,?)', [donee_info.child_id, finalDonator, tile]);
+        }
+
+        await db.execute('INSERT INTO donations(user_id, amount, for_child) VALUES(?, ?, ?)', [6, amount, donee_info.child_id]);
+        await db.execute('UPDATE donation_receivers SET total_donations=total_donations+? WHERE child_id=?', [amount, donee_info.child_id]);
+
+        res.status(200).json({ success: true, message: 'Tiles updated' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: 'Server error' });
+    }
 });
 
 router.post('/create_donee', authenticateToken, require_role('super_admin'), async (req, res) => {

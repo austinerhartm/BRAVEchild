@@ -10,23 +10,23 @@ const DonationForm = () => {
     const [amount, setAmount] = useState(0);
     const [message, setMessage] = useState(''); 
 
-
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
+
         const sponsorData = {
-            fname, 
+            user_id: localStorage.getItem('userId') || 0,
+            fname,
             lname,
             email,
             amount
         };
 
         try {
-            const result = await submit_sponsor(sponsorData); 
-            setMessage('Thank you for your generous donation!'); 
-            setFname(''); 
+            const result = await submit_sponsor(sponsorData);
+            setMessage('Thank you for your generous donation!');
+            setFname('');
             setLname('');
-            setEmail(''); 
+            setEmail('');
             setAmount(0);
         } catch (error) {
             console.error(error);

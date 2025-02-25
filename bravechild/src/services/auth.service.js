@@ -3,7 +3,7 @@ import api from './api.service';
 class AuthService {
     static setTokens(accessToken, refreshToken) {
         sessionStorage.setItem('accessToken', accessToken);
-        sessionStorage.setItem('refreshToken', refreshToken);
+        localStorage.setItem('refreshToken', refreshToken);
     }
 
     static getAccessToken() {
@@ -20,7 +20,7 @@ class AuthService {
     }
 
     static isAuthenticated() {
-        return !!this.getAccessToken();
+        return Boolean(this.getAccessToken());
     }
 
     static async getUserRole() {
@@ -29,6 +29,19 @@ class AuthService {
             return response.data.role;
         } catch (error) {
             console.error('Error fetching user role:', error);
+            return null;
+        }
+    }
+
+    static async logout() {
+        try {
+            const refreshToken = this.getRefreshToken();
+            const response = await api.post('/auth/logout', { refreshToken });
+            this.clearTokens();
+            return response;
+        } catch (error) {
+            console.error('Error logging out:', error);
+            this.clearTokens();
             return null;
         }
     }

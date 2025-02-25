@@ -5,17 +5,14 @@ const router = express.Router();
 
 
 router.post('/donate', async(req, res) => {
-    const { user_id, amount } = req.body; 
+    const { user_id, amount, for_child } = req.body; 
 
     if (!user_id || !amount ) {
         return res.status(400).json({ message: 'user_id and amount required.'});
     }
     
     try {
-        const [result] = await db.execute( 
-            'INSERT INTO donations (user_id, amount) VALUES (?, ?)',
-            [user_id, amount]
-        ); 
+        const [result] = await db.execute('INSERT INTO donations (user_id, amount, for_child) VALUES (?, ?, ?)', [user_id, amount, for_child || null]); 
         res.status(200).json({ message: 'Donation recieved!' })
     } catch (error) {
         console.error(error); 

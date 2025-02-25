@@ -21,7 +21,7 @@ router.post('/registration', async (req, res) => {
 		const salt = 10;
 		const passwordHash = await bcrypt.hash(password, salt);
 
-		if (exisitingUser.length > 0) {
+		if (existingUsers.length > 0) {
 			return res.status(409).json({ success: false, message: "user already exists" });
 		}
 
@@ -196,7 +196,7 @@ router.post('/reset_otp', authenticateToken, async (req, res) => {
 			from: process.env.SENDER_EMAIL,
 			to: user.email,
 			subject: 'Test Password Reset OTP',
-			text: `Your OTP is ${otp}.`
+			text: `Your OTP is ${resetOTP}.`
 		};
 
 		await transporter.sendMail(mailOptions);
@@ -209,6 +209,7 @@ router.post('/reset_otp', authenticateToken, async (req, res) => {
 
 router.post('/reset_password', authenticateToken, async (req, res) => {
 	const { email, otp, newPassword } = req.body;
+	const salt = 10;
 
 	if (!email || !otp || !newPassword) {
 		return res.status(400).json({ success: false, message: 'Email, otp, and new password is required' });
