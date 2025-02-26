@@ -28,6 +28,7 @@ function App() {
                         <Route path="/login" element={<Login />} />
                         <Route path="/create-user" element={<CreateUser />} />
                         <Route path="/sponsor-donations" element={<SponsorDonations />} />
+                        <Route path="/learn-more" element={<LearnMore />} />
                         <Route path="/child-donations/:linkId" element={<SpecificChildDonations />} />
                         <Route path="/child-donations/numbers-donation-form" element={<NumbersDonationForm />} />
                         <Route path="/user-dashboard" element={

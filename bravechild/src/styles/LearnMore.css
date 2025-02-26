@@ -99,7 +99,7 @@
     width: 80%;
     margin: 20px auto;
     padding: 20px;
-    background-color: #f8f8f8;
+    background-color: #f9ffbb;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
@@ -152,7 +152,7 @@
 .are-interested-text {
     display: flow;
     padding: 100px;
-    background-color: rgb(131, 245, 255);
+    background-color: rgb(171, 241, 248);
     border-radius: 1000px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     margin-top: 20px;

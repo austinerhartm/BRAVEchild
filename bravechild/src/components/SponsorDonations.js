@@ -172,8 +172,8 @@ const SponsorDonation = ({ onSubmit: externalSubmit }) => {
                     </div>
                     <div className="footer-section">
                         <h2>Quick Links</h2>
-                        <p><a href="#home">Home</a></p>
-                        <p><a href="#about">About Us</a></p>
+                        <p><a href="/">Home</a></p>
+                        <p><a href="/learn-more">About Us</a></p>
                         <p><a href="#services">Services</a></p>
                     </div>
                     <div className="footer-section">

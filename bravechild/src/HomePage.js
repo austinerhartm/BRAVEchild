@@ -90,12 +90,6 @@ const HomePage = () => {
                 </div>
             </div>
 
-            <div className="dono-container">
-                    <SponsorDonations 
-                        onSubmit={handleSubmit}
-                    />
-                </div>
-
             <div className="brave-501c-container">
                 <div className="brave-501c-container-text">
                     <p>B.R.A.V.E. Child, Inc is a (IRC) Section 501c (3) organization.
@@ -103,7 +97,15 @@ const HomePage = () => {
                 </div>
             </div>
 
-            <div className="footer">
+            <div className="dono-container">
+                    <SponsorDonations 
+                        onSubmit={handleSubmit}
+                    />
+                </div>
+
+            
+
+           {/* <div className="footer">
                 <div className="footer-section">
                     <h2>Contact Us</h2>
                     <p>Email: BRAVEbfchild@gmail.com</p>
@@ -126,7 +128,7 @@ const HomePage = () => {
                         <img src="/BRAVETwitterIcon.png" alt="Twitter" />
                     </div>
                 </div>
-            </div>
+            </div>*/}
         </div>
     );
 };
