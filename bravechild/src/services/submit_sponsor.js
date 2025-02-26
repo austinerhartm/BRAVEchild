@@ -4,7 +4,7 @@ async function submit_sponsor(sponsorData) {
     
     const donorData = {
         user_id: 6, 
-        amount: sponsorData.amount, 
+        amount: sponsorData.selectedAmount || sponsorData.customAmount, 
         for_child: "all", 
     }
     

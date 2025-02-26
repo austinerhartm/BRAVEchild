@@ -4,7 +4,7 @@ import ContributionToggle from './sponsor/ContributionToggle';
 import PresetAmountButtons from './sponsor/PresetAmountButtons';
 import CustomAmountField from './sponsor/CustomAmountField';
 import DonationForm from './sponsor/DonationForm';
-import { get_dono_amount } from '../services/get_dono_amount';
+import { submit_sponsor } from '../services/submit_sponsor';
 import '../styles/SponsorDonations.css';
 
 const SponsorDonation = ({ onSubmit: externalSubmit }) => {
@@ -98,6 +98,7 @@ const SponsorDonation = ({ onSubmit: externalSubmit }) => {
 
         } else {
             if (validateForm()) {
+                submit_sponsor(formData);
                 console.log('Form submitted:', JSON.stringify(formData, null, 2));
                 setErrorMessage('')
 

@@ -10,6 +10,10 @@ router.post('/donate', async(req, res) => {
     if (!user_id || !amount || !for_child ) {
         return res.status(400).json({ message: 'user_id, amount, and for_child required.'});
     }
+
+    if (amount <= 0){
+        return res.status(400).jason({ message: 'amount must be greater than zero.'})
+    }
     
     try {
         const [result] = await db.execute( 
