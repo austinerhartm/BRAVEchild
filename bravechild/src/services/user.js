@@ -1,53 +1,18 @@
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL; // needs IP address of backend server
+import api from './api.service';
 
-const fetch_user = async () => {
-    let token = sessionStorage.getItem('token');
-
-    const token_from_ss = JSON.parse(token, (key, value) => {
-        if (key === "token") {
-            return value;
-        }
-    });
-
-    console.log(token_from_ss);
-
-    const response = await fetch(`${API_BASE_URL}/fetch/user`, {
-        method: 'GET',
-        withCredntials: true,
-        credentials: 'include',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `${ token_from_ss }`,
-        },
-    });
-
-    if (response.status === 401) {
-        // Try refreshing the token
-        const refreshResponse = await fetch(`${API_BASE_URL}/auth/refresh`, {
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-        const refreshData = await refreshResponse.json();
-
-        if (refreshData.success) {
-            console.log("THIS IS BEING RUN");
-            return fetch(`${API_BASE_URL}/fetch/user`, {
-                method: 'GET',
-                withCredntials: true,
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
+export const fetch_user = async () => {
+    try {
+        const response = await api.get('/fetch/user');
+        
+        return response.data;
+    } catch (error) {
+        console.error('Error in fetch_user:', error);
+        if (error.response) {
+            throw new Error(error.response.data.message || 'Failed to fetch user data');
+        } else if (error.request) {
+            throw new Error('No response received from server');
         } else {
-            /*window.location.href = '/login'; // Redirect to login if refresh fails*/
+            throw new Error('Error setting up the request');
         }
     }
-
-    return response;
 };
-
-export { fetch_user };

@@ -43,7 +43,7 @@ const SpecificChildDonations = ({
     };
 
     const handleDonateClick = () => {
-        navigate('/sponsor-donations', {
+        navigate('/child-donations/numbers-donation-form', {
             state: {
                 selectedTiles: selectedTiles,
                 totalSum: totalSum,

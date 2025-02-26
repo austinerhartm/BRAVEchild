@@ -2,7 +2,7 @@ import express from 'express';
 const router = express.Router();
 
 import db from '../config/db.js';
-import authenticateToken from '../middleware/token_auth.js';
+import { authenticateToken } from '../middleware/token_auth.js';
 
 // Endpoint to get progress
 router.get('/progress', async (req, res) => {
@@ -40,21 +40,45 @@ router.get('/user', authenticateToken, async (req, res) => {
     try {
         const userId = req.user.id;
 
-        const [[user]] = await db.execute(`SELECT id, username, email, created_at, isAccountVerified FROM users WHERE id = ?`, [userId]);
+        // Get user data
+        const [[user]] = await db.execute( 'SELECT id, username, email FROM users WHERE id = ?', [userId]);
 
         if (!user) {
             return res.status(404).json({ success: false, message: 'User not found' });
         }
 
-        res.status(200).json({
+        // Get total donations if you have a donations table
+        const [[donations]] = await db.execute( 'SELECT SUM(amount) as total FROM donations WHERE user_id = ?', [userId]);
+
+        res.json({
             success: true,
-            userData: {
-                name: user.username,
-                isAccountVerified: user.isAccountVerified
-            }
+            user: {
+                id: user.id,
+                username: user.username,
+                email: user.email
+            },
+            totalDonations: donations?.total || 0
         });
     } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
+        console.error('Error in /user route:', error);
+        res.status(500).json({ success: false, message: 'Error fetching user data' });
+    }
+});
+
+router.get('/verify-role', authenticateToken, async (req, res) => {
+    try {
+        const userId = req.user.id;
+
+        const [[user]] = await db.execute( 'SELECT role FROM users WHERE id = ?', [userId]);
+
+        if (!user) {
+            return res.status(404).json({ success: false, message: 'User not found' });
+        }
+
+        res.json({ success: true, role: user.role });
+    } catch (error) {
+        console.error('Error in verify-role:', error);
+        res.status(500).json({ success: false, message: 'Error verifying role' });
     }
 });
 

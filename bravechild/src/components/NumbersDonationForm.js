@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import '../styles/DonationForm.css';
+import '../styles/NumbersDonationForm.css';
 import cashappImg from '../imgs/cashapp.png';
 import venmoImg from '../imgs/venmo.png';
 import squareImg from '../imgs/square.png';
 import { save_tiles } from '../services/save_tiles';
 
-const DonationForm = () => {
+const NumbersDonationForm = () => {
     const location = useLocation();
     const { selectedTiles, totalSum, childId } = location.state || {};
 
@@ -123,4 +123,4 @@ const DonationForm = () => {
     );
 };
 
-export default DonationForm;
+export default NumbersDonationForm;

@@ -2,13 +2,11 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router';
 import { login_user } from '../services/login_auth';
-import { logout_user } from '../services/logout';
-import PropTypes from 'prop-types';
 
 // Style import
 import '../styles/Login.css';
 
-const Login = ({ setToken }) => {
+const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
@@ -19,11 +17,13 @@ const Login = ({ setToken }) => {
 
         setError(null);
         try {
-            const token = await login_user({ username, password });
-            setToken(token);
-
+            const result = await login_user(username, password);
+            if (result.success) {
+            } else {
+                setError(result.message);
+            }
         } catch (err) {
-            console.log(err);
+            console.error(err);
             setError('Invalid credentials');
         }
 
@@ -53,9 +53,5 @@ const Login = ({ setToken }) => {
         </div>
     );
 };
-
-Login.propTypes = {
-    setToken: PropTypes.func.isRequired
-}
 
 export default Login;

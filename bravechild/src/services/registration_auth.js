@@ -1,21 +1,29 @@
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL; // needs IP address of backend server
+import api from './api.service';
+import AuthService from './auth.service';
 
-// takes in credentials from CreateUser and converts to to JSON formatted string
-// returns status message from backend along with a message of completion or error
-async function register_user(credentials) {
-    return fetch(`${API_BASE_URL}/auth/registration`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(credentials)
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Registration failed');
-            }
-            return response.json();
-        });
-}
+export const register_user = async (credentials) => {
+    try {
+        const response = await api.post('/auth/registration', credentials);
 
-export { register_user };
+        if (response.data?.accessToken && response.data?.refreshToken) {
+            AuthService.setTokens( response.data.accessToken, response.data.refreshToken );
+        }
+
+        return {
+            success: true,
+            message: response.data.message
+        };
+
+    } catch (error) {
+        console.error('Registration error:', error);
+
+        if (error.response) {
+            const errorMessage = error.response.data?.message || 'Registration failed';
+            throw new Error(errorMessage);
+        } else if (error.request) {
+            throw new Error('No response from server');
+        } else {
+            throw new Error('Error setting up request');
+        }
+    }
+};
