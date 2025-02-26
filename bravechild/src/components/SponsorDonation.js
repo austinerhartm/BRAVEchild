@@ -126,41 +126,41 @@ const SponsorDonation = ({ onSubmit: externalSubmit }) => {
     };
 
     return (
-        <div className="donor-container">  
-            <h1 className="donation-title">Become a BRAVE sponsor!</h1>
-            <ContributionToggle 
-                isMonthly={formData.isMonthly} 
-                onChange={(value) => setFormData(prev => ({ ...prev, isMonthly: value }))} 
-            />
-            <PresetAmountButtons 
-                amounts={formData.isMonthly ? [5, 10, 25, 50, 100] : [25, 50, 100, 250, 500]}
-                selectedAmount={formData.selectedAmount}
-                onSelect={(amount) => setFormData(prev => ({
-                    ...prev,
-                    selectedAmount: amount,
-                    customAmount: ''
-                }))}
-            />
-            <CustomAmountField 
-                value={formData.customAmount} 
-                onChange={(value) => handleCustomAmountChange(value)} 
-                onFocus={handleCustomAmountFocus}
-                onBlur={handleCustomAmountBlur}
-            />
+            <div className="donor-container">  
+                <h1 className="donation-title">Become a BRAVE sponsor!</h1>
+                <ContributionToggle 
+                    isMonthly={formData.isMonthly} 
+                    onChange={(value) => setFormData(prev => ({ ...prev, isMonthly: value }))} 
+                />
+                <PresetAmountButtons 
+                    amounts={formData.isMonthly ? [5, 10, 25, 50, 100] : [25, 50, 100, 250, 500]}
+                    selectedAmount={formData.selectedAmount}
+                    onSelect={(amount) => setFormData(prev => ({
+                        ...prev,
+                        selectedAmount: amount,
+                        customAmount: ''
+                    }))}
+                />
+                <CustomAmountField 
+                    value={formData.customAmount} 
+                    onChange={(value) => handleCustomAmountChange(value)} 
+                    onFocus={handleCustomAmountFocus}
+                    onBlur={handleCustomAmountBlur}
+                />
 
-            {errors.amount && <div className="error-message">{errors.amount}</div>}
+                {errors.amount && <div className="error-message">{errors.amount}</div>}
 
-            <DonationForm 
-                formData={formData}
-                onChange={handleInputChange}
-                errors={errors}
-            />
-            {errorMessage && <div className="error-message">{errorMessage}</div>}
+                <DonationForm 
+                    formData={formData}
+                    onChange={handleInputChange}
+                    errors={errors}
+                />
+                {errorMessage && <div className="error-message">{errorMessage}</div>}
 
-            <button type="submit" className='submit-button' onClick={handleSubmit}>
-                Donate
-            </button>
-        </div>
+                <button type="submit" className='submit-button' onClick={handleSubmit}>
+                    Donate
+                </button>
+            </div>
     );
 };
 

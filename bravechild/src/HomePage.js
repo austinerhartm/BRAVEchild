@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
-import SponsorDonations from './components/SponsorDonations.js'; 
+import SponsorDonation from './components/SponsorDonation.js'; 
 import './HomePage.css';
 
 const HomePage = () => {
@@ -84,7 +84,7 @@ const HomePage = () => {
             </div>
 
             <div className="dono-container">
-                    <SponsorDonations 
+                    <SponsorDonation 
                         onSubmit={handleSubmit}
                     />
                 </div>
