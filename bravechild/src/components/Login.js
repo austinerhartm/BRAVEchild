@@ -1,56 +1,131 @@
-//Library imports
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import { login_user } from '../services/login_auth';
 
-// Style import
+import {
+    Box,
+    Button,
+    CssBaseline,
+    TextField,
+    Link,
+    Typography,
+    Stack,
+    Card,
+    FormControl,
+    FormLabel,
+    CircularProgress,
+    Alert
+} from '@mui/material';
+
 import '../styles/Login.css';
 
 const Login = () => {
+    const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleLogin = async (event) => {
-
         event.preventDefault();
-
         setError(null);
+        setIsLoading(true);
+
         try {
             const result = await login_user(username, password);
             if (result.success) {
+                navigate('/', { replace: true });
             } else {
-                setError(result.message);
+                setError(result.message || 'Invalid credentials');
             }
         } catch (err) {
             console.error(err);
             setError('Invalid credentials');
+        } finally {
+            setIsLoading(false);
         }
-
     };
 
     return (
-        <div className='login-container'>
-            <h2> Login </h2>
-            <form onSubmit={handleLogin}>
-                <label>
-                    Username:
-                    <input type='text' value={username} onChange={(e) => setUsername(e.target.value)} required />
-                </label>
-                <label>
-                    Password:
-                    <input type='text' value={password} onChange={(e) => setPassword(e.target.value)} required />
-                </label>
+        <>
+            <CssBaseline />
+            <Stack className="login-container" direction="column" justifyContent="space-between">
+                <Card className="login-card" variant="outlined">
+                    <Typography component="h1" variant="h4" className="login-title">
+                        Sign in
+                    </Typography>
 
-                <button type='submit'>Login</button>
-            </form>
-            <p></p>
-            {error && <p>{error}</p>}
-            <p>Don't have an account?</p>
-            <Link to='/create-user'>
-                <button className='create-user-button'>Create User</button>
-            </Link>
-        </div>
+                    <Box
+                        component="form"
+                        onSubmit={handleLogin}
+                        noValidate
+                        className="login-form"
+                    >
+                        <FormControl>
+                            <FormLabel htmlFor="username">Username</FormLabel>
+                            <TextField
+                                id="username"
+                                type="text"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                                placeholder="Enter your username"
+                                autoComplete="username"
+                                autoFocus
+                                required
+                                fullWidth
+                                variant="outlined"
+                                error={!!error}
+                            />
+                        </FormControl>
+
+                        <FormControl>
+                            <FormLabel htmlFor="password">Password</FormLabel>
+                            <TextField
+                                id="password"
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                placeholder="******"
+                                autoComplete="current-password"
+                                required
+                                fullWidth
+                                variant="outlined"
+                                error={!!error}
+                            />
+                        </FormControl>
+
+                        {error && (
+                            <Alert severity="error" variant="outlined">
+                                {error}
+                            </Alert>
+                        )}
+
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            disabled={isLoading}
+                        >
+                            {isLoading ? <CircularProgress size={24} /> : 'Sign in'}
+                        </Button>
+                    </Box>
+
+                    <Box className="signup-section">
+                        <Typography>
+                            Don't have an account?{' '}
+                            <Link
+                                href="/create-user"
+                                color="primary"
+                                underline="hover"
+                            >
+                                Sign up
+                            </Link>
+                        </Typography>
+                    </Box>
+                </Card>
+            </Stack>
+        </>
     );
 };
 

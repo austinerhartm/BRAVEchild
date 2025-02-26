@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; 
-import SponsorDonations from './components/SponsorDonations.js'; 
+import auth from './services/auth.service';
 import './HomePage.css';
 import { Link } from 'react-router-dom';
 
@@ -23,9 +22,17 @@ const HomePage = () => {
                 </div>
                 <div className="navbar-list">
                     <ul>
-                        <li><a href="/login">Login</a></li>
+                        {!auth.isAuthenticated() ? (
+                            <li><a href="/login">Login</a></li>
+                        ) : (
+                            <li><a href="/super/secret/page">Dashboard</a></li>
+                        )}
                         <div className="navbar-divider-vertical"></div>
-                        <li><a href="/create-user">Create User</a></li>
+                        {!auth.isAuthenticated() ? (
+                            <li><a href="/create-user">Create User</a></li>
+                        ) : (
+                                <li> <a href="/" onClick={ async (e) => { e.preventDefault(); await auth.logout(); window.location.href = '/'; }}>Logout</a></li>
+                        )}
                         <div className="navbar-divider-vertical"></div>
                         <li><a href="/sponsor-donations">Donate Here</a></li>
                     </ul>

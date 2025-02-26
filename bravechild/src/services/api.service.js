@@ -1,9 +1,8 @@
 import axios from 'axios';
 import AuthService from './auth.service';
 
-// Create axios instance with HTTPS configuration
 const api = axios.create({
-    baseURL: 'https://localhost:8081',  // Updated to match your secure server
+    baseURL: 'https://localhost:8081',
     headers: {
         'Content-Type': 'application/json'
     },
@@ -51,5 +50,17 @@ api.interceptors.response.use(
         return Promise.reject(error);
     }
 );
+
+// Error handling
+export const handleApiError = (error, defaultMessage = 'An error occurred') => {
+    console.error('API Error:', error);
+    if (error.response) {
+        return error.response.data.message || defaultMessage;
+    } else if (error.request) {
+        return 'No response received from server';
+    } else {
+        return error.message || 'Error setting up the request';
+    }
+};
 
 export default api;

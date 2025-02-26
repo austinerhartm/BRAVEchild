@@ -17,6 +17,7 @@
     "dotenv": "^16.4.5",
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.11.3",
+    "nanoid": "^5.0.9",
     "nodemailer": "^6.10.0",
     "nodemon": "^3.1.9",
     "serve-index": "^1.9.1"

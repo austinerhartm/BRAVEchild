@@ -1,19 +1,15 @@
 import api from './api.service';
 
-export const save_tiles = async (childId, tiles, donator) => {
+export const save_tiles = async (link, tiles, donator, amount) => {
     try {
-        if (childId === undefined || childId === null) {
-            throw new Error('Child ID is required');
+        if (!link) {
+            throw new Error('ID is required');
         }
         if (!Array.isArray(tiles) || tiles.length === 0) {
             throw new Error('Tiles array is required and cannot be empty');
         }
 
-        const response = await api.post('/auth/save_tiles', {
-            childId,
-            tiles,
-            donator: donator || 'ANON'
-        });
+        const response = await api.post('/post/save_tiles', { link, tiles, donator: donator || 'ANON' , amount });
 
         return response.data;
     } catch (error) {

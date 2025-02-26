@@ -21,7 +21,7 @@ router.post('/registration', async (req, res) => {
 		const salt = 10;
 		const passwordHash = await bcrypt.hash(password, salt);
 
-		if (exisitingUser.length > 0) {
+		if (existingUsers.length > 0) {
 			return res.status(409).json({ success: false, message: "user already exists" });
 		}
 
@@ -196,7 +196,7 @@ router.post('/reset_otp', authenticateToken, async (req, res) => {
 			from: process.env.SENDER_EMAIL,
 			to: user.email,
 			subject: 'Test Password Reset OTP',
-			text: `Your OTP is ${otp}.`
+			text: `Your OTP is ${resetOTP}.`
 		};
 
 		await transporter.sendMail(mailOptions);
@@ -209,6 +209,7 @@ router.post('/reset_otp', authenticateToken, async (req, res) => {
 
 router.post('/reset_password', authenticateToken, async (req, res) => {
 	const { email, otp, newPassword } = req.body;
+	const salt = 10;
 
 	if (!email || !otp || !newPassword) {
 		return res.status(400).json({ success: false, message: 'Email, otp, and new password is required' });
@@ -269,35 +270,5 @@ router.post('/refresh', async (req, res) => {
 		return res.status(403).json({ success: false, message: 'Invalid refresh token' });
 	}
 });
-
-router.post('/save_tiles', async (req, res) => {
-	const { childId, tiles, donator } = req.body;
-
-	if ((!childId && childId !== 0) || !tiles) {
-		return res.status(400).json({ success: false, message: 'Id and selected tiles is required' });
-	}
-
-	if (!donator) {
-		donator = 'ANON';
-	}
-
-	try {
-		const [[donee_info]] = await db.execute('SELECT * FROM donation_receivers WHERE child_id=?', [childId]);
-
-		if (!donee_info) {
-			return res.status(404).json({ success: false, message: 'Donee not found' });
-		}
-
-		for (let tile of tiles) {
-			await db.execute('INSERT INTO donation_tile_selections (child_id, donator, selected_tile) VALUES (?,?,?)', [childId, donator, tile]);
-		}
-
-		res.status(200).json({ success: true, message: 'Connection successful' });
-	} catch (error) {
-		console.error(error);
-		res.status(500).json({ success: false, message: 'Server error' });
-	}
-});
-
 
 export default router;
