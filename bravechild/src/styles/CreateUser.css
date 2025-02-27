@@ -1,0 +1,98 @@
+.create-user-container {
+    height: 100vh;
+    min-height: 100%;
+    padding: 16px;
+}
+
+    .create-user-container::before {
+        content: "";
+        display: block;
+        position: absolute;
+        z-index: -1;
+        inset: 0;
+        background-image: radial-gradient(ellipse at 50% 50%, #e8f5e9, hsl(0, 0%, 100%));
+        background-repeat: no-repeat;
+    }
+
+.create-user-card {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    width: 100%;
+    padding: 32px;
+    gap: 16px;
+    margin: auto;
+}
+
+.create-user-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 16px;
+}
+
+.create-user-title {
+    width: 100%;
+    font-size: clamp(2rem, 10vw, 2.15rem);
+    color: rgb(140, 0, 175);
+}
+
+@media (min-width: 600px) {
+    .create-user-container {
+        padding: 32px;
+    }
+
+    .create-user-card {
+        max-width: 450px;
+    }
+}
+
+.footer {
+    background-color: darkcyan;
+    padding: 40px 10px;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-top: 0px;
+    display: flex;
+    width: 100%;
+    flex: 1 0;
+}
+
+.footer-section {
+    flex: 1;
+    padding: 20px 2rem;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.footer h2 {
+    color: white;
+    font-size: 2.2rem;
+    margin-bottom: 2rem;
+}
+
+.footer p{
+    color: white;
+    font-size: 1.3rem;
+    margin: 0.8rem 0;
+    text-align: center;
+}
+
+.footer-social-icons {
+    display: flex;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.footer-social-icons img {
+    width: 40px;
+    height: 40px;
+    transition: transform 0.2s;
+}
+
+.footer-social-icons img:hover {
+    transform: scale(1.1);
+}
