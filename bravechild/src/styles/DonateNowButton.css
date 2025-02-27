@@ -1,0 +1,15 @@
+/* Donate Now button styling */
+.donate-now-button {
+    background-color: #28a745;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.donate-now-button:hover {
+    background-color: #218838;
+}
