@@ -11,7 +11,7 @@ class AuthService {
     }
 
     static getRefreshToken() {
-        return sessionStorage.getItem('refreshToken');
+        return localStorage.getItem('refreshToken');
     }
 
     static clearTokens() {
