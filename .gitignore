@@ -33,3 +33,4 @@ yarn-error.log*
 /bravechild/build
 /bravechild/node_modules
 /bravechild--test--/node_modules
+/--bravechildtest--/node_modules
