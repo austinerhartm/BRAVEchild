@@ -28,11 +28,16 @@ import '../styles/NumbersDonationForm.css';
 import cashappImg from '../imgs/cashapp.png';
 import venmoImg from '../imgs/venmo.png';
 import squareImg from '../imgs/square.png';
+import PaymentForm from './stripe/PaymentForm';
+import { StripeProvider } from '../stripe/StripeProvider';
+import {useStripe, useElements } from '@stripe/react-stripe-js';
 
 const NumbersDonationForm = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const { selectedTiles, totalSum, linkId } = location.state || {};
+    const stripe = useStripe();
+    const elements = useElements();
 
     const [formData, setFormData] = useState({
         firstName: '',
@@ -46,6 +51,23 @@ const NumbersDonationForm = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(false);
+    const [paymentSuccess, setPaymentSuccess] = useState(false);
+
+    const handlePaymentSuccess = async (paymentIntentId) => {
+        try {
+          await save_tiles(linkId, selectedTiles, 
+            `${formData.firstName} ${formData.lastName}`, 
+            formData.donationAmount, 
+            paymentIntentId);
+          
+          setSuccess(true);
+          setTimeout(() => {
+            navigate('/', { replace: true });
+          }, 3000);
+        } catch (error) {
+          setError(error.message || 'Error processing donation after payment');
+        }
+    };
 
     const validateForm = () => {
         const errors = {};
@@ -286,6 +308,17 @@ const NumbersDonationForm = () => {
                     </Grid>
 
                     <Typography variant="h6" className="form-section-title">
+                        Payment Details
+                    </Typography>
+
+                    <StripeProvider>
+                        <PaymentForm
+                          amount={parseFloat(formData.donationAmount)}
+                          onSuccess={handlePaymentSuccess}
+                          formData={formData}
+                        />
+                    </StripeProvider>
+                    {/*<Typography variant="h6" className="form-section-title">
                         Payment Methods
                     </Typography>
 
@@ -293,7 +326,7 @@ const NumbersDonationForm = () => {
                         <img src={cashappImg} alt="CashApp" className="payment-image" />
                         <img src={venmoImg} alt="Venmo" className="payment-image" />
                         <img src={squareImg} alt="Square" className="payment-image" />
-                    </div>
+                    </div> */}
 
                     <Box className="form-actions">
                         <Button
