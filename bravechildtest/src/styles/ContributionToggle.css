@@ -1,0 +1,33 @@
+.toggle-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.toggle-option {
+    flex: 1;
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    background-color: white;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.toggle-option:first-child {
+    border-radius: 5px 0 0 5px;
+}
+
+.toggle-option:last-child {
+    border-radius: 0 5px 5px 0;
+}
+
+.toggle-option.active {
+    background-color: #28a745;
+    color: white;
+    border-color: #28a745;
+}
+
+.toggle-option:not(.active):hover {
+    border-color: #28a745;
+}
