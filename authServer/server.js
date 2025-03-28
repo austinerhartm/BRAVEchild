@@ -7,6 +7,7 @@ import authRoutes from './routes/auth.js';
 import getRoutes from './routes/get.js';
 import sponsorRoutes from './routes/sponsor.js';
 import postRoutes from './routes/post.js';
+import donoRoutes from './routes/donation.js';
 
 const app = express();
 
@@ -20,7 +21,7 @@ const sslOptions = {
 // CORS configuration
 const corsOptions = {
     origin: function (origin, callback) {
-        const allowedOrigins = ['https://localhost:3000'];
+        const allowedOrigins = ['http://localhost:3000'];
         if (!origin || allowedOrigins.indexOf(origin) !== -1) {
             callback(null, true);
         } else {
@@ -40,6 +41,7 @@ app.use('/fetch', getRoutes);
 app.use('/auth', authRoutes);
 app.use('/post', postRoutes);
 app.use('/sponsor', sponsorRoutes); 
+app.use('/donation', donoRoutes);
 
 https.createServer(sslOptions, app).listen(PORT, 'localhost', () => {
     console.log(`Secure server running at https://localhost:${PORT}`);

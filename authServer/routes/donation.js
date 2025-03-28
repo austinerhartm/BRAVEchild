@@ -3,13 +3,13 @@ import transporter from '../config/mailer.js'
 
 const router = express.Router()
 
-
 async function sendDonationReciept(donationDetails) {
     try {
         const mailOptions= {
-            from: process.env.EMAIL_FROM, 
-            to: donationDetails.donorEmail, 
-            subject: `Donation Reciept - ${process.env.ORGANIZATION_NAME}`,
+            from: process.env.SENDER_EMAIL, 
+            to: donationDetails.donorEmail,
+            subject:'Test Email', 
+            //subject: `Donation Reciept - ${process.env.ORGANIZATION_NAME}`,
             html: generateRecieptHTML(donationDetails)
         }; 
 
@@ -22,11 +22,9 @@ async function sendDonationReciept(donationDetails) {
     }
 }
 
-/** 
 function generateTransactionId() {
     return `DON-${Date.now()}-${Math.random().toString(36).substr(2,9)}`; 
 }
-*/
 
 function generateRecieptHTML(donationDetails) {
     return  `
@@ -53,29 +51,40 @@ function generateRecieptHTML(donationDetails) {
 }
 
 router.post('/donate', async (req, res) => {
+    console.log("donation triggered", req.body);
+
     try {
-        /** 
+        const amount = parseFloat(req.body.amount); 
+
+        if (isNaN(amount)) {
+            return res.status(400).json({
+                message: 'Invalid donation amount', 
+                success: false
+            });
+        }
+
         const paymentResult = {
             transactionId: generateTransactionId()
         }
-        */
-
+        
         await sendDonationReciept({
             donorName: req.body.name,
             donorEmail: req.body.email,
-            amount: req.body.amount,
-            //transactionId: paymentResult.transactionId
+            amount: amount,
+            transactionId: paymentResult.transactionId
         });
 
         res.status(200).json({ 
             message: 'Donation processed successfully', 
-            //transactionId: paymentResult.transactionId
+            transactionId: paymentResult.transactionId
         });
     } catch (error) {
         console.error('Donation processing error:', error); 
         res.status(500).json({
-            message: 'Doantion processing failed', 
+            message: 'Donation processing failed', 
             error: error.message
         });
     }
 })
+
+export default router;
