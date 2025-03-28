@@ -99,7 +99,7 @@ const SponsorDonation = ({ onSubmit: externalSubmit }) => {
             validateAmount(value); 
         }
     };
-
+    
     const handleSubmit = (e) => {
         e.preventDefault(); 
 
@@ -121,7 +121,7 @@ const SponsorDonation = ({ onSubmit: externalSubmit }) => {
         
         
     };
-
+       
     const handleInputChange = (e) => {
         const { name, value } = e.target; 
         setFormData(prev => ({
@@ -153,7 +153,16 @@ const SponsorDonation = ({ onSubmit: externalSubmit }) => {
           
           setSuccess(true);
           setTimeout(() => {
-            navigate('/', { replace: true });
+            navigate('/thank-you', { 
+                replace: true,
+                state: {
+                    donationData: {
+                        name: `${formData.fName} ${formData.lName}`, 
+                        amount: formData.selectedAmount || parseFloat(formData.customAmount) || 0, 
+                        transactionId: paymentIntentId
+                    }
+                }
+             });
           }, 3000);
         } catch (error) {
           setError(error.message || 'Error processing donation after payment');
