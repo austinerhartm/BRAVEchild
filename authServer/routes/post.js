@@ -7,7 +7,7 @@ import { require_role } from '../middleware/require_role.js';
 const router = express.Router();
 
 router.post('/save_tiles', async (req, res) => {
-    const { link, tiles, donator: requestDonator, amount } = req.body;
+    const { link, tiles, donator: requestDonator, amount, paymentId } = req.body;
 
     if (!link || !tiles) {
         return res.status(400).json({ success: false, message: 'Id and selected tiles is required' });
@@ -33,7 +33,7 @@ router.post('/save_tiles', async (req, res) => {
             await db.execute('INSERT INTO donation_tile_selections (child_id, donator, selected_tile) VALUES (?,?,?)', [donee_info.child_id, finalDonator, tile]);
         }
 
-        await db.execute('INSERT INTO donations(user_id, amount, for_child) VALUES(?, ?, ?)', [6, amount, donee_info.child_id]);
+        await db.execute('INSERT INTO donations(user_id, amount, for_child) VALUES(?, ?, ?)', [6, amount, donee_info.child_id, paymentId]);
         await db.execute('UPDATE donation_receivers SET total_donations=total_donations+? WHERE child_id=?', [amount, donee_info.child_id]);
 
         res.status(200).json({ success: true, message: 'Tiles updated' });
