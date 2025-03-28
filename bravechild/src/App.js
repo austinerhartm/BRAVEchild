@@ -17,6 +17,8 @@ import SpecificChildDonations from './components/SpecificChildDonations';
 import NumbersDonationForm from './components/NumbersDonationForm';
 import SuperAdminPage from './components/SuperAdminPage';
 import LearnMore from './components/LearnMore';
+import EmailTest from './components/EmailTest.js';
+import ThankYou from './components/ThankYou.js';
 
 function App() {
     return (
@@ -28,11 +30,19 @@ function App() {
                         <Route path="/" element={<HomePage />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/create-user" element={<CreateUser />} />
+
+                        
                         <Route path="/sponsor-donations" element={
                             <StripeProvider>
                                 <SponsorDonations />
                             </StripeProvider>
                         } />
+                        <Route path="/sponsor-donations" element={<EmailTest />} />
+
+
+                        <Route path="/thank-you" element={<ThankYou/>} />
+
+
                         <Route path="/learn-more" element={<LearnMore />} />
                         <Route path="/child-donations/:linkId" element={<SpecificChildDonations />} />
                         <Route path="/child-donations/numbers-donation-form" element={
