@@ -33,3 +33,5 @@ yarn-debug.log*
 yarn-error.log*
 /bravechild/build
 /bravechild/node_modules
+bravechildtest/node_modules/.cache/babel-loader/00a005901df08d960a3306fc4d90bdf1e9c4ab0d9711ab5c9bb90f02c8ab44cd.json
+/bravechildtest/node_modules

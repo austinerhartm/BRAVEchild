@@ -36,15 +36,19 @@ import {
     Delete as DeleteIcon,
     Refresh as RefreshIcon,
     Download as DownloadIcon,
-    Home as HomeIcon
+    Home as HomeIcon,
+    Email as EmailIcon,
+    People as PeopleIcon
 } from '@mui/icons-material';
 
 import { add_donee } from '../services/add_donee';
 import { fetch_donees } from '../services/fetch_donees';
 import { fetch_donos } from '../services/fetch_donos';
 import { remove_donee } from '../services/remove_donee';
+import EmailManagement from './EmailManagement';
+import ParentManagement from './ParentManagement';
 
-const AdminDashboard = () => {
+const SuperAdminPage = () => {
     const [firstname, setFirst] = useState('');
     const [lastname, setLast] = useState('');
     const [donations, setDonations] = useState([]);
@@ -59,6 +63,7 @@ const AdminDashboard = () => {
     const [dialogOpen, setDialogOpen] = useState(false);
     const [doneeToDelete, setDoneeToDelete] = useState(null);
     const [copySuccess, setCopySuccess] = useState('');
+    
     function formatDate(date) {
         if (!date) return '';
         const options = {
@@ -217,6 +222,8 @@ const AdminDashboard = () => {
                     >
                         <Tab label="Donations" />
                         <Tab label="Manage Donees" />
+                        <Tab label="Email Management" icon={<EmailIcon />} iconPosition="start" />
+                        <Tab label="Parent Management" icon={<PeopleIcon />} iconPosition="start" />
                     </Tabs>
 
                     {/* Donations Tab */}
@@ -294,7 +301,6 @@ const AdminDashboard = () => {
                                         color: 'success.contrastText'
                                     }}
                                     action={
-                                        //Needs to be implemented
                                         <Button
                                             startIcon={<DownloadIcon />}
                                             variant="outlined"
@@ -517,6 +523,16 @@ const AdminDashboard = () => {
                             </Card>
                         </>
                     )}
+
+                    {/* Email Management Tab */}
+                    {tabValue === 2 && (
+                        <EmailManagement donees={donees} fetchDonees={fetchData} />
+                    )}
+                    
+                    {/* Parent Database Tab */}
+                    {tabValue === 3 && (
+                        <ParentManagement donees={donees} />
+                    )}
                 </Paper>
             </Container>
 
@@ -542,4 +558,4 @@ const AdminDashboard = () => {
     );
 };
 
-export default AdminDashboard;
+export default SuperAdminPage;
