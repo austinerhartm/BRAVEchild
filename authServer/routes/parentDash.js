@@ -23,6 +23,5 @@ router.get('/parent-dashboard/:parentId', async (req, res) => {
         console.error('Error fetching parent and child details:', error);
         res.status(500).json({ success: false, message: 'Server error' });
     }
-});
-
-export default router;
+}
+);
