@@ -7,6 +7,7 @@
 /node_modules
 /authServer/node_modules
 /braveChild/node_modules
+/bravechildtest/node_modules
 /.pnp
 .pnp.js
 /authServer/certs

@@ -13,6 +13,7 @@ import CreateUser from './components/CreateUser'
 import DonoPage from './components/Donation'
 import SponsorDonations from './components/SponsorDonations';
 import UserDashboard from './components/UserDashboard';
+import ParentDashboard from './components/ParentDashboard';
 import SpecificChildDonations from './components/SpecificChildDonations';
 import NumbersDonationForm from './components/NumbersDonationForm';
 import SuperAdminPage from './components/SuperAdminPage';
@@ -41,7 +42,7 @@ function App() {
 
 
                         <Route path="/thank-you" element={<ThankYou/>} />
-
+                        <Route path="/parent-dashboard/:parentId" element={<ParentDashboard />} />
 
                         <Route path="/learn-more" element={<LearnMore />} />
                         <Route path="/child-donations/:linkId" element={<SpecificChildDonations />} />

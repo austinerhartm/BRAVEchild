@@ -8,6 +8,7 @@ import getRoutes from './routes/get.js';
 import sponsorRoutes from './routes/sponsor.js';
 import postRoutes from './routes/post.js';
 import paymentRoutes from './routes/payment.js';
+import parentDashRoutes from './routes/parentDash.js';
 import emailRoutes from './routes/email.js';
 import parentRoutes from './routes/parent.js';
 
@@ -44,6 +45,7 @@ app.use('/auth', authRoutes);
 app.use('/post', postRoutes);
 app.use('/sponsor', sponsorRoutes); 
 app.use('/payment', paymentRoutes);
+app.use('/', parentDashRoutes);
 app.use('/email', emailRoutes);
 app.use('/parents', parentRoutes);
 
