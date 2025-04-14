@@ -4,22 +4,30 @@ import { authenticateToken } from '../middleware/token_auth.js';
 import 'dotenv/config';
 import db from '../config/db.js';
 import transporter from '../config/mailer.js'
+import { generateDonationReceipt, savePdfToFileSystem } from '../utilities/pdfGenerator.js';  
 
 const router = express.Router();
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 //sets the mailoptions for nodemailer and sends 
-async function sendDonationReciept(donationDetails) {
+async function sendDonationRecieptWithPdf(donationDetails, pdfBuffer, filename) {
   try {
       const mailOptions= {
           from: process.env.SENDER_EMAIL, 
           to: donationDetails.donorEmail,
           subject: 'Donation Reciept - BRAVE Child',
-          html: generateRecieptHTML(donationDetails)
+          html: generateRecieptHTML(donationDetails),
+          attachments: [
+            {
+              filename: filename, 
+              content: pdfBuffer, 
+              contentType: 'application/pdf'
+            }
+          ] 
       }; 
 
       const info = await transporter.sendMail(mailOptions);
-      console.log('Receipt email sent:', info.messageId);
+      console.log('Receipt email with pdf sent:', info.messageId);
       return info;
   } catch (error) {
       console.error('Email sending error:', error); 
@@ -52,41 +60,6 @@ function generateRecieptHTML(donationDetails) {
   `
 }
 
-//helper trigger function to start reciept behavior 
-async function triggerReceipt(req, res) {
-  try {
-      const amount = parseFloat(req.body.amount); 
-
-      if (isNaN(amount)) {
-          return res.status(400).json({
-              message: 'Invalid donation amount', 
-              success: false
-          });
-      }
-
-      const paymentResult = {
-          paymentId: req.body.paymentId
-      }
-      
-      await sendDonationReciept({
-          donorName: req.body.name,
-          donorEmail: req.body.email,
-          amount: amount,
-          paymentId: paymentResult.paymentId
-      });
-
-      res.status(200).json({ 
-          message: 'Donation processed successfully', 
-          paymentId: paymentResult.paymentId
-      });
-  } catch (error) {
-      console.error('Donation processing error:', error); 
-      res.status(500).json({
-          message: 'Donation processing failed', 
-          error: error.message
-      });
-  }
-}
 
 router.post('/create-payment-intent', authenticateToken, async (req, res) => {
     console.log('Received payment intent request: ', req.body);
@@ -131,20 +104,34 @@ router.post('/save-donation', authenticateToken, async (req, res) => {
       });
     }
     
-    // trigger reciept send and check for success 
-    const recieptResult = await triggerReceipt(req, res); 
-    if (!recieptResult.success) {
-      console.warn('Reciept sending failed but will continue with donation save:', recieptResult.error)
-    }
+    const donationDetails = {
+      donorName: name || 'Anonymous',
+      donorEmail: email, 
+      amount: amount, 
+      transactionId: paymentId, 
+      date: new Date(),
+      paymentMethod: 'Credit Card'
+    };
+
+    // Generate and save the reciept 
+    const { buffer, filename } = await generateDonationReceipt(donationDetails);
+    const filePath = await savePdfToFileSystem(buffer, filename);
 
     const [result] = await db.execute(
-      'INSERT INTO donations (user_id, amount, payment_id, donator_name, donator_email, created_at) VALUES (?, ?, ?, ?, ?, NOW())',
-      [userId, amount, paymentId, name || 'Anonymous', email || null]
+      'INSERT INTO donations (user_id, amount, payment_id, donator_name, donator_email, receipt_path, created_at) VALUES (?, ?, ?, ?, ?, ?, NOW())',
+      [userId, amount, paymentId, name || 'Anonymous', email || null, filePath]
+    );
+
+    await sendDonationRecieptWithPdf(donationDetails, buffer, filename);
+
+    await db.execute(
+      'UPDATE donations SET receipt_sent = TRUE WHERE payment_id = ?',
+      [paymentId]
     );
 
     res.status(200).json({
       success: true,
-      message: 'Donation saved successfully',
+      message: 'Donation saved successfully and reciept sent',
       donationId: result.insertId
     });
   } catch (error) {
@@ -155,5 +142,6 @@ router.post('/save-donation', authenticateToken, async (req, res) => {
     });
   }
 });
+
 
 export default router;
