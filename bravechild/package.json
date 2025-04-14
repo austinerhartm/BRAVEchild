@@ -10,7 +10,6 @@
     "@stripe/react-stripe-js": "^3.5.1",
     "@stripe/stripe-js": "^6.1.0",
     "axios": "^1.7.9",
-    "canvas": "^2.11.2",
     "canvas-confetti": "^1.9.3",
     "cra-template": "1.2.0",
     "react": "^18.0.0",

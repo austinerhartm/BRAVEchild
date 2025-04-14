@@ -8,6 +8,8 @@ import getRoutes from './routes/get.js';
 import sponsorRoutes from './routes/sponsor.js';
 import postRoutes from './routes/post.js';
 import paymentRoutes from './routes/payment.js';
+import parentRoutes from './routes/parent.js';
+
 
 const app = express();
 
@@ -42,6 +44,7 @@ app.use('/auth', authRoutes);
 app.use('/post', postRoutes);
 app.use('/sponsor', sponsorRoutes); 
 app.use('/payment', paymentRoutes);
+app.use('/', parentRoutes);
 
 https.createServer(sslOptions, app).listen(PORT, 'localhost', () => {
     console.log(`Secure server running at https://localhost:${PORT}`);
