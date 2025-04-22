@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom'; 
+import { useLocation, useNavigate } from 'react-router-dom'; 
+import { Typography } from '@mui/material';
 import ContributionToggle from './sponsor/ContributionToggle';
 import PresetAmountButtons from './sponsor/PresetAmountButtons';
 import CustomAmountField from './sponsor/CustomAmountField';
 import DonationForm from './sponsor/DonationForm';
 import { get_dono_amount } from '../services/get_dono_amount';
+import { StripeProvider } from '../stripe/StripeProvider';
+import PaymentForm from './stripe/PaymentForm';
+import api from '../services/api.service';
 import '../styles/SponsorDonations.css';
 
 const SponsorDonation = ({ onSubmit: externalSubmit }) => {
     const location = useLocation(); 
+    const navigate = useNavigate();
+    const [success, setSuccess] = useState(false);
+    const [error, setError] = useState(null);
     const [isTyping, setIsTyping] = useState(false)
     const [errors, setErrors] = useState({});
     const [errorMessage, setErrorMessage] = useState('')
@@ -21,6 +28,7 @@ const SponsorDonation = ({ onSubmit: externalSubmit }) => {
         email: ''
     });
 
+
     const MIN_DONATION_AMOUNT = 5; 
 
     useEffect(() => {
@@ -30,6 +38,7 @@ const SponsorDonation = ({ onSubmit: externalSubmit }) => {
     }, [location.state]);
 
     const validateForm = () => {
+        console.log('Validating form with data:', formData);
         const newErrors = {}; 
         if (!formData.fName) newErrors.firstName = 'First name is required';
         if (!formData.lName) newErrors.lastName = 'Last name is required';
@@ -38,9 +47,10 @@ const SponsorDonation = ({ onSubmit: externalSubmit }) => {
             (formData.customAmount && parseFloat(formData.customAmount) >= MIN_DONATION_AMOUNT);
         
         if (!hasValidAmount) {
-            newErrors.amount = 'Please select or enter a dontaion amount';
+            newErrors.amount = 'Please select or enter a donation amount';
         }
 
+        console.log('Validation errors:', newErrors);
         setErrors(newErrors); 
         return Object.keys(newErrors).length === 0; 
     };
@@ -89,7 +99,7 @@ const SponsorDonation = ({ onSubmit: externalSubmit }) => {
             validateAmount(value); 
         }
     };
-
+    
     const handleSubmit = (e) => {
         e.preventDefault(); 
 
@@ -111,7 +121,7 @@ const SponsorDonation = ({ onSubmit: externalSubmit }) => {
         
         
     };
-
+       
     const handleInputChange = (e) => {
         const { name, value } = e.target; 
         setFormData(prev => ({
@@ -123,6 +133,41 @@ const SponsorDonation = ({ onSubmit: externalSubmit }) => {
             setErrors(prev => ({...prev, [name]: ''})); 
         }
     };
+
+    const handlePaymentSuccess = async (paymentIntentId) => {
+        const token = sessionStorage.getItem('accessToken');
+        console.log('Payment successful, payment intent id: ', paymentIntentId);
+        try {
+          const response = await api.post('/payment/save-donation', {
+            userId: formData?.userId || 0,
+            name: `${formData.fName} ${formData.lName}`,
+            email: formData.email,
+            amount: formData.selectedAmount || parseFloat(formData.customAmount) || 0,
+            paymentId: paymentIntentId
+          }, {
+            headers: {
+              Authorization: `Bearer ${token}`
+            },
+          });
+          console.log('Server response:', response.data);
+          
+          setSuccess(true);
+          setTimeout(() => {
+            navigate('/thank-you', { 
+                replace: true,
+                state: {
+                    donationData: {
+                        name: `${formData.fName} ${formData.lName}`, 
+                        amount: formData.selectedAmount || parseFloat(formData.customAmount) || 0, 
+                        transactionId: paymentIntentId
+                    }
+                }
+             });
+          }, 3000);
+        } catch (error) {
+          setError(error.message || 'Error processing donation after payment');
+        }
+      };
 
     return (
         <>
@@ -155,11 +200,27 @@ const SponsorDonation = ({ onSubmit: externalSubmit }) => {
                     onChange={handleInputChange}
                     errors={errors}
                 />
+
+                <Typography variant="h6" className="form-section-title">
+                    Payment Details
+                </Typography>
+
+                <StripeProvider>
+                    <PaymentForm
+                      amount={formData.selectedAmount || parseFloat(formData.customAmount) || 0}
+                      onSuccess={handlePaymentSuccess}
+                      formData={{
+                          firstName: formData.fName,
+                          lastName: formData.lName,
+                          email: formData.email,
+                        }}
+                    />
+                </StripeProvider> 
                 {errorMessage && <div className="error-message">{errorMessage}</div>}
 
-                <button type="submit" className='submit-button' onClick={handleSubmit}>
+                {/*<button type="submit" className='submit-button' onClick={handleSubmit}>
                     Donate
-                </button>
+                </button>*/}
             </div>
 
             <div>

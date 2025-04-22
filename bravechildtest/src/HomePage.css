@@ -1,0 +1,429 @@
+/* Background and Layout */
+/*.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    color: rgb(0, 0, 0);
+    text-align: center;
+} */
+
+/* Dark overlay for readability */
+/*.overlay {
+    background: rgba(0, 0, 0, 0.6);
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+} */
+
+/* Headings */
+/*.page h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+} */
+
+.page-container {
+    background-color: #e8f5e9;
+    min-height: 100vh;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.navbar {
+    background-color: rgb(255, 255, 255);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: .1rem 0;
+    flex-direction: row;
+}
+
+.navbar-title {
+    display: flex;
+    font-size: 1rem;
+    font-weight: bold;
+    align-items: center;
+    color: rgb(140, 0, 175);
+}
+
+.navbar-logo img {
+    height: 100px;
+    margin-right: 10px;
+    cursor: pointer;
+
+}
+
+.navbar-list ul {
+    list-style: none;
+    justify-content: space-around;
+    display: flex;
+    gap: 20px;
+    flex-direction: row;
+}
+
+.navbar-list ul li {
+    display: flex;
+    align-items:last baseline;
+    padding: 20px;
+    flex-direction: row;
+    margin-right: 20px;
+}
+
+.navbar-list ul li a {
+    text-decoration: none;
+    color: black;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.navbar-divider-vertical {
+    border-left: 1px solid;
+    height: 60px;
+    margin: 0 7.5px;
+    position: inline;
+    align-self: middle;
+    display: fixed;
+    color:rgb(140, 0, 175)
+}
+
+.whoweare-container {
+    background-color: rgb(205, 242, 255);
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 100px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    min-height: 20vh;
+}
+
+.whoweare-container h2 {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding: 30px;
+    font-size: 2rem;
+}
+
+.whoweare-container p {
+    margin-top: 0;
+    margin-bottom: 0px;
+    padding: 30px;
+    font-size: 1.5rem;
+}
+
+.hippotherapy-container {
+    background-color: rgb(127, 247, 127);
+    margin-left: 100px;
+    margin-top: 0;
+    margin-right: 100px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    min-height: 60vh;
+    padding: 2rem;
+}
+
+.hippotherapy-text-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    max-width: 50%;
+    padding: 0 2rem;
+    flex: 1 0;
+}
+
+.hippotherapy-container h2 {
+    margin: 0;
+    padding: 30px;
+    font-style: monospace;
+    font-size: 3rem;
+    text-align: center;
+    color: rgb(0, 0, 0)
+}
+
+.hippotherapy-container p {
+    margin: 0;
+    padding: 30px;
+    font-style: monospace;
+    font-size: 1.5rem;
+    text-align: center;
+    color: rgb(0, 0, 0)
+}
+
+.hippotherapy-container-img {
+    margin: 0;
+    padding: 0;
+    max-width: 50%;
+    height: auto;
+    object-fit: cover;
+    overflow: hidden;
+    flex: 1 0;
+}
+
+.equinetherapy-container {
+    background-color: rgb(244, 241, 41);
+    margin-left: 100px;
+    margin-top: 0;
+    margin-right: 100px;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    padding: 2rem;
+}
+
+.equinetherapy-container h2 {
+    margin: 0;
+    padding: 30px;
+    font-style: monospace;
+    font-size: 3rem;
+    text-align: center;
+    color: rgb(0, 0, 0);
+    flex: 1 0;
+}
+
+.equinetherapy-container p {
+    margin: 0;
+    padding: 30px;
+    font-style: monospace;
+    font-size: 1.5rem;
+    text-align: center;
+    color: rgb(0, 0, 0);
+}
+
+.equinetherapy-container-img {
+    margin: 0;
+    padding: 0;
+    max-width: 110%;
+    height: 100%;
+    flex: 1 0;
+}
+
+.how-can-you-help-container {
+    background-color: pink;
+    margin-left: 100px;
+    margin-right: 100px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2rem 0;
+    width: calc(100% - 200px);
+    flex: 1 0;
+}
+
+.navbar-divider-vertical-how-help {
+    border-left: 1px solid;
+    height: 100px;
+    margin: 0 7.5px;
+    position: inline;
+    align-self: middle;
+    display: fixed;
+    color:rgb(0, 0, 0)
+}
+
+.how-can-you-help-sponsor,
+.how-can-you-help-donate,
+.how-can-you-help-enroll {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 33%;
+    padding: 0 1rem;
+}
+
+.how-can-you-help-sponsor h2 {
+    margin: 0;
+    padding: 30px;
+    font-style: monospace;
+    font-size: 1.5rem;
+    text-align: center;
+    color: rgb(0, 0, 0);
+}
+
+.how-can-you-help-sponsor button {
+    background: #ffffff;
+    border: 1px solid #000000;
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 16px;
+    min-height: 40px;
+    outline: 0;
+    padding: 12px 14px;
+    text-align: center;
+    text-rendering: geometricprecision;
+    text-transform: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: middle;
+    margin: 10px auto;
+    color: #000000;
+}
+
+
+
+.how-can-you-help-donate h2 {
+    margin: 0;
+    padding: 30px;
+    font-style: monospace;
+    font-size: 1.5rem;
+    text-align: center;
+    color: rgb(0, 0, 0);
+}
+
+.how-can-you-help-donate button {
+    background: #ffffff;
+    border: 1px solid #000000;
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 16px;
+    min-height: 40px;
+    outline: 0;
+    padding: 12px 14px;
+    text-align: center;
+    text-rendering: geometricprecision;
+    text-transform: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: middle;
+    margin: 10px auto;
+    color: #000000;
+}
+
+.how-can-you-help-enroll h2 {
+    margin: 0;
+    padding: 20px;
+    font-style: monospace;
+    font-size: 1.5rem;
+    text-align: center;
+    color: rgb(0, 0, 0);
+}
+
+.how-can-you-help-enroll button {
+    background: #ffffff;
+    border: 1px solid #000000;
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 16px;
+    min-height: 40px;
+    outline: 0;
+    padding: 12px 14px;
+    text-align: center;
+    text-rendering: geometricprecision;
+    text-transform: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: middle;
+    margin: 10px auto;
+    color: #000000;
+}
+
+
+.brave-501c-container {
+    background-color: rgb(255, 255, 255);
+    margin-top: 100px;
+    margin-right: 500px;
+    margin-left: 500px;
+    margin-bottom: 50px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    outline: solid;
+    flex: 1 0;
+    overflow: auto;
+}
+
+.footer {
+    background-color: darkcyan;
+    padding: 40px 10px;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-top: 100px;
+    display: flex;
+    width: 100%;
+    flex: 1 0;
+}
+
+.footer-section {
+    flex: 1;
+    padding: 20px 2rem;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.footer h2 {
+    color: white;
+    font-size: 2.2rem;
+    margin-bottom: 2rem;
+}
+
+.footer p{
+    color: white;
+    font-size: 1.3rem;
+    margin: 0.8rem 0;
+    text-align: center;
+}
+
+.footer-social-icons {
+    display: flex;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.footer-social-icons img {
+    width: 40px;
+    height: 40px;
+    transition: transform 0.2s;
+}
+
+.footer-social-icons img:hover {
+    transform: scale(1.1);
+}
+

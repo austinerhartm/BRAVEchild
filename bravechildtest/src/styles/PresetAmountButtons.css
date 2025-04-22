@@ -1,0 +1,29 @@
+/* Preset amounts container */
+.preset-amounts {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;  /* Match container width */
+    margin-bottom: 20px;
+    padding: 0 5px;
+}
+
+.amount-button {
+    flex: 1;
+    margin: 0 5px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.amount-button:hover {
+    border-color: #28a745;
+}
+
+.amount-button.selected {
+    background-color: #28a745;
+    color: white;
+    border-color: #28a745;
+}
