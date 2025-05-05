@@ -43,12 +43,21 @@
     top: 0;
     width: 100%;
     z-index: 100;
-    height: auto;
+    height: 100px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: .1rem 0;
+    padding: 0.5rem 1rem;
     flex-direction: row;
+    transition: height 0.3s ease, padding 0.3s ease;
+}
+
+.navbar-scrolled {
+    height: 60px;
+    padding: 0.25rem 1rem;
+    background-color: rgba(255, 255, 255, 0.296);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-position: 50%;
 }
 
 .navbar-title {
@@ -100,10 +109,8 @@
 }
 
 .whoweare-container {
-    background-color: rgb(205, 242, 255);
-    margin-left: 100px;
-    margin-right: 100px;
-    margin-top: 100px;
+    background-color: #FE5FCE;
+    margin-top: 150px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -124,25 +131,100 @@
     font-size: 1.5rem;
 }
 
+.first-homepage-img-container {
+    width: 100%;
+    display: flex;
+    height: 65vh;
+    justify-content: space-evenly;
+    gap: 20px;
+    padding: 0 30px;
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+.first-homepage-img img {
+    width: calc(33.333% - 14px);
+    height: 455px;
+    object-fit: cover;
+    margin-top: 0;
+    border-radius: 0px;
+}
+
+.second-homepage-img img {
+    width: calc(33.333% - 14px);
+    height: 455px;
+    object-fit: scale-down;
+    margin-top: 0;
+    border-radius: 8px;
+}
+
+/*@media (max-width: 768px) {
+    .first-homepage-img img {
+        flex-direction: column;
+        padding: 0 15px;
+    }
+
+    .first-homepage-img img {
+        width: 100%;
+        height: auto;
+        margin-bottom: 20px;
+    }
+
+    .second-homepage-img img {
+        flex-direction: column;
+        padding: 0 15px;
+    }
+
+    .second-homepage-img img {
+        width: 100%;
+        height: auto;
+        margin-bottom: 20px;
+    }
+}*/
+
+.mission-statement-container {
+    margin-top: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 0;
+}
+
+.mission-statement-container h2 {
+    margin: 0;
+    padding: 0px;
+    font-style: monospace;
+    font-size: 3rem;
+    text-align: center;
+    color: rgb(255, 255, 255);
+}
+
+.mission-statement-container p {
+    margin: 0;
+    padding: 30px;
+    font-style: monospace;
+    font-size: 1.5rem;
+    text-align: center;
+    color: rgb(255, 255, 255);
+}
+
 .hippotherapy-container {
     background-color: rgb(127, 247, 127);
-    margin-left: 100px;
     margin-top: 0;
-    margin-right: 100px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
     flex-wrap: nowrap;
     min-height: 60vh;
-    padding: 2rem;
 }
 
 .hippotherapy-text-content {
     display: flex;
     flex-direction: column;
     flex: 1;
-    max-width: 50%;
+    min-width: 50%;
     padding: 0 2rem;
     flex: 1 0;
 }
@@ -165,27 +247,36 @@
     color: rgb(0, 0, 0)
 }
 
-.hippotherapy-container-img {
-    margin: 0;
-    padding: 0;
-    max-width: 50%;
-    height: auto;
-    object-fit: cover;
+.hippotherapy-container img {
+    width: 100%;
+    height: 430px;
+    object-fit: fill;
     overflow: hidden;
-    flex: 1 0;
+    margin-top: 5px;
+    border-radius: 5px;
+    margin-right: 5px;
 }
+
 
 .equinetherapy-container {
     background-color: rgb(244, 241, 41);
-    margin-left: 100px;
     margin-top: 0;
-    margin-right: 100px;
+    overflow: hidden;
     display: flex;
     flex-direction: row-reverse;
     align-items: center;
     justify-content: space-between;
     flex-wrap: nowrap;
-    padding: 2rem;
+    min-height: 60vh;
+}
+
+.equinetherapy-text-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 50%;
+    padding: 0 2rem;
+    flex: 1 0;
 }
 
 .equinetherapy-container h2 {
@@ -207,24 +298,29 @@
     color: rgb(0, 0, 0);
 }
 
-.equinetherapy-container-img {
-    margin: 0;
-    padding: 0;
-    max-width: 110%;
-    height: 100%;
-    flex: 1 0;
+.equinetherapy-img img {
+    width: 100%;
+    height: 430px;
+    object-fit: fill;
+    overflow: hidden;
+    margin-top: 5px;
+    border-radius: 4px;
+    margin-left: 5px;
+}
+
+.hippotherapy-container,
+.equinetherapy-container,
+.footer {
+    scroll-snap-stop: always;
 }
 
 .how-can-you-help-container {
-    background-color: pink;
-    margin-left: 100px;
-    margin-right: 100px;
+    background-color: #FE5FCE;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
     padding: 2rem 0;
-    width: calc(100% - 200px);
     flex: 1 0;
 }
 
@@ -325,7 +421,7 @@
 
 .how-can-you-help-enroll h2 {
     margin: 0;
-    padding: 20px;
+    padding: 30px;
     font-style: monospace;
     font-size: 1.5rem;
     text-align: center;
