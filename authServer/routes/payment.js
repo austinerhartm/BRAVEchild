@@ -10,13 +10,13 @@ const router = express.Router();
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 //sets the mailoptions for nodemailer and sends 
-async function sendDonationRecieptWithPdf(donationDetails, pdfBuffer, filename) {
+async function sendDonationReceiptWithPdf(donationDetails, pdfBuffer, filename) {
   try {
       const mailOptions= {
           from: process.env.SENDER_EMAIL, 
           to: donationDetails.donorEmail,
-          subject: 'Donation Reciept - BRAVE Child',
-          html: generateRecieptHTML(donationDetails),
+          subject: 'Donation Receipt - BRAVE Child',
+          html: generateReceiptHTML(donationDetails),
           attachments: [
             {
               filename: filename, 
@@ -36,7 +36,7 @@ async function sendDonationRecieptWithPdf(donationDetails, pdfBuffer, filename) 
 }
 
 //define here what html to be displayed in the email 
-function generateRecieptHTML(donationDetails) {
+function generateReceiptHTML(donationDetails) {
   return  `
   <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
     <h1>Thank You for Your Donation</h1>
@@ -59,7 +59,6 @@ function generateRecieptHTML(donationDetails) {
   </div>
   `
 }
-
 
 router.post('/create-payment-intent', authenticateToken, async (req, res) => {
     console.log('Received payment intent request: ', req.body);
@@ -122,7 +121,7 @@ router.post('/save-donation', authenticateToken, async (req, res) => {
       [userId, amount, paymentId, name || 'Anonymous', email || null, filePath]
     );
 
-    await sendDonationRecieptWithPdf(donationDetails, buffer, filename);
+    await sendDonationReceiptWithPdf(donationDetails, buffer, filename);
 
     await db.execute(
       'UPDATE donations SET receipt_sent = TRUE WHERE payment_id = ?',
