@@ -17,7 +17,7 @@ const HomePage = () => {
             <div className="navbar">
                 <div className="navbar-title">
                     <div className="navbar-logo">
-                        <Link to="/"><img src="/BRAVEpic.png" alt="logo" /></Link>
+                        <Link to="/"><img src="/BRAVEPic.png" alt="logo" /></Link>
                     </div>
                     <h1>B.R.A.V.E Child Inc</h1>
                 </div>
