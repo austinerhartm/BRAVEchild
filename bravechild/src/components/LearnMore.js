@@ -1,27 +1,43 @@
-import React from 'react';
+import React, { useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 import FAQ from '../components/FAQ';
 import '../styles/FAQ.css';
 import '../styles/LearnMore.css';
 
 const LearnMore = () => {
+    const [isScrolled, setIsScrolled] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.scrollY > 50) {
+                setIsScrolled(true);
+            } else {
+                setIsScrolled(false);
+            }
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll); 
+    }, []);
+
     return (
         <div className="page-container">
-            <div className="navbar">
-                <div className="navbar-title">
-                    <div className="navbar-logo">
-                        <Link to="/"><img src="/BRAVEpic.png" alt="logo" /></Link>
+            <div className={`navbar ${isScrolled ? 'navbar-scrolled' : ''}`}>
+                <div className="navbar">
+                    <div className="navbar-title">
+                        <div className="navbar-logo">
+                            <Link to="/"><img src="/BRAVEpic.png" alt="logo" /></Link>
+                        </div>
+                        <h1>B.R.A.V.E Child Inc</h1>
                     </div>
-                    <h1>B.R.A.V.E Child Inc</h1>
-                </div>
-                <div className="navbar-list">
-                    <ul>
-                        <li><a href="/login">Login</a></li>
-                        <div className="navbar-divider-vertical"></div>
-                        <li><a href="/create-user">Create User</a></li>
-                        <div className="navbar-divider-vertical"></div>
-                        <li><a href="/sponsor-donations">Donate Here</a></li>
-                    </ul>
+                    <div className="navbar-list">
+                        <ul>
+                            <li><a href="/login">Login</a></li>
+                            <div className="navbar-divider-vertical"></div>
+                            <li><a href="/create-user">Create User</a></li>
+                            <div className="navbar-divider-vertical"></div>
+                            <li><a href="/sponsor-donations">Donate Here</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 

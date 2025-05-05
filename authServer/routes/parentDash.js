@@ -25,3 +25,5 @@ router.get('/parent-dashboard/:parentId', async (req, res) => {
     }
 }
 );
+
+export default router;

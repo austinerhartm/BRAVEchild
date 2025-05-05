@@ -1,11 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import auth from './services/auth.service';
 import SponsorDonations from './components/SponsorDonations';
+import firstHomepageImg from './imgs/first-homepage-imgMod.jpg';
+import secondHomepageImg from './imgs/second-homepage-img.jpg';
+import thirdHomepageImg from './imgs/third-homepage-img.jpg';
+import hippoTherapyImg from './imgs/hippotherapy-img.jpg';
+import equineTherapyImg from './imgs/equinetherapy-img.jpg';
 import './HomePage.css';
 
 const HomePage = () => {
     const navigate = useNavigate(); 
+    const [isScrolled, setIsScrolled] = useState(false);
+
+    useEffect(() => () => {
+        const handleScroll = () => {
+            if (window.scrollY > 50) {
+                setIsScrolled(true);
+            } else {
+                setIsScrolled(false);
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     const handleSubmit = (e, formData) => {
         e.preventDefault(); 
@@ -14,62 +34,103 @@ const HomePage = () => {
 
     return (
         <div className="page-container">
-            <div className="navbar">
-                <div className="navbar-title">
-                    <div className="navbar-logo">
-                        <Link to="/"><img src="/BRAVEpic.png" alt="logo" /></Link>
+            <div className={`navbar ${isScrolled ? 'navbar-scrolled' : ''}`}>
+                <div className="navbar">
+                    <div className="navbar-title">
+                        <div className="navbar-logo">
+                            <Link to="/"><img src="/BRAVEpic.png" alt="logo" /></Link>
+                        </div>
+                        <h1>B.R.A.V.E Child Inc</h1>
                     </div>
-                    <h1>B.R.A.V.E Child Inc</h1>
-                </div>
-                <div className="navbar-list">
-                    <ul>
-                        {!auth.isAuthenticated() ? (
-                            <li><a href="/login">Login</a></li>
-                        ) : (
-                            <li><a href="/super/secret/page">Dashboard</a></li>
-                        )}
-                        <div className="navbar-divider-vertical"></div>
-                        {!auth.isAuthenticated() ? (
-                            <li><a href="/create-user">Create User</a></li>
-                        ) : (
-                                <li> <a href="/" onClick={ async (e) => { e.preventDefault(); await auth.logout(); window.location.href = '/'; }}>Logout</a></li>
-                        )}
-                        <div className="navbar-divider-vertical"></div>
-                        <li><a href="/sponsor-donations">Donate Here</a></li>
-                    </ul>
+                    <div className="navbar-list">
+                        <ul>
+                            {!auth.isAuthenticated() ? (
+                                <li><a href="/login">Login</a></li>
+                            ) : (
+                                <li><a href="/super/secret/page">Dashboard</a></li>
+                            )}
+                            <div className="navbar-divider-vertical"></div>
+                            {!auth.isAuthenticated() ? (
+                                <li><a href="/create-user">Create User</a></li>
+                            ) : (
+                                    <li> <a href="/" onClick={ async (e) => { e.preventDefault(); await auth.logout(); window.location.href = '/'; }}>Logout</a></li>
+                            )}
+                            <div className="navbar-divider-vertical"></div>
+                            <li><a href="/sponsor-donations">Donate Here</a></li>
+                        </ul>
+                    </div>
+                    <div className="navbar-bottom-list">
+                        <ul>
+                            <li><a href="#top" onClick={(e) => {
+                                e.preventDefault();
+                                window.scrollTo({ top: 0, behavior: 'smooth' });
+                            }}>Home</a></li>
+                            <li><a href="hippotherapy" onClick={(e) => {
+                                e.preventDefault();
+                                document.querySelector('.hippotherapy-container').scrollIntoView({ behavior: 'smooth' });
+                            }}>Hippotherapy</a></li>
+                            <li><a href="#equinetherapy" onClick={(e) => {
+                                e.preventDefault();
+                                document.querySelector('.equinetherapy-container').scrollIntoView({ behavior: 'smooth' });
+                            }}>Equine Therapy</a></li>
+                            <li><a href="#contact" onClick={(e) => {
+                                e.preventDefault();
+                                document.querySelector('.footer').scrollIntoView({ behavior: 'smooth' });
+                            }}>Contact Us</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
             <div className="whoweare-container">
                 <h2>Welcome to BRAVEChild</h2>
                 <p><span style={{fontWeight: 'bold' }}>Building and Restoring Abilities Via Equine </span> 
-                   is a team of therapists and parents working together to raise funds <br /> 
-                   to assist with covering the cost of the equine service fee</p>
+                   is a team of therapists and parents working together to raise funds
+                   to assist with covering the cost of the equine service fee.</p>
             </div>
 
-            <div className="hippotherapy-container">
-                <div className="hippotherapy-container-img">
-                    <img src="/EquineTherapyPic.jpg" alt="hippotherapypic" />
+            <div className="first-homepage-img-container">
+                <img src={firstHomepageImg} alt="first-homepage-img" />
+                <img src={secondHomepageImg} alt="second-homepage-img" />
+                <img src={thirdHomepageImg} alt="third-homepage-img" />
+            </div>
+
+            <div className="mission-statement-container">
+                <div className="mission-statement-text-content">
+                    <h2>Our Mission Statement</h2>
+                    <p>B.R.A.V.E. Child, Inc is a non-profit organization that was created and designed
+                        with parents in mind. By providing opportunites to decrease the cost of equine services
+                        and facility fees. So, parents can focus on their child and their child's needs,
+                        knowing that financial barriers to receiving these services are removed.B.R.A.V.E.
+                        Child, Inc creates fundraising opportunities for families of children with or without
+                        disabilities, enabling them to participate in hippotherapy or equine therapy services.
+                    </p>
                 </div>
+            </div>
+            
+            <div className="hippotherapy-container">
                 <div className="hippotherapy-text-content">
-                    <h2>How Hippotherapy Helps</h2>
+                    <h2>Hippotherapy Benefits</h2>
                     <p>Hippotherapy allows the child to work on balance, core strength,
                         endurance, motor planning, attention to task, and fine 
                         motor skills using the horse's movement to stimulate the overall body.
                     </p>
                 </div>
+                <div className="hippotherapy-img">
+                    <img src={hippoTherapyImg} alt="hippotherapy-img" />
+                </div>
             </div>
 
             <div className="equinetherapy-container">
-                <div className="equinetherapy-container-img">
-                    <img src="/EquineTherapyPic3.jpg" alt="equinetherapypic" />
-                </div>
                 <div className="equinetherapy-text-content">
-                    <h2>Equine Therapy Service</h2>
+                    <h2>Equinetherapy Benefits</h2>
                     <p>Equine therapy is a type of therapy that involves activities with horses
                     and other equines to promote physical, occupational, and emotional growth
                     in persons with disabilities.
                     </p>
+                </div>
+                <div className="equinetherapy-img">
+                    <img src={equineTherapyImg} alt="equinetherapy-img" />
                 </div>
             </div>
 

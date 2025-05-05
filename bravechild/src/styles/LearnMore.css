@@ -1,5 +1,5 @@
 .page-container {
-    background-color: #e8f5e9;
+    background-color: #771387;
     min-height: 100vh;
     width: 100%;
     position: absolute;
@@ -11,14 +11,21 @@
     background-color: rgb(255, 255, 255);
     position: fixed;
     top: 0;
+    left: 0;
     width: 100%;
     z-index: 100;
-    height: auto;
+    height: 150px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: .1rem 0;
+    padding: 0.1rem 1rem;
     flex-direction: row;
+    transition: height 0.3s ease, padding 0.3s ease;
+}
+
+.navbar-scrolled {
+    height: 60px;
+    padding: 0.25rem 1rem;
 }
 
 .navbar-title {
@@ -30,7 +37,8 @@
 }
 
 .navbar-logo img {
-    height: 100px;
+    height: 150px;
+    width: 200px;
     margin-right: 10px;
 }
 
@@ -52,7 +60,7 @@
 
 .navbar-list ul li a {
     text-decoration: none;
-    color: black;
+    color: rgb(0, 0, 0);
     font-size: 1rem;
     font-weight: bold;
 }
@@ -67,6 +75,45 @@
     color:rgb(140, 0, 175)
 }
 
+.navbar-bottom-list {
+    width: 75%;
+    background-color: lightgrey;
+    padding: 0;
+    margin-top: 126px;
+    position: absolute;
+    flex-direction: row-reverse;
+    display: flex;
+    justify-content: center;
+    margin-left: 25%;
+}
+
+.navbar-bottom-list ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    gap: 100px;
+}
+
+.navbar-bottom-list li {
+    margin: 0 15px;
+}
+
+.navbar-bottom-list a {
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    font-weight: 500;
+    padding: 5px 10px;
+    transition: all 0.3s ease;
+}
+
+.navbar-bottom-list a:hover {
+    background-color: lightgrey;
+    color: rgb(255, 255, 255);
+    text-decoration: underline;
+}
+
 .learn-more-container {
     display: flex;
     flex-direction: column;
@@ -74,7 +121,7 @@
     margin-left: 100px;
     margin-right: 100px;
     background-color: white;
-    margin-top: 107px;
+    margin-top: 205px;
     min-height: calc(100vh - 107px);
 }
 
@@ -83,7 +130,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 50px;
+    margin-top: 25px;
     margin-bottom: 50px;
     background-color: rgb(255, 255, 255);
 }
@@ -185,14 +232,16 @@
 .brave-501c-container {
     background-color: rgb(255, 255, 255);
     margin-top: 100px;
-    margin-right: 500px;
-    margin-left: 500px;
+    margin-right: 200px;
+    margin-left: 200px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
     flex-wrap: nowrap;
     outline: solid;
+    font-weight: bold;
+    font-size: 1rem;
 }
 
 
