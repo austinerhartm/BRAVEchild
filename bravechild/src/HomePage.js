@@ -40,7 +40,6 @@ const HomePage = () => {
                     <div className="navbar-title">
                         <div className="navbar-logo">
                             <Link to="/"><img src="/BRAVEpic.png" alt="logo" /></Link>
-                            <img src={bannerImg} alt="bannerImg" />
                         </div>
                     </div>
                     <div className="navbar-list">
