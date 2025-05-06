@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { Box, Button, CircularProgress, Alert, Typography } from '@mui/material';
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
 const PaymentForm = ({ amount, onSuccess, formData }) => {
   const stripe = useStripe();
   const elements = useElements();
@@ -38,7 +40,7 @@ const PaymentForm = ({ amount, onSuccess, formData }) => {
 
     try {
       //paymentIntent Stripe API call but for backend
-      const response = await fetch(process.env.REACT_APP_API_BASE_URL + '/payment/create-payment-intent', {
+      const response = await fetch(`${API_BASE_URL}/payment/create-payment-intent`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
