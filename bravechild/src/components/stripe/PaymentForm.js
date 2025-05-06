@@ -38,7 +38,7 @@ const PaymentForm = ({ amount, onSuccess, formData }) => {
 
     try {
       //paymentIntent Stripe API call but for backend
-      const response = await fetch('https://localhost:8081/payment/create-payment-intent', {
+      const response = await fetch(process.env.REACT_APP_API_BASE_URL + '/payment/create-payment-intent', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
