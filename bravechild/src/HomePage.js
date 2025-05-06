@@ -7,6 +7,7 @@ import secondHomepageImg from './imgs/second-homepage-img.jpg';
 import thirdHomepageImg from './imgs/third-homepage-img.jpg';
 import hippoTherapyImg from './imgs/hippotherapy-img.jpg';
 import equineTherapyImg from './imgs/equinetherapy-img.jpg';
+import bannerImg from './imgs/banner-img.jpg';
 import './HomePage.css';
 
 const HomePage = () => {
@@ -39,8 +40,8 @@ const HomePage = () => {
                     <div className="navbar-title">
                         <div className="navbar-logo">
                             <Link to="/"><img src="/BRAVEpic.png" alt="logo" /></Link>
+                            <img src={bannerImg} alt="bannerImg" />
                         </div>
-                        <h1>B.R.A.V.E Child Inc</h1>
                     </div>
                     <div className="navbar-list">
                         <ul>
@@ -83,15 +84,13 @@ const HomePage = () => {
             </div>
 
             <div className="whoweare-container">
-                <h2>Welcome to BRAVEChild</h2>
-                <p><span style={{fontWeight: 'bold' }}>Building and Restoring Abilities Via Equine </span> 
-                   is a team of therapists and parents working together to raise funds
-                   to assist with covering the cost of the equine service fee.</p>
+                <h2>B.R.A.V.E. Child Inc.</h2>
+                <h2>Building and Restoring Abilities Via Equine</h2>
             </div>
 
             <div className="first-homepage-img-container">
-                <img src={firstHomepageImg} alt="first-homepage-img" />
                 <img src={secondHomepageImg} alt="second-homepage-img" />
+                <img src={firstHomepageImg} alt="first-homepage-img" />
                 <img src={thirdHomepageImg} alt="third-homepage-img" />
             </div>
 

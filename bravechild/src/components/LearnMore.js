@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import FAQ from '../components/FAQ';
 import '../styles/FAQ.css';
 import '../styles/LearnMore.css';
+import bannerImg from '../imgs/banner-img.jpg';
 
 const LearnMore = () => {
     const [isScrolled, setIsScrolled] = useState(false);
@@ -26,6 +27,9 @@ const LearnMore = () => {
                     <div className="navbar-title">
                         <div className="navbar-logo">
                             <Link to="/"><img src="/BRAVEpic.png" alt="logo" /></Link>
+                        </div>
+                        <div className="navbar-banner">
+                            <img src={bannerImg} alt="bannerImg" />
                         </div>
                         <h1>B.R.A.V.E Child Inc</h1>
                     </div>
