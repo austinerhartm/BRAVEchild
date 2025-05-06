@@ -2,7 +2,7 @@ import React from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 
-const STRIPE_PUBLISH_KEY = process.env.REACT_APP_STRIPE_PUBLISH_KEY;
+const STRIPE_PUBLISH_KEY = process.env.STRIPE_PUBLISH_KEY;
 
 const stripePromise = STRIPE_PUBLISH_KEY 
   ? loadStripe(STRIPE_PUBLISH_KEY) 
