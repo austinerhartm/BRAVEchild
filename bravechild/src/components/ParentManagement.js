@@ -84,10 +84,12 @@ Email: BRAVEbfchild@gmail.com`
     const [selectedParents, setSelectedParents] = useState([]);
     const [selectAll, setSelectAll] = useState(false);
 
+    // Fetch parents on component mount
     useEffect(() => {
         fetchParents();
     }, []);
 
+    // Handle select all checkbox
     useEffect(() => {
         if (selectAll) {
             setSelectedParents(parents.map(parent => parent.id));
@@ -96,6 +98,7 @@ Email: BRAVEbfchild@gmail.com`
         }
     }, [selectAll, parents]);
 
+    // Update selectAll when all parents are manually selected/deselected
     useEffect(() => {
         if (parents.length > 0 && selectedParents.length === parents.length) {
             setSelectAll(true);
@@ -104,67 +107,73 @@ Email: BRAVEbfchild@gmail.com`
         }
     }, [selectedParents, parents, selectAll]);
 
+    // Direct API calls instead of using service functions
     const fetchParents = async () => {
         setIsLoading(true);
         setError(null);
         
         try {
             const response = await api.get('/parents');
+            console.log('API Response:', response.data);
             
+            // Fix: Extract parents from the nested data structure
             if (response.data.success) {
-                setParents(response.data.parents || []);
+                // Check if the response has a data.parents structure
+                if (response.data.data && Array.isArray(response.data.data.parents)) {
+                    setParents(response.data.data.parents);
+                } 
+                // Or if it has a direct parents array
+                else if (Array.isArray(response.data.parents)) {
+                    setParents(response.data.parents);
+                }
+                else {
+                    console.warn("API returned success but with unexpected structure:", response.data);
+                    setParents([]);
+                    setError('Server returned data in an unexpected format');
+                }
             } else {
-                console.warn('Could not fetch parents from API, using demo data');
-                setParents([
-                    {
-                        id: 1,
-                        firstName: 'John',
-                        lastName: 'Doe',
-                        email: 'john.doe@example.com',
-                        childId: donees[0]?.child_id,
-                        childName: donees[0]?.child_name,
-                        notes: 'Primary contact'
-                    },
-                    {
-                        id: 2,
-                        firstName: 'Jane',
-                        lastName: 'Smith',
-                        email: 'jane.smith@example.com',
-                        childId: donees[1]?.child_id,
-                        childName: donees[1]?.child_name,
-                        notes: 'Prefers email contact'
-                    }
-                ]);
+                console.warn("API call unsuccessful:", response.data);
+                setError(response.data.message || 'Failed to load parents');
+                // Use demo data as fallback
+                useDemoData();
             }
         } catch (error) {
             console.error('Error fetching parents:', error);
-            setError('Failed to load parents from server');
+            setError(error.message || 'Failed to load parents from server');
             
-            setParents([
-                {
-                    id: 1,
-                    firstName: 'John',
-                    lastName: 'Doe',
-                    email: 'john.doe@example.com',
-                    childId: donees[0]?.child_id || '',
-                    childName: donees[0]?.child_name || 'Unknown Child',
-                    notes: 'Primary contact'
-                },
-                {
-                    id: 2,
-                    firstName: 'Jane',
-                    lastName: 'Smith',
-                    email: 'jane.smith@example.com',
-                    childId: donees[1]?.child_id || '',
-                    childName: donees[1]?.child_name || 'Unknown Child',
-                    notes: 'Prefers email contact'
-                }
-            ]);
+            // Use demo data as fallback
+            useDemoData();
         } finally {
             setIsLoading(false);
         }
     };
 
+    // Helper function to load demo data
+    const useDemoData = () => {
+        const demoData = [
+            {
+                id: 1,
+                firstName: 'John',
+                lastName: 'Doe',
+                email: 'john.doe@example.com',
+                child_id: donees && donees.length > 0 ? donees[0].child_id : '',
+                childName: donees && donees.length > 0 ? donees[0].child_name : 'Unknown Child',
+                notes: 'Primary contact'
+            },
+            {
+                id: 2,
+                firstName: 'Jane',
+                lastName: 'Smith',
+                email: 'jane.smith@example.com',
+                child_id: donees && donees.length > 1 ? donees[1].child_id : '',
+                childName: donees && donees.length > 1 ? donees[1].child_name : 'Unknown Child',
+                notes: 'Prefers email contact'
+            }
+        ];
+        setParents(demoData);
+    };
+
+    // Handle adding a new parent
     const handleAddParent = async (e) => {
         e.preventDefault();
         setError(null);
@@ -182,8 +191,7 @@ Email: BRAVEbfchild@gmail.com`
                 firstName,
                 lastName,
                 email,
-                childId,
-                childName: childInfo?.child_name || '',
+                childId: childId, // Ensure this matches what your API expects
                 notes
             };
             
@@ -191,11 +199,13 @@ Email: BRAVEbfchild@gmail.com`
             
             if (response.data.success) {
                 setSuccessMessage('Parent added successfully');
+                // Clear form
                 setFirstName('');
                 setLastName('');
                 setEmail('');
                 setChildId('');
                 setNotes('');
+                // Refresh parents list
                 fetchParents();
             } else {
                 throw new Error(response.data.message || 'Failed to add parent');
@@ -204,6 +214,7 @@ Email: BRAVEbfchild@gmail.com`
             console.error('Error adding parent:', error);
             setError(error.message || 'Failed to add parent');
             
+            // For demo or development mode - add parent to local state
             if (process.env.NODE_ENV === 'development') {
                 const newId = parents.length > 0 ? Math.max(...parents.map(p => p.id)) + 1 : 1;
                 const childInfo = donees.find(d => d.child_id === childId);
@@ -212,14 +223,15 @@ Email: BRAVEbfchild@gmail.com`
                     firstName,
                     lastName,
                     email,
-                    childId,
-                    childName: childInfo?.child_name || '',
+                    child_id: childId,
+                    child_name: childInfo?.child_name || '',
                     notes
                 };
                 
                 setParents([...parents, newParent]);
                 setSuccessMessage('Parent added successfully (Demo Mode)');
                 
+                // Clear form
                 setFirstName('');
                 setLastName('');
                 setEmail('');
@@ -231,15 +243,17 @@ Email: BRAVEbfchild@gmail.com`
         }
     };
 
+    // Handle editing a parent
     const handleEditParent = (parent) => {
         setEditingParentId(parent.id);
         setFirstName(parent.firstName);
         setLastName(parent.lastName);
         setEmail(parent.email);
-        setChildId(parent.childId);
+        setChildId(parent.child_id); // Note: Using child_id from the API response
         setNotes(parent.notes || '');
     };
 
+    // Handle saving edited parent
     const handleSaveEdit = async () => {
         setError(null);
         
@@ -257,8 +271,7 @@ Email: BRAVEbfchild@gmail.com`
                 firstName,
                 lastName,
                 email,
-                childId,
-                childName: childInfo?.child_name || '',
+                childId, // Match the field expected by your API
                 notes
             };
             
@@ -266,6 +279,7 @@ Email: BRAVEbfchild@gmail.com`
             
             if (response.data.success) {
                 setSuccessMessage('Parent updated successfully');
+                // Refresh parents list
                 fetchParents();
             } else {
                 throw new Error(response.data.message || 'Failed to update parent');
@@ -274,6 +288,7 @@ Email: BRAVEbfchild@gmail.com`
             console.error('Error updating parent:', error);
             setError(error.message || 'Failed to update parent');
             
+            // For demo or development mode
             if (process.env.NODE_ENV === 'development') {
                 const updatedParents = parents.map(p => 
                     p.id === editingParentId ? {
@@ -281,8 +296,8 @@ Email: BRAVEbfchild@gmail.com`
                         firstName,
                         lastName,
                         email,
-                        childId,
-                        childName: donees.find(d => d.child_id === childId)?.child_name || '',
+                        child_id: childId,
+                        child_name: donees.find(d => d.child_id === childId)?.child_name || '',
                         notes
                     } : p
                 );
@@ -294,6 +309,7 @@ Email: BRAVEbfchild@gmail.com`
             setIsLoading(false);
             setEditingParentId(null);
             
+            // Clear form
             setFirstName('');
             setLastName('');
             setEmail('');
@@ -302,6 +318,7 @@ Email: BRAVEbfchild@gmail.com`
         }
     };
 
+    // Handle canceling edit
     const handleCancelEdit = () => {
         setEditingParentId(null);
         setFirstName('');
@@ -311,11 +328,13 @@ Email: BRAVEbfchild@gmail.com`
         setNotes('');
     };
 
+    // Open delete confirmation dialog
     const handleDeleteClick = (parentId) => {
         setParentToDelete(parentId);
         setDeleteDialogOpen(true);
     };
 
+    // Delete parent
     const handleDeleteParent = async () => {
         setIsLoading(true);
         
@@ -324,6 +343,7 @@ Email: BRAVEbfchild@gmail.com`
             
             if (response.data.success) {
                 setSuccessMessage('Parent deleted successfully');
+                // Refresh parents list
                 fetchParents();
             } else {
                 throw new Error(response.data.message || 'Failed to delete parent');
@@ -332,6 +352,7 @@ Email: BRAVEbfchild@gmail.com`
             console.error('Error deleting parent:', error);
             setError(error.message || 'Failed to delete parent');
             
+            // For demo or development mode
             if (process.env.NODE_ENV === 'development') {
                 const filteredParents = parents.filter(p => p.id !== parentToDelete);
                 setParents(filteredParents);
@@ -344,6 +365,7 @@ Email: BRAVEbfchild@gmail.com`
         }
     };
 
+    // Handle parent selection
     const handleParentSelection = (parentId) => {
         if (selectedParents.includes(parentId)) {
             setSelectedParents(selectedParents.filter(id => id !== parentId));
@@ -352,6 +374,7 @@ Email: BRAVEbfchild@gmail.com`
         }
     };
 
+    // Handle opening batch email dialog
     const handleBatchEmailClick = () => {
         if (selectedParents.length === 0) {
             setError('Please select at least one parent');
@@ -361,6 +384,7 @@ Email: BRAVEbfchild@gmail.com`
         setEmailDialogOpen(true);
     };
 
+    // Send batch emails
     const handleSendBatchEmails = async () => {
         setIsSending(true);
         setError(null);
@@ -368,8 +392,9 @@ Email: BRAVEbfchild@gmail.com`
         try {
             const selectedParentData = parents.filter(p => selectedParents.includes(p.id));
             
+            // Prepare email data for each parent
             const emailRequests = selectedParentData.map(parent => {
-                const donee = donees.find(d => d.child_id === parent.childId);
+                const donee = donees.find(d => d.child_id === parent.child_id);
                 const donationLink = donee ? 
                     `${window.location.origin}/child-donations/${donee.link}` : 
                     'Link not available';
@@ -378,7 +403,7 @@ Email: BRAVEbfchild@gmail.com`
                     email: parent.email,
                     subject: emailSubject,
                     content: emailTemplate.replace('{{donationLink}}', donationLink),
-                    childName: parent.childName,
+                    childName: parent.child_name,
                     donationLink
                 };
             });
@@ -396,6 +421,7 @@ Email: BRAVEbfchild@gmail.com`
             console.error('Error sending batch emails:', error);
             setError(error.message || 'Failed to send emails');
             
+            // For demo purposes
             if (process.env.NODE_ENV === 'development') {
                 setSuccessMessage(`Successfully sent emails to ${selectedParents.length} parents (Demo Mode)`);
                 setSelectedParents([]);
@@ -538,7 +564,7 @@ Email: BRAVEbfchild@gmail.com`
             
             <Card>
                 <CardHeader
-                    title="Parent Database"
+                    title={`Parent Database (${parents.length} parents)`}
                     sx={{
                         bgcolor: 'warning.main',
                         color: 'warning.contrastText'
@@ -610,7 +636,7 @@ Email: BRAVEbfchild@gmail.com`
                                             </TableCell>
                                             <TableCell>{`${parent.firstName} ${parent.lastName}`}</TableCell>
                                             <TableCell>{parent.email}</TableCell>
-                                            <TableCell>{parent.childName || 'Unknown'}</TableCell>
+                                            <TableCell>{parent.child_name}</TableCell>
                                             <TableCell>{parent.notes || '-'}</TableCell>
                                             <TableCell>
                                                 <Box sx={{ display: 'flex', gap: 1 }}>

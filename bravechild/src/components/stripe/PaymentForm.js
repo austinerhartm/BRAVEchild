@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { Box, Button, CircularProgress, Alert, Typography } from '@mui/material';
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:3001';
+
 const PaymentForm = ({ amount, onSuccess, formData }) => {
   const stripe = useStripe();
   const elements = useElements();
@@ -21,56 +23,77 @@ const PaymentForm = ({ amount, onSuccess, formData }) => {
     event.preventDefault();
     
     if (!stripe || !elements) {
-      setError("Stripe is not initialized. Reload page");
+      setError("Stripe is not initialized. Please reload the page");
+      return;
+    }
+
+    if (!amount || amount <= 0) {
+      setError("Please enter a valid donation amount");
       return;
     }
 
     setProcessing(true);
-
-    const token = sessionStorage.getItem('accessToken');
-    if (!token) {
-      setError("Authentication token not found. Please log in again");
-      setProcessing(false);
-      console.log("Access Token: ", token);
-      return;
-      
-    }
+    setError(null);
 
     try {
-      //paymentIntent Stripe API call but for backend
-      const response = await fetch('https://localhost:8081/payment/create-payment-intent', {
+      const token = sessionStorage.getItem('accessToken') || '';
+      
+      const headers = {
+        'Content-Type': 'application/json'
+      };
+      
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+
+      console.log('Sending payment intent request to:', `${API_BASE_URL}/payment/create-payment-intent`);
+      console.log('With data:', { 
+        amount: Math.round(amount * 100),
+        metadata: {
+          name: formData?.firstName && formData?.lastName ?
+            `${formData.firstName} ${formData.lastName}` : 'Anonymous',
+          email: formData?.email || '',
+        }
+      });
+
+      const response = await fetch(`${API_BASE_URL}/payment/create-payment-intent`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
+        headers: headers,
+        credentials: 'include',
         body: JSON.stringify({ 
-          amount: amount * 100,
+          amount: Math.round(amount * 100),
           metadata: {
             name: formData?.firstName && formData?.lastName ?
-              `${formData.firstName} ${formData.lastName}` : 'Anon',
+              `${formData.firstName} ${formData.lastName}` : 'Anonymous',
             email: formData?.email || '',
           }
         }),
       });
       
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Payment intent error response:', errorText);
+        throw new Error(`Payment service error: ${response.status} ${response.statusText}`);
+      }
+
       const data = await response.json();
+      console.log('Payment intent response:', data);
       
       if (!data.clientSecret) {
-        throw new Error('Failed to create payment intent');
+        throw new Error('Server did not return a client secret');
       }
 
       const cardElement = elements.getElement(CardElement);
-      if(!cardElement) {
-        throw new Error('Failed to get card element');
+      if (!cardElement) {
+        throw new Error('Card element not found');
       }
 
       const result = await stripe.confirmCardPayment(data.clientSecret, {
         payment_method: {
-          card: elements.getElement(CardElement),
+          card: cardElement,
           billing_details: {
             name: formData?.firstName && formData?.lastName ? 
-              `${formData.firstName} ${formData.lastName}` : 'Anon',
+              `${formData.firstName} ${formData.lastName}` : 'Anonymous',
             email: formData?.email || '',
             address: {
               line1: formData?.address || formData?.billingAddress || '',
@@ -80,12 +103,16 @@ const PaymentForm = ({ amount, onSuccess, formData }) => {
       });
 
       if (result.error) {
-        setError(result.error.message);
+        throw new Error(result.error.message);
       } else if (result.paymentIntent.status === 'succeeded') {
+        console.log('Payment succeeded:', result.paymentIntent.id);
         onSuccess(result.paymentIntent.id);
+      } else {
+        throw new Error(`Payment status: ${result.paymentIntent.status}`);
       }
     } catch (err) {
-      setError(err.message);
+      console.error('Payment error:', err);
+      setError(err.message || 'An unexpected error occurred. Please try again.');
     } finally {
       setProcessing(false);
     }
@@ -116,6 +143,7 @@ const PaymentForm = ({ amount, onSuccess, formData }) => {
               color: '#9e2146',
             },
           },
+          hidePostalCode: true,
         }} />
       </Box>
       
@@ -130,11 +158,15 @@ const PaymentForm = ({ amount, onSuccess, formData }) => {
         variant="contained"
         color="primary"
         fullWidth
-        disabled={!stripe || processing}
-        startIcon={processing && <CircularProgress size={20} />}
+        disabled={!stripe || processing || amount <= 0}
+        startIcon={processing ? <CircularProgress size={20} /> : null}
       >
-        {processing ? 'Processing...' : `Pay $${amount}`}
+        {processing ? 'Processing...' : `Pay $${amount.toFixed(2)}`}
       </Button>
+
+      <Typography variant="caption" color="textSecondary" sx={{ mt: 2, display: 'block', textAlign: 'center' }}>
+        Secure payment processing by Stripe
+      </Typography>
     </Box>
   );
 };
