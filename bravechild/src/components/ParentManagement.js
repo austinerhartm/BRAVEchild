@@ -135,21 +135,21 @@ Email: BRAVEbfchild@gmail.com`
                 console.warn("API call unsuccessful:", response.data);
                 setError(response.data.message || 'Failed to load parents');
                 // Use demo data as fallback
-                useDemoData();
+                loadDemoData();
             }
         } catch (error) {
             console.error('Error fetching parents:', error);
             setError(error.message || 'Failed to load parents from server');
             
             // Use demo data as fallback
-            useDemoData();
+            loadDemoData();
         } finally {
             setIsLoading(false);
         }
     };
 
     // Helper function to load demo data
-    const useDemoData = () => {
+    const loadDemoData = () => {
         const demoData = [
             {
                 id: 1,
