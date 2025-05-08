@@ -22,8 +22,6 @@ import {
     CheckCircle as CheckCircleIcon
 } from '@mui/icons-material';
 import { save_tiles } from '../services/save_tiles';
-import api from '../services/api.service';
-import AuthService from '../services/auth.service';
 
 import '../styles/NumbersDonationForm.css';
 
@@ -32,7 +30,7 @@ import venmoImg from '../imgs/venmo.png';
 import squareImg from '../imgs/square.png';
 import PaymentForm from './stripe/PaymentForm';
 import { StripeProvider } from '../stripe/StripeProvider';
-import { useStripe, useElements } from '@stripe/react-stripe-js';
+import {useStripe, useElements } from '@stripe/react-stripe-js';
 
 const NumbersDonationForm = () => {
     const location = useLocation();
@@ -55,7 +53,6 @@ const NumbersDonationForm = () => {
     const [success, setSuccess] = useState(false);
     const [paymentSuccess, setPaymentSuccess] = useState(false);
 
-    // This function was causing ESLint errors because it was using hooks
     const handlePaymentSuccess = async (paymentIntentId) => {
         try {
           await save_tiles(linkId, selectedTiles, 
@@ -67,8 +64,8 @@ const NumbersDonationForm = () => {
           setTimeout(() => {
             navigate('/', { replace: true });
           }, 3000);
-        } catch (err) {
-          setError(err.message || 'Error processing donation after payment');
+        } catch (error) {
+          setError(error.message || 'Error processing donation after payment');
         }
     };
 
@@ -316,11 +313,20 @@ const NumbersDonationForm = () => {
 
                     <StripeProvider>
                         <PaymentForm
-                            amount={parseFloat(formData.donationAmount)}
-                            onSuccess={handlePaymentSuccess}
-                            formData={formData}
+                          amount={parseFloat(formData.donationAmount)}
+                          onSuccess={handlePaymentSuccess}
+                          formData={formData}
                         />
                     </StripeProvider>
+                    {/*<Typography variant="h6" className="form-section-title">
+                        Payment Methods
+                    </Typography>
+
+                    <div className="payment-options">
+                        <img src={cashappImg} alt="CashApp" className="payment-image" />
+                        <img src={venmoImg} alt="Venmo" className="payment-image" />
+                        <img src={squareImg} alt="Square" className="payment-image" />
+                    </div> */}
 
                     <Box className="form-actions">
                         <Button
