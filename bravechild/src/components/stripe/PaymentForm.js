@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { Box, Button, CircularProgress, Alert, Typography } from '@mui/material';
 
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:3001';
+const API_BASE_URL = (process.env.REACT_APP_API_BASE_URL || 'http://localhost:3001');
 
 const PaymentForm = ({ amount, onSuccess, formData }) => {
   const stripe = useStripe();
@@ -36,7 +36,11 @@ const PaymentForm = ({ amount, onSuccess, formData }) => {
     setError(null);
 
     try {
-      const token = sessionStorage.getItem('accessToken') || '';
+      const token = 
+        sessionStorage.getItem('accessToken') || 
+        localStorage.getItem('accessToken') || 
+        localStorage.getItem('token') || 
+        '';
       
       const headers = {
         'Content-Type': 'application/json'
@@ -56,24 +60,49 @@ const PaymentForm = ({ amount, onSuccess, formData }) => {
         }
       });
 
-      const response = await fetch(`${API_BASE_URL}/payment/create-payment-intent`, {
-        method: 'POST',
-        headers: headers,
-        credentials: 'include',
-        body: JSON.stringify({ 
-          amount: Math.round(amount * 100),
-          metadata: {
-            name: formData?.firstName && formData?.lastName ?
-              `${formData.firstName} ${formData.lastName}` : 'Anonymous',
-            email: formData?.email || '',
-          }
-        }),
-      });
+      let response;
+      
+      try {
+        if (token) {
+          response = await fetch(`${API_BASE_URL}/payment/create-payment-intent`, {
+            method: 'POST',
+            headers: headers,
+            credentials: 'include',
+            body: JSON.stringify({ 
+              amount: Math.round(amount * 100),
+              metadata: {
+                name: formData?.firstName && formData?.lastName ?
+                  `${formData.firstName} ${formData.lastName}` : 'Anonymous',
+                email: formData?.email || '',
+              }
+            }),
+          });
+        }
+        
+        if (!token || (response && response.status === 401)) {
+          console.log('Trying anonymous payment endpoint...');
+          response = await fetch(`${API_BASE_URL}/payment/anonymous-payment-intent`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+              amount: Math.round(amount * 100),
+              metadata: {
+                name: formData?.firstName && formData?.lastName ?
+                  `${formData.firstName} ${formData.lastName}` : 'Anonymous',
+                email: formData?.email || '',
+              }
+            }),
+          });
+        }
+      } catch (fetchError) {
+        console.error('Fetch error:', fetchError);
+        throw new Error(`Network error: ${fetchError.message}`);
+      }
       
       if (!response.ok) {
         const errorText = await response.text();
         console.error('Payment intent error response:', errorText);
-        throw new Error(`Payment service error: ${response.status} ${response.statusText}`);
+        throw new Error(`Payment server error: ${response.status} ${response.statusText}`);
       }
 
       const data = await response.json();
@@ -161,7 +190,7 @@ const PaymentForm = ({ amount, onSuccess, formData }) => {
         disabled={!stripe || processing || amount <= 0}
         startIcon={processing ? <CircularProgress size={20} /> : null}
       >
-        {processing ? 'Processing...' : `Pay $${amount.toFixed(2)}`}
+        {processing ? 'Processing...' : `Pay $${parseFloat(amount).toFixed(2)}`}
       </Button>
 
       <Typography variant="caption" color="textSecondary" sx={{ mt: 2, display: 'block', textAlign: 'center' }}>

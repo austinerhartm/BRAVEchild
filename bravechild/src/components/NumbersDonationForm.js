@@ -53,21 +53,82 @@ const NumbersDonationForm = () => {
     const [success, setSuccess] = useState(false);
     const [paymentSuccess, setPaymentSuccess] = useState(false);
 
-    const handlePaymentSuccess = async (paymentIntentId) => {
+    const handlePaymentSuccess = async (paymentIntentId, formData, selectedTiles, linkId) => {
+        const navigate = useNavigate();
+        const [error, setError] = useState(null);
+        
         try {
-          await save_tiles(linkId, selectedTiles, 
-            `${formData.firstName} ${formData.lastName}`, 
-            formData.donationAmount, 
-            paymentIntentId);
+          console.log('Saving tiles for link ID:', linkId, 'Selected tiles:', selectedTiles);
           
-          setSuccess(true);
-          setTimeout(() => {
-            navigate('/', { replace: true });
-          }, 3000);
+          try {
+            await save_tiles(
+              linkId, 
+              selectedTiles, 
+              `${formData.firstName} ${formData.lastName}`, 
+              formData.donationAmount, 
+              paymentIntentId
+            );
+            console.log('Tiles saved successfully');
+          } catch (tilesError) {
+            console.error('Error saving tiles:', tilesError);
+            throw new Error(`Failed to reserve your selected numbers: ${tilesError.message}`);
+          }
+          
+          const donationData = {
+            name: `${formData.firstName} ${formData.lastName}`,
+            email: formData.email,
+            amount: parseFloat(formData.donationAmount) || 0,
+            paymentId: paymentIntentId,
+            metadata: {
+              tiles: selectedTiles.join(','),
+              linkId: linkId
+            }
+          };
+          
+          const isAuthenticated = AuthService.isAuthenticated();
+          let response;
+          
+          if (isAuthenticated) {
+            response = await api.post('/payment/save-donation', donationData);
+          } else {
+            response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/payment/anonymous-donation`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(donationData)
+            });
+            
+            if (!response.ok) {
+              const errorData = await response.json();
+              console.warn('Warning: Error saving donation to database:', errorData);
+            } else {
+              response = await response.json();
+              console.log('Donation saved:', response);
+            }
+          }
+          
+          navigate('/thank-you', {
+            replace: true,
+            state: {
+              donationData: {
+                name: donationData.name,
+                amount: donationData.amount,
+                transactionId: paymentIntentId,
+                tiles: selectedTiles
+              }
+            }
+          });
+          
         } catch (error) {
-          setError(error.message || 'Error processing donation after payment');
+          console.error('Error processing numbers donation:', error);
+          setError(error.message || 'Error processing donation');
+          
+          return { success: false, error: error.message };
         }
-    };
+        
+        return { success: true };
+      };
 
     const validateForm = () => {
         const errors = {};

@@ -134,38 +134,67 @@ const SponsorDonation = ({ onSubmit: externalSubmit }) => {
         }
     };
 
-    const handlePaymentSuccess = async (paymentIntentId) => {
-        const token = sessionStorage.getItem('accessToken');
-        console.log('Payment successful, payment intent id: ', paymentIntentId);
+    const handlePaymentSuccess = async (paymentIntentId, formData) => {
+        const navigate = useNavigate();
+        const [error, setError] = useState(null);
+        
         try {
-          const response = await api.post('/payment/save-donation', {
-            userId: formData?.userId || 0,
-            name: `${formData.fName} ${formData.lName}`,
+          const donationData = {
+            name: `${formData.firstName || formData.fName} ${formData.lastName || formData.lName}`,
             email: formData.email,
             amount: formData.selectedAmount || parseFloat(formData.customAmount) || 0,
             paymentId: paymentIntentId
-          }, {
-            headers: {
-              Authorization: `Bearer ${token}`
-            },
-          });
-          console.log('Server response:', response.data);
+          };
           
-          setSuccess(true);
-          setTimeout(() => {
-            navigate('/thank-you', { 
-                replace: true,
-                state: {
-                    donationData: {
-                        name: `${formData.fName} ${formData.lName}`, 
-                        amount: formData.selectedAmount || parseFloat(formData.customAmount) || 0, 
-                        transactionId: paymentIntentId
-                    }
-                }
-             });
-          }, 3000);
+          const isAuthenticated = AuthService.isAuthenticated();
+          let response;
+          
+          if (isAuthenticated) {
+            response = await api.post('/payment/save-donation', donationData);
+          } else {
+            response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/payment/anonymous-donation`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(donationData)
+            });
+            
+            if (!response.ok) {
+              const errorData = await response.json();
+              throw new Error(errorData.message || 'Error saving donation');
+            }
+            response = await response.json();
+          }
+          
+          console.log('Donation saved:', response);
+          
+          navigate('/thank-you', {
+            replace: true,
+            state: {
+              donationData: {
+                name: donationData.name,
+                amount: donationData.amount,
+                transactionId: paymentIntentId
+              }
+            }
+          });
+          
         } catch (error) {
-          setError(error.message || 'Error processing donation after payment');
+          console.error('Error saving donation after payment:', error);
+          setError(error.message || 'Error processing donation');
+          
+          navigate('/thank-you', {
+            replace: true,
+            state: {
+              donationData: {
+                name: `${formData.firstName || formData.fName} ${formData.lastName || formData.lName}`,
+                amount: formData.selectedAmount || parseFloat(formData.customAmount) || 0,
+                transactionId: paymentIntentId,
+                error: 'Your payment was successful, but we encountered an issue saving your donation details.'
+              }
+            }
+          });
         }
       };
 

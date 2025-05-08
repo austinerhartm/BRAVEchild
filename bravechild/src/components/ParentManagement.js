@@ -42,11 +42,7 @@ import {
     Cancel as CancelIcon
 } from '@mui/icons-material';
 
-import { fetch_parents } from '../services/fetch_parents';
-import { add_parent } from '../services/add_parent';
-import { update_parent } from '../services/update_parent';
-import { delete_parent } from '../services/delete_parent';
-import { send_batch_emails } from '../services/send_batch_emails';
+import api from '../services/api.service';
 
 const ParentManagement = ({ donees }) => {
     const [parents, setParents] = useState([]);
@@ -55,7 +51,7 @@ const ParentManagement = ({ donees }) => {
     const [email, setEmail] = useState('');
     const [childId, setChildId] = useState('');
     const [notes, setNotes] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [isSending, setIsSending] = useState(false);
     const [error, setError] = useState(null);
     const [successMessage, setSuccessMessage] = useState('');
@@ -88,41 +84,37 @@ Email: BRAVEbfchild@gmail.com`
     const [selectedParents, setSelectedParents] = useState([]);
     const [selectAll, setSelectAll] = useState(false);
 
-    // Fetch parents on component mount
     useEffect(() => {
         fetchParents();
     }, []);
 
-    // Handle select all checkbox
     useEffect(() => {
         if (selectAll) {
             setSelectedParents(parents.map(parent => parent.id));
-        } else if (selectedParents.length === parents.length) {
+        } else if (selectedParents.length === parents.length && parents.length > 0) {
             setSelectedParents([]);
         }
-    }, [selectAll]);
+    }, [selectAll, parents]);
 
-    // Update selectAll when all parents are manually selected/deselected
     useEffect(() => {
         if (parents.length > 0 && selectedParents.length === parents.length) {
             setSelectAll(true);
         } else if (selectAll && selectedParents.length < parents.length) {
             setSelectAll(false);
         }
-    }, [selectedParents]);
+    }, [selectedParents, parents, selectAll]);
 
-    // Fetch parents from API
     const fetchParents = async () => {
         setIsLoading(true);
         setError(null);
         
         try {
-            const response = await fetch_parents();
+            const response = await api.get('/parents');
             
-            if (response?.success) {
+            if (response.data.success) {
                 setParents(response.data.parents || []);
             } else {
-                // For demo purposes
+                console.warn('Could not fetch parents from API, using demo data');
                 setParents([
                     {
                         id: 1,
@@ -146,17 +138,16 @@ Email: BRAVEbfchild@gmail.com`
             }
         } catch (error) {
             console.error('Error fetching parents:', error);
-            setError('Failed to load parents');
+            setError('Failed to load parents from server');
             
-            // For demo purposes
             setParents([
                 {
                     id: 1,
                     firstName: 'John',
                     lastName: 'Doe',
                     email: 'john.doe@example.com',
-                    childId: donees[0]?.child_id,
-                    childName: donees[0]?.child_name,
+                    childId: donees[0]?.child_id || '',
+                    childName: donees[0]?.child_name || 'Unknown Child',
                     notes: 'Primary contact'
                 },
                 {
@@ -164,8 +155,8 @@ Email: BRAVEbfchild@gmail.com`
                     firstName: 'Jane',
                     lastName: 'Smith',
                     email: 'jane.smith@example.com',
-                    childId: donees[1]?.child_id,
-                    childName: donees[1]?.child_name,
+                    childId: donees[1]?.child_id || '',
+                    childName: donees[1]?.child_name || 'Unknown Child',
                     notes: 'Prefers email contact'
                 }
             ]);
@@ -174,7 +165,6 @@ Email: BRAVEbfchild@gmail.com`
         }
     };
 
-    // Handle adding a new parent
     const handleAddParent = async (e) => {
         e.preventDefault();
         setError(null);
@@ -197,53 +187,50 @@ Email: BRAVEbfchild@gmail.com`
                 notes
             };
             
-            const response = await add_parent(parentData);
+            const response = await api.post('/parents', parentData);
             
-            if (response?.success) {
+            if (response.data.success) {
                 setSuccessMessage('Parent added successfully');
-                // Clear form
                 setFirstName('');
                 setLastName('');
                 setEmail('');
                 setChildId('');
                 setNotes('');
-                // Refresh parents list
                 fetchParents();
             } else {
-                throw new Error(response?.message || 'Failed to add parent');
+                throw new Error(response.data.message || 'Failed to add parent');
             }
         } catch (error) {
             console.error('Error adding parent:', error);
             setError(error.message || 'Failed to add parent');
             
-            // For demo purposes
-            const newId = parents.length > 0 ? Math.max(...parents.map(p => p.id)) + 1 : 1;
-            const childInfo = donees.find(d => d.child_id === childId);
-            const newParent = {
-                id: newId,
-                firstName,
-                lastName,
-                email,
-                childId,
-                childName: childInfo?.child_name || '',
-                notes
-            };
-            
-            setParents([...parents, newParent]);
-            setSuccessMessage('Parent added successfully (demo mode)');
-            
-            // Clear form
-            setFirstName('');
-            setLastName('');
-            setEmail('');
-            setChildId('');
-            setNotes('');
+            if (process.env.NODE_ENV === 'development') {
+                const newId = parents.length > 0 ? Math.max(...parents.map(p => p.id)) + 1 : 1;
+                const childInfo = donees.find(d => d.child_id === childId);
+                const newParent = {
+                    id: newId,
+                    firstName,
+                    lastName,
+                    email,
+                    childId,
+                    childName: childInfo?.child_name || '',
+                    notes
+                };
+                
+                setParents([...parents, newParent]);
+                setSuccessMessage('Parent added successfully (Demo Mode)');
+                
+                setFirstName('');
+                setLastName('');
+                setEmail('');
+                setChildId('');
+                setNotes('');
+            }
         } finally {
             setIsLoading(false);
         }
     };
 
-    // Handle editing a parent
     const handleEditParent = (parent) => {
         setEditingParentId(parent.id);
         setFirstName(parent.firstName);
@@ -253,7 +240,6 @@ Email: BRAVEbfchild@gmail.com`
         setNotes(parent.notes || '');
     };
 
-    // Handle saving edited parent
     const handleSaveEdit = async () => {
         setError(null);
         
@@ -276,39 +262,38 @@ Email: BRAVEbfchild@gmail.com`
                 notes
             };
             
-            const response = await update_parent(updatedParent);
+            const response = await api.put(`/parents/${editingParentId}`, updatedParent);
             
-            if (response?.success) {
+            if (response.data.success) {
                 setSuccessMessage('Parent updated successfully');
-                // Refresh parents list
                 fetchParents();
             } else {
-                throw new Error(response?.message || 'Failed to update parent');
+                throw new Error(response.data.message || 'Failed to update parent');
             }
         } catch (error) {
             console.error('Error updating parent:', error);
             setError(error.message || 'Failed to update parent');
             
-            // For demo purposes
-            const updatedParents = parents.map(p => 
-                p.id === editingParentId ? {
-                    ...p,
-                    firstName,
-                    lastName,
-                    email,
-                    childId,
-                    childName: donees.find(d => d.child_id === childId)?.child_name || '',
-                    notes
-                } : p
-            );
-            
-            setParents(updatedParents);
-            setSuccessMessage('Parent updated successfully (demo mode)');
+            if (process.env.NODE_ENV === 'development') {
+                const updatedParents = parents.map(p => 
+                    p.id === editingParentId ? {
+                        ...p,
+                        firstName,
+                        lastName,
+                        email,
+                        childId,
+                        childName: donees.find(d => d.child_id === childId)?.child_name || '',
+                        notes
+                    } : p
+                );
+                
+                setParents(updatedParents);
+                setSuccessMessage('Parent updated successfully (Demo Mode)');
+            }
         } finally {
             setIsLoading(false);
             setEditingParentId(null);
             
-            // Clear form
             setFirstName('');
             setLastName('');
             setEmail('');
@@ -317,7 +302,6 @@ Email: BRAVEbfchild@gmail.com`
         }
     };
 
-    // Handle canceling edit
     const handleCancelEdit = () => {
         setEditingParentId(null);
         setFirstName('');
@@ -327,34 +311,32 @@ Email: BRAVEbfchild@gmail.com`
         setNotes('');
     };
 
-    // Open delete confirmation dialog
     const handleDeleteClick = (parentId) => {
         setParentToDelete(parentId);
         setDeleteDialogOpen(true);
     };
 
-    // Delete parent
     const handleDeleteParent = async () => {
         setIsLoading(true);
         
         try {
-            const response = await delete_parent(parentToDelete);
+            const response = await api.delete(`/parents/${parentToDelete}`);
             
-            if (response?.success) {
+            if (response.data.success) {
                 setSuccessMessage('Parent deleted successfully');
-                // Refresh parents list
                 fetchParents();
             } else {
-                throw new Error(response?.message || 'Failed to delete parent');
+                throw new Error(response.data.message || 'Failed to delete parent');
             }
         } catch (error) {
             console.error('Error deleting parent:', error);
             setError(error.message || 'Failed to delete parent');
             
-            // For demo purposes
-            const filteredParents = parents.filter(p => p.id !== parentToDelete);
-            setParents(filteredParents);
-            setSuccessMessage('Parent deleted successfully (demo mode)');
+            if (process.env.NODE_ENV === 'development') {
+                const filteredParents = parents.filter(p => p.id !== parentToDelete);
+                setParents(filteredParents);
+                setSuccessMessage('Parent deleted successfully (Demo Mode)');
+            }
         } finally {
             setIsLoading(false);
             setDeleteDialogOpen(false);
@@ -362,7 +344,6 @@ Email: BRAVEbfchild@gmail.com`
         }
     };
 
-    // Handle parent selection
     const handleParentSelection = (parentId) => {
         if (selectedParents.includes(parentId)) {
             setSelectedParents(selectedParents.filter(id => id !== parentId));
@@ -371,7 +352,6 @@ Email: BRAVEbfchild@gmail.com`
         }
     };
 
-    // Handle opening batch email dialog
     const handleBatchEmailClick = () => {
         if (selectedParents.length === 0) {
             setError('Please select at least one parent');
@@ -381,7 +361,6 @@ Email: BRAVEbfchild@gmail.com`
         setEmailDialogOpen(true);
     };
 
-    // Send batch emails
     const handleSendBatchEmails = async () => {
         setIsSending(true);
         setError(null);
@@ -389,11 +368,10 @@ Email: BRAVEbfchild@gmail.com`
         try {
             const selectedParentData = parents.filter(p => selectedParents.includes(p.id));
             
-            // Prepare email data for each parent
             const emailRequests = selectedParentData.map(parent => {
                 const donee = donees.find(d => d.child_id === parent.childId);
                 const donationLink = donee ? 
-                    `https://${window.location.hostname}${window.location.port ? ':' + window.location.port : ''}/child-donations/${donee.link}` : 
+                    `${window.location.origin}/child-donations/${donee.link}` : 
                     'Link not available';
                 
                 return {
@@ -405,18 +383,24 @@ Email: BRAVEbfchild@gmail.com`
                 };
             });
             
-            const response = await send_batch_emails(emailRequests);
+            const response = await api.post('/email/batch', { emails: emailRequests });
             
-            if (response?.success) {
+            if (response.data.success) {
                 setSuccessMessage(`Successfully sent emails to ${selectedParentData.length} parents`);
                 setSelectedParents([]);
                 setSelectAll(false);
             } else {
-                throw new Error(response?.message || 'Failed to send emails');
+                throw new Error(response.data.message || 'Failed to send emails');
             }
         } catch (error) {
             console.error('Error sending batch emails:', error);
             setError(error.message || 'Failed to send emails');
+            
+            if (process.env.NODE_ENV === 'development') {
+                setSuccessMessage(`Successfully sent emails to ${selectedParents.length} parents (Demo Mode)`);
+                setSelectedParents([]);
+                setSelectAll(false);
+            }
         } finally {
             setIsSending(false);
             setEmailDialogOpen(false);
@@ -488,11 +472,15 @@ Email: BRAVEbfchild@gmail.com`
                                         label="Child"
                                         onChange={(e) => setChildId(e.target.value)}
                                     >
-                                        {donees.map((donee) => (
-                                            <MenuItem key={donee.child_id} value={donee.child_id}>
-                                                {donee.child_name}
-                                            </MenuItem>
-                                        ))}
+                                        {donees && donees.length > 0 ? (
+                                            donees.map((donee) => (
+                                                <MenuItem key={donee.child_id} value={donee.child_id}>
+                                                    {donee.child_name}
+                                                </MenuItem>
+                                            ))
+                                        ) : (
+                                            <MenuItem disabled>No children available</MenuItem>
+                                        )}
                                     </Select>
                                 </FormControl>
                             </Grid>
@@ -571,6 +559,7 @@ Email: BRAVEbfchild@gmail.com`
                                 color="secondary"
                                 startIcon={<RefreshIcon />}
                                 onClick={fetchParents}
+                                disabled={isLoading}
                             >
                                 Refresh
                             </Button>
@@ -582,6 +571,10 @@ Email: BRAVEbfchild@gmail.com`
                         <Box sx={{ display: 'flex', justifyContent: 'center', p: 3 }}>
                             <CircularProgress />
                         </Box>
+                    ) : parents.length === 0 ? (
+                        <Typography variant="body1" align="center" sx={{ py: 4 }}>
+                            No parents found in the database. Add a parent to get started.
+                        </Typography>
                     ) : (
                         <TableContainer>
                             <Table>
@@ -592,6 +585,7 @@ Email: BRAVEbfchild@gmail.com`
                                                 checked={selectAll}
                                                 onChange={() => setSelectAll(!selectAll)}
                                                 indeterminate={selectedParents.length > 0 && selectedParents.length < parents.length}
+                                                disabled={parents.length === 0}
                                             />
                                         </TableCell>
                                         <TableCell>Name</TableCell>
@@ -602,54 +596,46 @@ Email: BRAVEbfchild@gmail.com`
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {parents.length > 0 ? (
-                                        parents.map((parent) => (
-                                            <TableRow 
-                                                key={parent.id} 
-                                                hover
-                                                selected={selectedParents.includes(parent.id)}
-                                            >
-                                                <TableCell padding="checkbox">
-                                                    <Checkbox
-                                                        checked={selectedParents.includes(parent.id)}
-                                                        onChange={() => handleParentSelection(parent.id)}
-                                                    />
-                                                </TableCell>
-                                                <TableCell>{`${parent.firstName} ${parent.lastName}`}</TableCell>
-                                                <TableCell>{parent.email}</TableCell>
-                                                <TableCell>{parent.childName}</TableCell>
-                                                <TableCell>{parent.notes}</TableCell>
-                                                <TableCell>
-                                                    <Box sx={{ display: 'flex', gap: 1 }}>
-                                                        <Tooltip title="Edit">
-                                                            <IconButton
-                                                                onClick={() => handleEditParent(parent)}
-                                                                color="primary"
-                                                                size="small"
-                                                            >
-                                                                <EditIcon />
-                                                            </IconButton>
-                                                        </Tooltip>
-                                                        <Tooltip title="Delete">
-                                                            <IconButton
-                                                                onClick={() => handleDeleteClick(parent.id)}
-                                                                color="error"
-                                                                size="small"
-                                                            >
-                                                                <DeleteIcon />
-                                                            </IconButton>
-                                                        </Tooltip>
-                                                    </Box>
-                                                </TableCell>
-                                            </TableRow>
-                                        ))
-                                    ) : (
-                                        <TableRow>
-                                            <TableCell colSpan={6} align="center">
-                                                No parents in database
+                                    {parents.map((parent) => (
+                                        <TableRow 
+                                            key={parent.id} 
+                                            hover
+                                            selected={selectedParents.includes(parent.id)}
+                                        >
+                                            <TableCell padding="checkbox">
+                                                <Checkbox
+                                                    checked={selectedParents.includes(parent.id)}
+                                                    onChange={() => handleParentSelection(parent.id)}
+                                                />
+                                            </TableCell>
+                                            <TableCell>{`${parent.firstName} ${parent.lastName}`}</TableCell>
+                                            <TableCell>{parent.email}</TableCell>
+                                            <TableCell>{parent.childName || 'Unknown'}</TableCell>
+                                            <TableCell>{parent.notes || '-'}</TableCell>
+                                            <TableCell>
+                                                <Box sx={{ display: 'flex', gap: 1 }}>
+                                                    <Tooltip title="Edit">
+                                                        <IconButton
+                                                            onClick={() => handleEditParent(parent)}
+                                                            color="primary"
+                                                            size="small"
+                                                        >
+                                                            <EditIcon />
+                                                        </IconButton>
+                                                    </Tooltip>
+                                                    <Tooltip title="Delete">
+                                                        <IconButton
+                                                            onClick={() => handleDeleteClick(parent.id)}
+                                                            color="error"
+                                                            size="small"
+                                                        >
+                                                            <DeleteIcon />
+                                                        </IconButton>
+                                                    </Tooltip>
+                                                </Box>
                                             </TableCell>
                                         </TableRow>
-                                    )}
+                                    ))}
                                 </TableBody>
                             </Table>
                         </TableContainer>
@@ -713,10 +699,8 @@ Email: BRAVEbfchild@gmail.com`
                         placeholder="Email content"
                         variant="outlined"
                         sx={{ mb: 2 }}
+                        helperText="Use {{donationLink}} as a placeholder for the child's unique donation link"
                     />
-                    
-                    <Typography variant="caption" color="text.secondary">
-                    </Typography>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={() => setEmailDialogOpen(false)}>Cancel</Button>
@@ -737,6 +721,7 @@ Email: BRAVEbfchild@gmail.com`
                 open={!!successMessage}
                 autoHideDuration={6000}
                 onClose={handleCloseSuccess}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
             >
                 <Alert onClose={handleCloseSuccess} severity="success" sx={{ width: '100%' }}>
                     {successMessage}
