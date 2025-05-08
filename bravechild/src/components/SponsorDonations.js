@@ -9,6 +9,7 @@ import { get_dono_amount } from '../services/get_dono_amount';
 import { StripeProvider } from '../stripe/StripeProvider';
 import PaymentForm from './stripe/PaymentForm';
 import api from '../services/api.service';
+import AuthService from '../services/auth.service';
 import '../styles/SponsorDonations.css';
 
 const SponsorDonation = ({ onSubmit: externalSubmit }) => {
@@ -16,9 +17,9 @@ const SponsorDonation = ({ onSubmit: externalSubmit }) => {
     const navigate = useNavigate();
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(null);
-    const [isTyping, setIsTyping] = useState(false)
+    const [isTyping, setIsTyping] = useState(false);
     const [errors, setErrors] = useState({});
-    const [errorMessage, setErrorMessage] = useState('')
+    const [errorMessage, setErrorMessage] = useState('');
     const [formData, setFormData] = useState({
         isMonthly: true,
         selectedAmount: null,
@@ -27,7 +28,6 @@ const SponsorDonation = ({ onSubmit: externalSubmit }) => {
         lName: '',
         email: ''
     });
-
 
     const MIN_DONATION_AMOUNT = 5; 
 
@@ -66,7 +66,7 @@ const SponsorDonation = ({ onSubmit: externalSubmit }) => {
     const handleCustomAmountBlur = () => {
         setIsTyping(false); 
         validateAmount(formData.customAmount); 
-    }
+    };
 
     const validateAmount = (value) => {
         if (value === '') {
@@ -84,9 +84,9 @@ const SponsorDonation = ({ onSubmit: externalSubmit }) => {
             return false; 
         }
         
-        setErrorMessage('')
+        setErrorMessage('');
         return true; 
-    }
+    };
 
     const handleCustomAmountChange = (value) => {
         setFormData(prev => ({
@@ -105,21 +105,17 @@ const SponsorDonation = ({ onSubmit: externalSubmit }) => {
 
         if (externalSubmit) {
             externalSubmit(e, formData);
-
         } else {
             if (validateForm()) {
                 console.log('Form submitted:', JSON.stringify(formData, null, 2));
-                setErrorMessage('')
-
+                setErrorMessage('');
             } else {
-            const missingFields = Object.keys(errors).length > 0;
+                const missingFields = Object.keys(errors).length > 0;
                 if (missingFields) {
-                setErrorMessage('Please fill in all required fields before submitting.');
+                    setErrorMessage('Please fill in all required fields before submitting.');
                 }
             }
         }
-        
-        
     };
        
     const handleInputChange = (e) => {
@@ -134,69 +130,41 @@ const SponsorDonation = ({ onSubmit: externalSubmit }) => {
         }
     };
 
-    const handlePaymentSuccess = async (paymentIntentId, formData) => {
-        const navigate = useNavigate();
-        const [error, setError] = useState(null);
-        
+    // Moved the hook logic outside of this function to fix ESLint errors
+    const handlePaymentSuccess = async (paymentIntentId) => {
+        const token = sessionStorage.getItem('accessToken');
+        console.log('Payment successful, payment intent id: ', paymentIntentId);
         try {
-          const donationData = {
-            name: `${formData.firstName || formData.fName} ${formData.lastName || formData.lName}`,
-            email: formData.email,
-            amount: formData.selectedAmount || parseFloat(formData.customAmount) || 0,
-            paymentId: paymentIntentId
-          };
-          
-          const isAuthenticated = AuthService.isAuthenticated();
-          let response;
-          
-          if (isAuthenticated) {
-            response = await api.post('/payment/save-donation', donationData);
-          } else {
-            response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/payment/anonymous-donation`, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(donationData)
-            });
-            
-            if (!response.ok) {
-              const errorData = await response.json();
-              throw new Error(errorData.message || 'Error saving donation');
-            }
-            response = await response.json();
-          }
-          
-          console.log('Donation saved:', response);
-          
-          navigate('/thank-you', {
-            replace: true,
-            state: {
-              donationData: {
-                name: donationData.name,
-                amount: donationData.amount,
-                transactionId: paymentIntentId
-              }
-            }
-          });
-          
-        } catch (error) {
-          console.error('Error saving donation after payment:', error);
-          setError(error.message || 'Error processing donation');
-          
-          navigate('/thank-you', {
-            replace: true,
-            state: {
-              donationData: {
-                name: `${formData.firstName || formData.fName} ${formData.lastName || formData.lName}`,
+            const response = await api.post('/payment/save-donation', {
+                userId: formData?.userId || 0,
+                name: `${formData.fName} ${formData.lName}`,
+                email: formData.email,
                 amount: formData.selectedAmount || parseFloat(formData.customAmount) || 0,
-                transactionId: paymentIntentId,
-                error: 'Your payment was successful, but we encountered an issue saving your donation details.'
-              }
-            }
-          });
+                paymentId: paymentIntentId
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+            });
+            console.log('Server response:', response.data);
+            
+            setSuccess(true);
+            setTimeout(() => {
+                navigate('/thank-you', { 
+                    replace: true,
+                    state: {
+                        donationData: {
+                            name: `${formData.fName} ${formData.lName}`, 
+                            amount: formData.selectedAmount || parseFloat(formData.customAmount) || 0, 
+                            transactionId: paymentIntentId
+                        }
+                    }
+                });
+            }, 3000);
+        } catch (err) {
+            setError(err.message || 'Error processing donation after payment');
         }
-      };
+    };
 
     return (
         <>
@@ -236,20 +204,16 @@ const SponsorDonation = ({ onSubmit: externalSubmit }) => {
 
                 <StripeProvider>
                     <PaymentForm
-                      amount={formData.selectedAmount || parseFloat(formData.customAmount) || 0}
-                      onSuccess={handlePaymentSuccess}
-                      formData={{
-                          firstName: formData.fName,
-                          lastName: formData.lName,
-                          email: formData.email,
+                        amount={formData.selectedAmount || parseFloat(formData.customAmount) || 0}
+                        onSuccess={handlePaymentSuccess}
+                        formData={{
+                            firstName: formData.fName,
+                            lastName: formData.lName,
+                            email: formData.email,
                         }}
                     />
                 </StripeProvider> 
                 {errorMessage && <div className="error-message">{errorMessage}</div>}
-
-                {/*<button type="submit" className='submit-button' onClick={handleSubmit}>
-                    Donate
-                </button>*/}
             </div>
 
             <div>
@@ -280,4 +244,4 @@ const SponsorDonation = ({ onSubmit: externalSubmit }) => {
     );
 };
 
-export default SponsorDonation; 
+export default SponsorDonation;
