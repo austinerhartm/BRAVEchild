@@ -99,7 +99,7 @@ const HomePage = () => {
                     <p>B.R.A.V.E. Child, Inc is a non-profit organization that was created and designed
                         with parents in mind. By providing opportunites to decrease the cost of equine services
                         and facility fees. So, parents can focus on their child and their child's needs,
-                        knowing that financial barriers to receiving these services are removed.B.R.A.V.E.
+                        knowing that financial barriers to receiving these services are removed .B.R.A.V.E.
                         Child, Inc creates fundraising opportunities for families of children with or without
                         disabilities, enabling them to participate in hippotherapy or equine therapy services.
                     </p>
@@ -121,7 +121,7 @@ const HomePage = () => {
 
             <div className="equinetherapy-container">
                 <div className="equinetherapy-text-content">
-                    <h2>Equinetherapy Benefits</h2>
+                    <h2>Equine-therapy Benefits</h2>
                     <p>Equine therapy is a type of therapy that involves activities with horses
                     and other equines to promote physical, occupational, and emotional growth
                     in persons with disabilities.
