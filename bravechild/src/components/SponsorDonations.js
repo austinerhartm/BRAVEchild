@@ -173,10 +173,10 @@ const SponsorDonation = ({ onSubmit: externalSubmit }) => {
         <>
             <div className="donor-container">  
                 <h1 className="donation-title">Become a BRAVE sponsor!</h1>
-                <ContributionToggle 
+                {/**<ContributionToggle 
                     isMonthly={formData.isMonthly} 
                     onChange={(value) => setFormData(prev => ({ ...prev, isMonthly: value }))} 
-                />
+                /> */}
                 <PresetAmountButtons 
                     amounts={formData.isMonthly ? [5, 10, 25, 50, 100] : [25, 50, 100, 250, 500]}
                     selectedAmount={formData.selectedAmount}
