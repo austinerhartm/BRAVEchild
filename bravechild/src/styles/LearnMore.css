@@ -9,7 +9,7 @@
 
 .navbar {
     background-color: rgb(255, 255, 255);
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
@@ -86,15 +86,15 @@
 }
 
 .navbar-bottom-list {
-    width: 75%;
+    width: 62%;
     background-color: lightgrey;
     padding: 0;
     margin-top: 200px;
-    position: absolute;
+    position: inherit;
     flex-direction: row-reverse;
     display: flex;
-    justify-content: center;
-    margin-left: 25%;
+    justify-content: space-evenly;
+    margin-left: 559px;
 }
 
 .navbar-bottom-list ul {

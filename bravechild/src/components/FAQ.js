@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const FAQ = ({question, answer }) => {
+const FAQ = ({question, answer, answer2 }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
@@ -11,7 +11,12 @@ const FAQ = ({question, answer }) => {
             </div>
             {isOpen && (
                 <div className="faq-answer">
-                    <p>{answer}</p>
+                    <div className="faq-answer1">
+                        <p>{answer}</p>
+                    </div>
+                    <div className="faq-answer2">
+                        <p>{answer2}</p>
+                    </div>
                 </div>
             )}
         </div>

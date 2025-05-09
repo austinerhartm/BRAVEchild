@@ -28,9 +28,6 @@ const LearnMore = () => {
                         <div className="navbar-logo">
                             <Link to="/"><img src="/BRAVEPic.png" alt="logo" /></Link>
                         </div>
-                        <div className="navbar-banner">
-                        </div>
-                        <h1>B.R.A.V.E Child Inc</h1>
                     </div>
                     <div className="navbar-list">
                         <ul>
@@ -50,9 +47,9 @@ const LearnMore = () => {
                     <div className="program-details">
                         <h3>What We Offer</h3>
                         <ul>
-                            <li>Professional hippotherapy sessions</li>
-                            <li>Experienced therapists and horse handlers</li>
-                            <li>Safe and supportive environment</li>
+                            <li>Personal Fundraising Opportunities</li>
+                            <li>Public Fundraising Opportunities</li>
+                            <li>Sponsorship Opportunities</li>
                         </ul>
                     </div>
                     <div className="are-interested-container">
@@ -69,16 +66,20 @@ const LearnMore = () => {
             <div className="faq-section">
                 <h2>Frequently Asked Questions</h2>
                 <FAQ
-                    question="Question 1"
-                    answer="Answer 1"
+                    question="What types of fundraising opportunities are offered by B.R.A.V.E. Child, Inc?"
+                    answer="First is Child's personal fundraiser, the Number Fundraiser. Every child can participate
+                    in this fundraiser and all funds raised for their child will go towards their child." 
+                    answer2="Second is Public fundraisers. The public fundraisers are bake sales, easter egg delivery,
+                    and Christmas ornament sales. All funds from public fundraisers cover any leftover expenses
+                    for all children and B.R.A.V.E. Child, Inc. All public fundraisers will be posted on our Facebook
+                    and website."
                 />
                 <FAQ
-                    question="Question 2"
-                    answer="Answer 2"
-                />
-                <FAQ
-                    question="Question 3"
-                    answer="Answer 3"
+                    question="How to qualify for or participate in B.R.A.V.E. Child, Inc fundraising opportunities?"
+                    answer="Caregiver volunteers for at least one public fundraiser or public event per year, by
+                    either donating their time or donating the supplies. Public fundraisers will be posted on our website
+                    and Facebook."
+                    answer2="Participate in the Number Fundraiser to receive benefits."
                 />
             </div>
 
@@ -99,8 +100,8 @@ const LearnMore = () => {
 
                 <div className="footer-section">
                     <h2>Quick Links</h2>
-                    <p><a href="#home">Home</a></p>
-                    <p><a href="#about">About Us</a></p>
+                    <p><a href="/">Home</a></p>
+                    <p><a href="/learn-more">About Us</a></p>
                     <p><a href="#services">Services</a></p>
                 </div>
 

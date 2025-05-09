@@ -43,13 +43,24 @@
     transform: rotate(180deg);
 }
 
-.faq-answer {
+.faq-answer1 {
     padding: 1rem;
     background-color: white;
     border-top: 1px solid #eee;
 }
 
-.faq-answer p {
+.faq-answer1 p {
+    margin: 0;
+    line-height: 1.5;
+}
+
+.faq-answer2 {
+    padding: 1rem;
+    background-color: white;
+    border-top: 1px solid #eee;
+}
+
+.faq-answer2 p {
     margin: 0;
     line-height: 1.5;
 }
