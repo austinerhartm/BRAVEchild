@@ -130,7 +130,7 @@ Email: BRAVEbfchild@gmail.com`
 
     const fetchEmailHistory = async () => {
         try {
-            const response = await api.get('/fetch/email-history');
+            const response = await api.get('/email/history');
             console.log('Email History API Response:', response.data);
             
             if (response.data.success && Array.isArray(response.data.data?.emails)) {
