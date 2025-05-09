@@ -130,7 +130,7 @@ Email: BRAVEbfchild@gmail.com`
 
     const fetchEmailHistory = async () => {
         try {
-            const response = await api.get('/email/history');
+            const response = await api.get('/fetch/email-history');
             console.log('Email History API Response:', response.data);
             
             if (response.data.success && Array.isArray(response.data.data?.emails)) {
@@ -151,14 +151,14 @@ Email: BRAVEbfchild@gmail.com`
                 recipient: 'parent1@example.com',
                 child_name: 'John Smith',
                 sent_date: new Date(Date.now() - 86400000).toISOString(),
-                status: 'Delivered'
+                status: 'Sent'
             },
             {
                 id: 2,
                 recipient: 'parent2@example.com',
                 child_name: 'Emma Johnson',
                 sent_date: new Date(Date.now() - 172800000).toISOString(),
-                status: 'Delivered'
+                status: 'Sent'
             }
         ]);
     };
@@ -242,14 +242,30 @@ Email: BRAVEbfchild@gmail.com`
     };
 
     const formatDate = (dateString) => {
-        const options = { 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric', 
-            hour: 'numeric', 
-            minute: 'numeric'
-        };
-        return new Date(dateString).toLocaleDateString('en-US', options);
+        try {
+            if (!dateString) return 'N/A';
+            
+            const date = new Date(dateString);
+            
+            if (isNaN(date.getTime())) {
+                console.warn('Invalid date string:', dateString);
+                return 'Invalid date';
+            }
+            
+            const options = { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric', 
+                hour: 'numeric', 
+                minute: 'numeric',
+                hour12: true
+            };
+            
+            return date.toLocaleDateString('en-US', options);
+        } catch (error) {
+            console.error('Error formatting date:', error, dateString);
+            return 'Date error';
+        }
     };
 
     const handleResetTemplate = () => {
@@ -448,11 +464,11 @@ Email: BRAVEbfchild@gmail.com`
                                         <TableRow key={email.id} hover>
                                             <TableCell>{email.recipient}</TableCell>
                                             <TableCell>{email.child_name}</TableCell>
-                                            <TableCell>{formatDate(email.sent_date)}</TableCell>
+                                            <TableCell>{formatDate(email.created_at || email.sent_date)}</TableCell>
                                             <TableCell>
                                                 <Chip 
                                                     label={email.status} 
-                                                    color={email.status === 'Delivered' ? 'success' : 'warning'}
+                                                    color={email.status === 'Delivered' || email.status === 'Sent' ? 'success' : 'warning'}
                                                     size="small"
                                                 />
                                             </TableCell>
