@@ -184,8 +184,7 @@ const HomePage = () => {
                                             animation: `${rainbowText} 3s linear infinite`,
                                             fontWeight: 'bold',
                                             display: { xs: 'none', sm: 'block' },
-                                            textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
-                                            fontFamily: 'Comic Sans MS, cursive'
+                                            textShadow: '2px 2px 4px rgba(0,0,0,0.3)'
                                         }}
                                     >
                                         B.R.A.V.E. Child Inc.
@@ -222,7 +221,6 @@ const HomePage = () => {
                                             px: 3,
                                             py: 1,
                                             fontSize: { xs: '0.7rem', sm: '0.9rem' },
-                                            fontFamily: 'Comic Sans MS, cursive',
                                             transform: 'rotate(' + (Math.random() * 4 - 2) + 'deg)',
                                             transition: 'all 0.3s ease',
                                             '&:hover': { 
@@ -277,44 +275,36 @@ const HomePage = () => {
                             WebkitBackgroundClip: 'text',
                             color: 'transparent',
                             fontSize: { xs: '2.5rem', sm: '3.5rem', md: '4.5rem' },
-                            fontFamily: 'Comic Sans MS, cursive',
                             textShadow: '3px 3px 0px #fff, 6px 6px 0px rgba(0,0,0,0.2)',
                             transform: 'rotate(-2deg)',
                             position: 'relative',
                             zIndex: 1
                         }}>
-                            🌟 B.R.A.V.E. Child Inc. 🌟
+                            B.R.A.V.E. Child Inc.
                         </Typography>
                         <Typography variant="h4" sx={{ 
                             mb: 2, 
                             fontWeight: 'bold', 
                             color: '#FF1493',
-                            fontFamily: 'Comic Sans MS, cursive',
                             textShadow: '2px 2px 4px rgba(255,255,255,0.8)',
                             fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem' },
                             position: 'relative',
                             zIndex: 1
                         }}>
-                            🐴 Building and Restoring Abilities Via Equine! 🐴
+                            Building and Restoring Abilities Via Equine!
                         </Typography>
                         <Typography variant="h6" sx={{ 
                             mb: 3, 
                             maxWidth: 900, 
                             mx: 'auto', 
                             color: '#8B0000',
-                            fontFamily: 'Comic Sans MS, cursive',
                             fontSize: { xs: '1rem', sm: '1.2rem' },
                             fontWeight: 600,
                             position: 'relative',
                             zIndex: 1
                         }}>
-                            🎉 Where kids and horses become best friends to learn and grow together! 🎉
+                            Where kids and horses become best friends to learn and grow together!
                         </Typography>
-                        
-                        <Box sx={{ position: 'absolute', top: '10%', right: '10%', fontSize: '2rem', animation: `${bounce} 2s infinite 0.5s` }}>🦄</Box>
-                        <Box sx={{ position: 'absolute', bottom: '15%', left: '5%', fontSize: '2rem', animation: `${bounce} 2s infinite 1s` }}>🌈</Box>
-                        <Box sx={{ position: 'absolute', top: '20%', left: '15%', fontSize: '1.5rem', animation: `${wiggle} 3s infinite` }}>⭐</Box>
-                        <Box sx={{ position: 'absolute', bottom: '20%', right: '20%', fontSize: '1.5rem', animation: `${wiggle} 3s infinite 1.5s` }}>🎈</Box>
                     </Paper>
                 </Container>
 
@@ -352,7 +342,6 @@ const HomePage = () => {
                                         color: 'white', 
                                         p: 1, 
                                         textAlign: 'center',
-                                        fontFamily: 'Comic Sans MS, cursive',
                                         fontWeight: 'bold'
                                     }}>
                                         {item.alt}
@@ -373,12 +362,11 @@ const HomePage = () => {
                         transition: 'transform 0.3s ease'
                     }}>
                         <CardHeader
-                            title="🎯 Our Super Cool Mission! 🎯"
+                            title="Our Super Cool Mission!"
                             sx={{
                                 background: 'linear-gradient(135deg, #8C00AF 0%, #6A0085 100%)',
                                 color: 'white',
-                                textAlign: 'center',
-                                fontFamily: 'Comic Sans MS, cursive'
+                                textAlign: 'center'
                             }}
                         />
                         <CardContent sx={{ 
@@ -390,7 +378,6 @@ const HomePage = () => {
                                 lineHeight: 1.8, 
                                 textAlign: 'center', 
                                 fontWeight: 600,
-                                fontFamily: 'Comic Sans MS, cursive',
                                 fontSize: { xs: '1rem', sm: '1.2rem' }
                             }}>
                                 B.R.A.V.E. Child, Inc is a non-profit organization created with parents in mind. We provide opportunities to decrease the cost of equine services and facility fees, so parents can focus on their child's needs, knowing that financial barriers are removed. We create fundraising opportunities for families of children with or without disabilities, enabling them to participate in hippotherapy or equine therapy services.
@@ -413,12 +400,11 @@ const HomePage = () => {
                                 transition: 'all 0.3s ease'
                             }}>
                                 <CardHeader
-                                    title="🐴 Hippotherapy Magic! 🌟"
+                                    title="Hippotherapy!"
                                     sx={{
                                         background: 'linear-gradient(135deg, #7FF77F 0%, #4CAF50 100%)',
                                         color: 'black',
-                                        fontWeight: 'bold',
-                                        fontFamily: 'Comic Sans MS, cursive'
+                                        fontWeight: 'bold'
                                     }}
                                 />
                                 <CardContent sx={{ p: 2, backgroundColor: '#E8F5E9' }}>
@@ -435,14 +421,13 @@ const HomePage = () => {
                                             }}
                                         />
                                         <Chip 
-                                            label="🎉 So Cool!" 
+                                            label="So Cool!" 
                                             sx={{ 
                                                 position: 'absolute', 
                                                 top: 10, 
                                                 right: 10,
                                                 backgroundColor: '#FF69B4',
                                                 color: 'white',
-                                                fontFamily: 'Comic Sans MS, cursive',
                                                 fontWeight: 'bold'
                                             }} 
                                         />
@@ -451,7 +436,6 @@ const HomePage = () => {
                                         lineHeight: 1.6, 
                                         color: 'black', 
                                         fontWeight: 500,
-                                        fontFamily: 'Comic Sans MS, cursive',
                                         fontSize: { xs: '0.9rem', sm: '1.1rem' }
                                     }}>
                                         Hippotherapy allows children to work on balance, core strength, endurance, motor planning, attention to task, and fine motor skills using the horse's movement to stimulate the overall body.
@@ -471,12 +455,11 @@ const HomePage = () => {
                                 transition: 'all 0.3s ease'
                             }}>
                                 <CardHeader
-                                    title="✨ Equine Therapy Adventures! 🦄"
+                                    title="Equine Therapy Adventures!"
                                     sx={{
                                         background: 'linear-gradient(135deg, #F4F141 0%, #FFD43A 100%)',
                                         color: 'black',
-                                        fontWeight: 'bold',
-                                        fontFamily: 'Comic Sans MS, cursive'
+                                        fontWeight: 'bold'
                                     }}
                                 />
                                 <CardContent sx={{ p: 2, backgroundColor: '#e8f5e9' }}>
@@ -500,7 +483,6 @@ const HomePage = () => {
                                                 right: 10,
                                                 backgroundColor: '#FF69B4',
                                                 color: 'white',
-                                                fontFamily: 'Comic Sans MS, cursive',
                                                 fontWeight: 'bold'
                                             }} 
                                         />
@@ -510,7 +492,6 @@ const HomePage = () => {
                                         color: 'black', 
                                         backgroundColor: '#e8f5e9',
                                         fontWeight: 500,
-                                        fontFamily: 'Comic Sans MS, cursive',
                                         fontSize: { xs: '0.9rem', sm: '1.1rem' }
                                     }}>
                                         Equine therapy involves activities with horses and other equines to promote physical, occupational, and emotional growth in persons with disabilities. Allowing children to develop their skills.
@@ -531,21 +512,20 @@ const HomePage = () => {
                         transition: 'transform 0.3s ease'
                     }}>
                         <CardHeader
-                            title="🤝 How YOU Can Be a HERO! 🦸‍♀️🦸‍♂️"
+                            title="How YOU Can Be a HERO!"
                             sx={{
                                 background: 'linear-gradient(135deg, #FE5FCE 0%, #FF78AC 100%)',
                                 color: 'white',
                                 textAlign: 'center',
-                                fontFamily: 'Comic Sans MS, cursive',
                                 fontSize: '1.2rem'
                             }}
                         />
                         <CardContent sx={{ p: { xs: 2, sm: 3 }, backgroundColor: '#FE5FCE' }}>
                             <Grid container spacing={3}>
                                 {[
-                                    { icon: VolunteerIcon, title: "🎪 Become A Super Sponsor!", desc: "Help kids achieve their dreams!" },
-                                    { icon: FavoriteIcon, title: "💝 Spread the Love!", desc: "Every donation makes magic happen!" },
-                                    { icon: SchoolIcon, title: "🎓 Join Our Horse Family!", desc: "Sign up your kiddo for adventures!" }
+                                    { icon: VolunteerIcon, title: "Become A Super Sponsor!", desc: "Help kids achieve their dreams!" },
+                                    { icon: FavoriteIcon, title: "Spread the Love!", desc: "Every donation makes magic happen!" },
+                                    { icon: SchoolIcon, title: "Join Our Horse Family!", desc: "Sign up your kiddo for adventures!" }
                                 ].map((item, index) => (
                                     <Grid item xs={12} md={4} key={index}>
                                         <Box sx={{ 
@@ -567,14 +547,12 @@ const HomePage = () => {
                                             <Typography variant="h5" gutterBottom sx={{ 
                                                 fontWeight: 'bold', 
                                                 color: 'black',
-                                                fontFamily: 'Comic Sans MS, cursive',
                                                 fontSize: { xs: '1.1rem', sm: '1.3rem' }
                                             }}>
                                                 {item.title}
                                             </Typography>
                                             <Typography sx={{ 
                                                 color: '#555',
-                                                fontFamily: 'Comic Sans MS, cursive',
                                                 fontWeight: 600
                                             }}>
                                                 {item.desc}
@@ -602,14 +580,12 @@ const HomePage = () => {
                     >
                         <Typography variant="h5" sx={{ 
                             fontWeight: 'bold',
-                            fontFamily: 'Comic Sans MS, cursive',
                             fontSize: { xs: '1.1rem', sm: '1.3rem' }
                         }}>
                             B.R.A.V.E. Child, Inc is a 501c(3) organization
                         </Typography>
                         <Typography sx={{ 
-                            mt: 1, 
-                            fontFamily: 'Comic Sans MS, cursive' 
+                            mt: 1
                         }}>
                         </Typography>
                     </Paper>
@@ -627,8 +603,7 @@ const HomePage = () => {
                                 background: 'linear-gradient(135deg, #7FF77F 0%, #4CAF50 100%)',
                                 color: 'black',
                                 textAlign: 'center',
-                                fontWeight: 'bold',
-                                fontFamily: 'Comic Sans MS, cursive'
+                                fontWeight: 'bold'
                             }}
                         />
                         <CardContent sx={{ p: { xs: 2, sm: 3 }, backgroundColor: '#E8F5E9' }}>
@@ -673,14 +648,12 @@ const HomePage = () => {
                                             <Typography variant="h5" gutterBottom sx={{ 
                                                 fontWeight: 'bold', 
                                                 color: 'black',
-                                                fontFamily: 'Comic Sans MS, cursive',
                                                 fontSize: { xs: '1.1rem', sm: '1.2rem' }
                                             }}>
                                                 {item.title}
                                             </Typography>
                                             <Typography variant="h6" sx={{ 
                                                 color: '#555',
-                                                fontFamily: 'Comic Sans MS, cursive',
                                                 fontWeight: 600,
                                                 fontSize: { xs: '0.9rem', sm: '1rem' }
                                             }}>
@@ -702,10 +675,9 @@ const HomePage = () => {
                                 <Typography variant="h5" gutterBottom sx={{ 
                                     fontWeight: 'bold', 
                                     color: 'black',
-                                    fontFamily: 'Comic Sans MS, cursive',
                                     mb: 3
                                 }}>
-                                    🌟 Follow Our Adventures on Social Media! 🌟
+                                    Follow Our Adventures on Social Media!
                                 </Typography>
                                 <Box sx={{ display: 'flex', justifyContent: 'center', gap: 4, mt: 3, flexWrap: 'wrap' }}>
                                     {[
@@ -736,7 +708,6 @@ const HomePage = () => {
                                             </IconButton>
                                             <Typography sx={{ 
                                                 mt: 1, 
-                                                fontFamily: 'Comic Sans MS, cursive',
                                                 fontWeight: 'bold',
                                                 color: '#8C00AF',
                                                 fontSize: '0.9rem'
@@ -745,51 +716,6 @@ const HomePage = () => {
                                             </Typography>
                                         </Box>
                                     ))}
-                                </Box>
-                                
-                                {/* Decorative elements */}
-                                <Box sx={{ mt: 4, position: 'relative', height: '60px' }}>
-                                    <Box sx={{ 
-                                        position: 'absolute', 
-                                        left: '10%', 
-                                        fontSize: '2rem', 
-                                        animation: `${bounce} 2s infinite` 
-                                    }}>
-                                        🎉
-                                    </Box>
-                                    <Box sx={{ 
-                                        position: 'absolute', 
-                                        right: '10%', 
-                                        fontSize: '2rem', 
-                                        animation: `${bounce} 2s infinite 1s` 
-                                    }}>
-                                        🎈
-                                    </Box>
-                                    <Box sx={{ 
-                                        position: 'absolute', 
-                                        left: '30%', 
-                                        fontSize: '1.5rem', 
-                                        animation: `${wiggle} 3s infinite` 
-                                    }}>
-                                        🌈
-                                    </Box>
-                                    <Box sx={{ 
-                                        position: 'absolute', 
-                                        right: '30%', 
-                                        fontSize: '1.5rem', 
-                                        animation: `${wiggle} 3s infinite 1.5s` 
-                                    }}>
-                                        ⭐
-                                    </Box>
-                                    <Box sx={{ 
-                                        position: 'absolute', 
-                                        left: '50%', 
-                                        transform: 'translateX(-50%)',
-                                        fontSize: '2.5rem', 
-                                        animation: `${bounce} 2s infinite 0.5s` 
-                                    }}>
-                                        🦄
-                                    </Box>
                                 </Box>
                             </Box>
                         </CardContent>

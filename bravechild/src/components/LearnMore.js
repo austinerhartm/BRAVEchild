@@ -121,7 +121,6 @@ const ModernFAQ = ({ question, answer, answer2 }) => {
                 <Typography variant="h6" sx={{ 
                     fontWeight: 700, 
                     color: '#8C00AF',
-                    fontFamily: '"Segoe UI", "Roboto", sans-serif',
                     fontSize: { xs: '1.1rem', sm: '1.25rem' }
                 }}>
                     {question}
@@ -226,8 +225,7 @@ const LearnMore = () => {
                                             color: '#8C00AF',
                                             fontWeight: 'bold',
                                             display: { xs: 'none', sm: 'block' },
-                                            textShadow: '1px 1px 3px rgba(0,0,0,0.1)',
-                                            fontFamily: '"Segoe UI", "Roboto", sans-serif'
+                                            textShadow: '1px 1px 3px rgba(0,0,0,0.1)'
                                         }}
                                     >
                                         B.R.A.V.E. Child Inc.
@@ -262,7 +260,6 @@ const LearnMore = () => {
                                             px: 3,
                                             py: 1,
                                             fontSize: { xs: '0.7rem', sm: '0.9rem' },
-                                            fontFamily: 'Comic Sans MS, cursive',
                                             transform: 'rotate(' + (Math.random() * 4 - 2) + 'deg)',
                                             transition: 'all 0.3s ease',
                                             '&:hover': { 
@@ -318,15 +315,13 @@ const LearnMore = () => {
                                 px: 3,
                                 backgroundColor: '#8C00AF',
                                 color: 'white',
-                                fontWeight: 'bold',
-                                fontFamily: '"Segoe UI", "Roboto", sans-serif'
+                                fontWeight: 'bold'
                             }}
                         />
                         <Typography variant="h2" component="h1" gutterBottom sx={{
                             color: '#8C00AF',
                             fontWeight: 'bold',
                             fontSize: { xs: '2.5rem', sm: '3rem', md: '3.5rem' },
-                            fontFamily: '"Segoe UI", "Roboto", sans-serif',
                             textShadow: '2px 2px 4px rgba(255,255,255,0.8)',
                             position: 'relative',
                             zIndex: 1
@@ -340,7 +335,6 @@ const LearnMore = () => {
                             color: '#8B0000',
                             fontSize: { xs: '1.1rem', sm: '1.3rem' },
                             fontWeight: 600,
-                            fontFamily: '"Segoe UI", "Roboto", sans-serif',
                             position: 'relative',
                             zIndex: 1
                         }}>
@@ -361,7 +355,6 @@ const LearnMore = () => {
                                 background: 'linear-gradient(135deg, #FFB6C1 0%, #FF69B4 100%)',
                                 color: 'white',
                                 textAlign: 'center',
-                                fontFamily: '"Segoe UI", "Roboto", sans-serif',
                                 fontWeight: 'bold',
                                 fontSize: '1.5rem'
                             }}
@@ -403,7 +396,6 @@ const LearnMore = () => {
                                 background: 'linear-gradient(135deg, #7FF77F 0%, #4CAF50 100%)',
                                 color: 'black',
                                 textAlign: 'center',
-                                fontFamily: '"Segoe UI", "Roboto", sans-serif',
                                 fontWeight: 'bold'
                             }}
                         />
@@ -452,8 +444,7 @@ const LearnMore = () => {
                                             }} />
                                             <Typography variant="h6" gutterBottom sx={{
                                                 fontWeight: 'bold',
-                                                color: '#8C00AF',
-                                                fontFamily: '"Segoe UI", "Roboto", sans-serif'
+                                                color: '#8C00AF'
                                             }}>
                                                 {item.title}
                                             </Typography>
@@ -482,7 +473,6 @@ const LearnMore = () => {
                                 <Typography variant="h6" gutterBottom sx={{
                                     fontWeight: 'bold',
                                     color: '#8C00AF',
-                                    fontFamily: '"Segoe UI", "Roboto", sans-serif',
                                     mb: 3
                                 }}>
                                     Follow Our Journey on Social Media
@@ -516,7 +506,6 @@ const LearnMore = () => {
                                             </IconButton>
                                             <Typography sx={{ 
                                                 mt: 1, 
-                                                fontFamily: '"Segoe UI", "Roboto", sans-serif',
                                                 fontWeight: 600,
                                                 color: '#8C00AF',
                                                 fontSize: '0.9rem'
@@ -525,32 +514,6 @@ const LearnMore = () => {
                                             </Typography>
                                         </Box>
                                     ))}
-                                </Box>
-                                
-                                {/* Decorative elements */}
-                                <Box sx={{ mt: 4, position: 'relative', height: '40px' }}>
-                                    <StarIcon sx={{ 
-                                        position: 'absolute', 
-                                        left: '15%', 
-                                        color: '#FFD700',
-                                        fontSize: '1.5rem', 
-                                        animation: `${wiggle} 4s infinite` 
-                                    }} />
-                                    <FavoriteIcon sx={{ 
-                                        position: 'absolute', 
-                                        right: '15%', 
-                                        color: '#FF69B4',
-                                        fontSize: '1.5rem', 
-                                        animation: `${wiggle} 4s infinite 2s` 
-                                    }} />
-                                    <StarIcon sx={{ 
-                                        position: 'absolute', 
-                                        left: '50%', 
-                                        transform: 'translateX(-50%)',
-                                        color: '#32CD32',
-                                        fontSize: '2rem', 
-                                        animation: `${bounce} 3s infinite 1s` 
-                                    }} />
                                 </Box>
                             </Box>
                             
